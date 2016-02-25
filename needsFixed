@@ -1,0 +1,7 @@
+# when running assembly from the "run" button, the machine code box does not get filled.  
+# only gets filled when using the "step" button
+
+# need to update docs to reflect changes
+# need to get Mark's code added and see how its all going to fit together
+
+# can we use a table instead of calculating the values on the wires every time?
