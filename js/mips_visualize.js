@@ -5,7 +5,7 @@
 
 
 function visualize () {
-    console.log("Well now we are in visualize");
+    if (false) {console.log("Well now we are in visualize");}
     $("#vis").append(
         //' <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Launch demo modal </button>' +
 
@@ -17,10 +17,10 @@ function visualize () {
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> ' +
         '<h4 class="modal-title" id="myModalLabel">MIPS Processor</h4> ' +
         '</div> ' +
-        '<div class="modal-body" style="height:550px;" >' +
+        '<div class="modal-body" style="height:600px;" >' +
         '<!-- MODAL DEFINITION END -->' +
 
-        '<svg id="processor" style="width:640px;height:510px;">' +
+        '<svg id="processor" style="width:640px;height:560px;">' +
         '<g id="start"> ' +
         '<g id="IF">' +
         '<!-- START ### IF ###--> ' +
@@ -94,14 +94,14 @@ function visualize () {
         '<text class="idecode" x="162" y="287" font-size="9px" fill="lightgrey" >Instruction [20-16]</text>' +
         '<line id="inst20ToRR2" class="idecodeObj" x1="158" y1=292 x2="259" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="idecodeObj" d="M 259,292 259,290 263,292 259,294 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="inst20toMUXZero" class="idecodeObj" d="M 259,292 259,290 263,292 259,294 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<circle class="idecodeObj" cx="158" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></circle>' +
 
         '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE BRANCHES TO MUX  -->' +
-        '<path id="inst20ToMux" class="idecodeObj" d="M  233,310 213,310 213,292" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<path id="inst20ToMux" class="idecodeObj notRObj" d="M  233,310 213,310 213,292" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="idecodeObj" d="M 228,310 228,308 232,310 228,312 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<circle class="idecodeObj" cx="213" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+        '<path class="idecodeObj notRObj" d="M 228,310 228,308 232,310 228,312 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<circle class="idecodeObj notRObj" cx="213" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
 
         '<!-- Instruction [15-11] INSTRUCTION DISTRIBUTION LINE-->' +
         '<text class="idecode" x="162" y="340" font-size="9px" fill="lightgrey" >Instruction [15-11]</text>' +
@@ -119,15 +119,16 @@ function visualize () {
 
         '<!-- Instruction [15-0] INSTRUCTION DISTRIBUTION LINE-->' +
         '<text class="idecode" x="162" y="407" font-size="9px" fill="lightgrey" >Instruction [15-0]</text>' +
-        '<line id="inst15ToSignExt" class="idecodeObj" x1="158" y1=412 x2="285" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line id="inst15ToSignExt" class="idecodeObj" x1="158" y1=412 x2="268" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line " id="intoSignExt16" class="idecodeObj notRObj" x1="268" y1=412 x2="285" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="idecodeObj" d="M 285,412 285,410 289,412 285,414 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="intoSignExtArrow16" class="idecodeObj notRObj" d="M 285,412 285,410 289,412 285,414 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- 16 DIAG LINE 32 DIAG LINE AT SIGN EXTEND-->' +
-        '<text class="idecode" x="273" y="402" font-size="11px" fill="lightgrey" >16</text>' +
-        '<line class="idecodeObj" x1="273" y1=405 x2="283" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
-        '<text class="idecode" x="343" y="402" font-size="11px" fill="lightgrey" >32</text>' +
-        '<line class="idecodeObj" x1="343" y1=405 x2="353" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+        '<text id="signExt16Txt" class="idecode notR" x="273" y="402" font-size="11px" fill="lightgrey" >16</text>' +
+        '<line id="signExt16DiagLine" class="idecodeObj notRObj" x1="273" y1=405 x2="283" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+        '<text id="signExt32Txt" class="idecode notR" x="343" y="402" font-size="11px" fill="lightgrey" >32</text>' +
+        '<line id="signExt32DiagLine" class="idecodeObj notRObj" x1="343" y1=405 x2="353" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
 
         '<!-- Instruction [5-0] INSTRUCTION DISTRIBUTION LINE TO ALU CONTROL-->' +
         '<text class="idecode" x="275" y="460" font-size="9px" fill="lightgrey" >Instruction [5-0]</text>' +
@@ -216,24 +217,25 @@ function visualize () {
         '<path class="idecodeObj" d="M 377,325 377,323 381,325 377,327 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- SIGN-EXTED ELLIPSE-->' +
-        '<text class="idecode" x="299" y="407" font-size="11px" fill="lightgrey" >Sign-</text>' +
-        '<text class="idecode" x="299" y="420" font-size="11px" fill="lightgrey" >extend</text>' +
-        '<ellipse class="idecodeObj" cx="315" cy="410" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,315,410)" ></ellipse>s' +
+        '<text class="idecode notR" x="299" y="407" font-size="11px" fill="lightgrey" >Sign-</text>' +
+        '<text class="idecode notR" x="299" y="420" font-size="11px" fill="lightgrey" >extend</text>' +
+        '<ellipse class="idecodeObj notRObj" cx="315" cy="410" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,315,410)" ></ellipse>s' +
 
         '<!-- REGISTER FILE READ DATA2 TO MEMORY WRITE DATA JUNCTION-->' +
         '<circle class="idecodeObj" cx="362" cy=325  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
 
         '<!-- LINE SIGN-EXTED ELLIPSE TO SHIFT LEFT 2-->' +
-        '<path class="idecodeObj" d="M 375,140 372,140 372,412 335,412" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<line class="idecodeObj" x1="372" y1=140 x2="373" y2="140"  stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<path class="idecodeObj notRObj" d="M 372,350 372,412 335,412" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<path class="idecodeObj notRObj" d="M 375,140 372,140 372,350" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<line class="idecodeObj notRObj" x1="372" y1=140 x2="373" y2="140"  stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="idecodeObj" d="M 373,140 373,138 377,140 373,142 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path class="idecodeObj notRObj" d="M 373,140 373,138 377,140 373,142 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- LINE SIGN-EXTED 32 TO SHIFT LEFT 2 ALU MUX JUNCTION-->' +
-        '<circle class="idecodeObj" cx="372" cy="350"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-        '<line class="idecodeObj" x1="372" y1=350 x2="377" y2="350" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<circle class="idecodeObj notRObj" cx="372" cy="350"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+        '<line class="idecodeObj notRObj" x1="372" y1=350 x2="377" y2="350" stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="idecodeObj" d="M 377,350 377,348 381,350 377,352 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path class="idecodeObj notRObj" d="M 377,350 377,348 381,350 377,352 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- LINE ADD ALU TO ALU RESULT -->' +
         '<path id="addAluToMux" class="idecodeObj" d="M 145,90, 345,90 345,57 505,57" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
@@ -252,6 +254,7 @@ function visualize () {
 
 
         '<!-- START ### EX ###-->' +
+        '<g id="EX">' +
         '<!-- ALU CONTROL ELLIPSE-->' +
         '<ellipse class="excodeObj, extorq" cx="410" cy="415" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,410,415)" ></ellipse>' +
         '<text class="excode, extorq" x="398" y="410" font-size="11px" fill="lightgrey" >ALU</text>' +
@@ -296,27 +299,27 @@ function visualize () {
 
         '<g transform="translate(5,10)">' +
         '<!-- SHIFT LEFT 2 ELLIPSE-->' +
-        '<ellipse class="excodeObj" cx="390" cy="130" rx="20" ry="15" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,390,130)" ></ellipse>' +
-        '<text class="excode" x="378" y="128" font-size="11px" fill="lightgrey" >Shift</text>' +
-        '<text class="excode" x="378" y="138" font-size="11px" fill="lightgrey" >left 2</text>' +
+        '<ellipse class="excodeObj notRObj" cx="390" cy="130" rx="20" ry="15" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,390,130)" ></ellipse>' +
+        '<text class="excode notR" x="378" y="128" font-size="11px" fill="lightgrey" >Shift</text>' +
+        '<text class="excode notR" x="378" y="138" font-size="11px" fill="lightgrey" >left 2</text>' +
         '</g>' +
-        '<line class="excodeObj" x1="410" y1="138" x2="418" y2="138" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line class="excodeObj notRObj" x1="410" y1="138" x2="418" y2="138" stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="excodeObj" d="M 418,138 418,136 422,138 418,140 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path class="excodeObj notRObj" d="M 418,138 418,136 422,138 418,140 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- ALU SHIFT left 2 to PC-->' +
         '<g transform="translate(425,60)">' +
-        '<path class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path class="excodeObj notRObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
         '</g>' +
-        '<text class="excode" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
-        '<text class="excode" x="450" y="94" font-size="11px" fill="lightgrey" >ALU</text>' +
-        '<text class="excode" x="450" y="104" font-size="11px" fill="lightgrey" >result</text>' +
+        '<text class="excode notR" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
+        '<text class="excode notR" x="450" y="94" font-size="11px" fill="lightgrey" >ALU</text>' +
+        '<text class="excode notR" x="450" y="104" font-size="11px" fill="lightgrey" >result</text>' +
 
         '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
         '<path class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
@@ -325,13 +328,15 @@ function visualize () {
         '<path class="excodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- LINE ALU RESULT TO MUX -->' +
-        '<line class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line class="excodeObj notRObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="excodeObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path class="excodeObj notRObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<!-- END ### EX ###-->' +
+        '</g>' +
 
 
         '<!-- START ### MEM ###-->' +
+        '<g id="MEM">' +
         '<!-- DATA MEMORY-->' +
         '<rect class="memcodeObj" x="500" y="290" width="65" height="110" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
         '<text class="memcode" x="503" y="325" font-size="10px" fill="lightgrey" >Address</text>' +
@@ -391,9 +396,11 @@ function visualize () {
         '<!-- Arrow point end of line-->' +
         '<path class="memcodeObj" d="M 26,275 26,273 30,275 26,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<!-- END ### MEM ###-->' +
+        '</g>' +
 
 
         '<!-- START ### WB ###-->' +
+        '<g id="WB">' +
         '<!-- MEMORY MUX -->' +
         '<g transform="translate(580,310)">' +
         '<path class="wbcodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none" ></path>' +
@@ -411,13 +418,14 @@ function visualize () {
         '<!-- Arrow point end of line-->' +
         '<path class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<!-- END ### WB ###-->' +
+        '</g>' +
 
         '<!-- START TIMING LINES ### TM ### -->' +
         '<!--line class="timing" id="iftime" x1="25" y1="490" x2="145" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
         '<!--line class="timing" id="idtime" x1="147" y1="490" x2="365" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
 
         '<!-- CREDIT AUTHOR FOR DIAGRAM -->' +
-        '<text class="ifetch" x="15" y="505" font-size="9px" >' +
+        '<text class="ifetch" x="15" y="560" font-size="9px" >' +
         'Figure 5.17: Patterson, D. and Hennessy, J. Computer Organization and Design. 3rd ed. Morgan Kaufmann, 2005. 307-14. Print. Reprinted with permission.' +
         '</text>' +
 
@@ -462,6 +470,10 @@ function visualize () {
     var pc = 32768;
     var previousLine = 0;
 
+    // THIS IS INSTRUCTION TEXT, INSTRUCTION FORMAT AND BINARY INSTRUCT PRINTED AT TOP.
+    instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+    var instructionIn = CurrentLine["text"];
+
     var allRegs = [
         '$zero', '$at', '$v0', '$v1', '$a0', '$a1', '$a2', '$a3',
         '$t0',   '$t1', '$t2', '$t3', '$t4', '$t5', '$t6', '$t7',
@@ -487,7 +499,9 @@ function visualize () {
         'inst20ToMux', 'inst15ToMux', 'inst15ToSignExt', 'inst5ToAluCtrl',
         'regDst', 'jump', 'branch', 'memRead', 'memToReg', 'aluOp0',
         'aluOp1', 'memWrite', 'aluSrc', 'regWrite', 'RR1', 'RR2', 'WR',
-        'WD', 'RD1', 'RD2', 'signExt32'
+        'WD', 'RD1', 'RD2', 'signExt32', 'aluInBot',
+        "intoSignExt16", "intoSignExtArrow16", "signExt16Txt", "signExt16DiagLine", "signExt32Txt",
+        "signExt32DiagLine"
     ];
 
 
@@ -498,7 +512,7 @@ function visualize () {
     if (MIPS.numberToBinaryString((CurrentLine["lineNo"]), 8) != previousLine) {
         for (var i = 0; i < elements.length; i++) {
             mipsValues[elements[i]] = setElementValues(elements[i], i);
-            console.log("lineValues: ", mipsValues[elements[i]]);
+            if(debug) {console.log("lineValues: ", mipsValues[elements[i]]);}
         }
     }
 
@@ -527,7 +541,13 @@ function visualize () {
              * The element stage ID, IF, etc.
              * @type {String}
              */
-            stage: getStage(lineName)
+            stage: getStage(lineName),
+            /**
+             * Determine the element visibility.
+             * @type boolean
+             */
+            vis: setElementVisibility(lineName)
+
 
         };
     } // end function setElementValues(lineName, lineNumber)
@@ -554,8 +574,8 @@ function visualize () {
             "RR2": [276, 306],
             "WR": [276, 336],
             "WD": [276, 364],
-            "RD1": [35, 378],
-            "RD2": [35, 391],
+            "RD1": [35, 469],
+            "RD2": [35, 482],
             "regDst": [239, 364],
             "jump": [210, 50],
             "branch": [485, 156],
@@ -566,7 +586,14 @@ function visualize () {
             "memWrite": [525, 286],
             "aluSrc": [389, 309],
             "regWrite": [307, 245],
-            "signExt32": [10, 417]
+            "signExt32": [10, 456],
+            "aluInBot": [75, 495],
+            "intoSignExt16": [268, 412],
+            "intoSignExtArrow16": [285,412],
+            "signExt16Txt":[273,402],
+            "signExt16DiagLine": [273, 405],
+            "signExt32Txt": [343, 402],
+            "signExt32DiagLine": [343, 405]
         };
 
         return coordinates[lineName] || defaultFormat;
@@ -586,6 +613,7 @@ function visualize () {
                 break;
 
             //ID elements
+                // elements with values
             case "inst31ToCtrl":
             case "instToRR1":
             case "inst20ToRR2":
@@ -609,7 +637,19 @@ function visualize () {
             case "aluSrc":
             case "regWrite":
             case "signExt32":
+            case "intoSignExt16":
+            case "intoSignExtArrow16":
+            case "signExt16Txt":
+            case "signExt16DiagLine":
+            case "signExt32Txt":
+            case "signExt32DiagLine":
+
                 return "ID";
+                break;
+
+            // IF elements
+            case "aluInBot":
+                return "EX";
                 break;
             default:
                 return defaultFormat;
@@ -630,7 +670,7 @@ function visualize () {
     // display the element values by stage
     function displayElementValues(datapoint, stageClass) {
         // update only lines relevant to this instruction type and specific inst
-        if (debug) {
+        if (false) {
             console.log("displayLineValues datapoint is :", datapoint);
             console.log("displayLineValues stageClass is :", stageClass);
         }
@@ -642,7 +682,7 @@ function visualize () {
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if (anElement.stage == "IF") {
+                    if (anElement.stage == "IF" && anElement.vis) {
                         console.log("displayElementValues case IF is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         d3.select("#IF").append("text")
@@ -652,6 +692,10 @@ function visualize () {
                             .attr("x", anElement.coordinates[0])
                             .attr("y", anElement.coordinates[1]);
                     }
+                    if (!anElement.vis){
+                        console.log("IF displayElementValues elements[i]: ", elements[i]);
+                        setElementToGrey(elements[i]);
+                    }
                 }
                 // lable the PC value below the PC rectangle element
                 d3.select("#IF").append("text")
@@ -660,24 +704,6 @@ function visualize () {
                     .attr("class", "ifetch")
                     .attr("x", 10)
                     .attr("y", 365);
-                d3.select("#IF").append("text")
-                    .text("RD1: ")
-                    .style("font-size", "9px")
-                    .attr("class", "ifetch")
-                    .attr("x", 10)
-                    .attr("y", 378);
-                d3.select("#IF").append("text")
-                    .text("RD2: ")
-                    .style("font-size", "9px")
-                    .attr("class", "ifetch")
-                    .attr("x", 10)
-                    .attr("y", 391);
-                d3.select("#IF").append("text")
-                    .text("Sign Extended 32 bit value: ")
-                    .style("font-size", "9px")
-                    .attr("class", "ifetch")
-                    .attr("x", 10)
-                    .attr("y", 404);
 
                 break;
 
@@ -686,7 +712,7 @@ function visualize () {
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if (anElement.stage == "ID") {
+                    if (anElement.stage == "ID" && anElement.vis) {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         d3.select("#ID").append("text")
@@ -697,9 +723,60 @@ function visualize () {
                             .attr("y", anElement.coordinates[1]);
                     }
                 }
-                greyOutElements();
-                break;
+                // Display values that will not fit on processor graphic
+                d3.select("#ID").append("text")
+                    .text("RD1: ")
+                    .style("font-size", "9px")
+                    .attr("class", "ifetch")
+                    .attr("x", 10)
+                    .attr("y", 469);
+                d3.select("#ID").append("text")
+                    .text("RD2: ")
+                    .style("font-size", "9px")
+                    .attr("class", "ifetch")
+                    .attr("x", 10)
+                    .attr("y", 482);
+                d3.select("#ID").append("text")
+                    .text("Sign Extended 32 bit value: ")
+                    .style("font-size", "9px")
+                    .attr("class", "ifetch")
+                    .attr("x", 10)
+                    .attr("y", 443);
 
+                if (!anElement.vis){
+                    console.log("ID displayElementValues elements[i]: ", elements[i]);
+                    setElementToGrey(elements[i]);
+                }
+                break;
+            case "EX":
+
+                for (var i = 0; i < elements.length; i++) {
+                    var anElement = mipsValues[elements[i]];
+                    // perhpas another way similar to append in main?
+                    if (anElement.stage == "EX" && anElement.vis) {
+                        console.log("displayElementValues case ID is: ", anElement.stage);
+                        //create the html element and append to the IF tag.
+                        d3.select("#EX").append("text")
+                            .text(anElement.val)
+                            .style("font-size", "9px")
+                            .attr("class", "idecode lineValues")
+                            .attr("x", anElement.coordinates[0])
+                            .attr("y", anElement.coordinates[1]);
+                    }
+                }
+                // Display values that will not fit on processor graphic
+                d3.select("#EX").append("text")
+                    .text("Mux to ALU in: ")
+                    .style("font-size", "9px")
+                    .attr("class", "ifetch")
+                    .attr("x", 10)
+                    .attr("y", 495);
+
+                if (!anElement.vis){
+                    console.log("EX displayElementValues elements[i]: ", elements[i]);
+                    setElementToGrey(elements[i]);
+                }
+                break;
             default:
                 console.log("displayElementValues: something went horribly wrong");
 
@@ -708,8 +785,28 @@ function visualize () {
     }
 
 
-    function greyOutElements() {
-        console.log("Well were in greyOutElements now...");
+    function setElementVisibility(element) {
+        if (false) {console.log("HELLO setElementVisibility LineName is: ", element);}
+        if (instructionFormat === "R"){
+            switch (CurrentLine["instruction"]){
+                case "ADD":
+                    switch (element){
+
+                        case "intoSignExt16":
+                        case "intoSignExtArrow16":
+                        case "signExt16Txt":
+                        case "signExt16DiagLine":
+                        case "signExt32Txt":
+                        case "signExt32DiagLine":
+                            return false;
+                        break;
+
+                        default:
+                            return true;
+                    }
+            }
+            //setGrey(".notR")
+        }
 
     }
 
@@ -797,23 +894,23 @@ function visualize () {
             case "memWrite":
             case "aluSrc":
             case "regWrite":
-                console.log("getElementData: ", lineName);
+                if (debug) {console.log("getElementData: ", lineName);}
                 return control(lineName);
                 break;
 
             // TODO: Need logic here to set these lines by
             case"RR1":
-                console.log("in RR1: ", allRegs [MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))]);
+                //console.log("in RR1: ", allRegs [MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))]);
                 return allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))];
                 break;
 
             case"RR2":
-                console.log("in RR1: ", allRegs [MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]);
+                //console.log("in RR1: ", allRegs [MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]);
                 return allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))];
                 break;
 
             case"WR":
-                console.log("in WR value of ", elements[9].val);
+                //console.log("in WR value of ", elements[9].val);
                 if ((mipsValues[elements[9]].val) === "0"){
                     return allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))];
                  } else {
@@ -827,19 +924,30 @@ function visualize () {
 
             case"RD1":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))]];
-                console.log("RD1 is: ", regValue.val);
-                return regValue.val;
+                //console.log("RD1 is: ", regValue.val);
+                // TODO: convert regVal.val to a binary string
+                return MIPS.numberToBinaryString(regValue.val, 32);
                 break;
 
             case"RD2":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
-                console.log("RD2 is: ", regValue.val);
+                //console.log("RD2 is: ", regValue.val);
+                // TODO: convert regVal.val to a binary string
                 return regValue.val;
                 break;
             case "signExt32":
-                //MIPS.unsignedNumberToSignedNumber(number, bits)
-                return "?";
+                var regValue = MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
+                //console.log("SignExt32 regValue is: ", regValue);
+                //console.log("SignExt32 regValue sign extended to 32: ", MIPS.numberToBinaryString(regValue, 32));
+                return MIPS.numberToBinaryString(regValue, 32);
                 break;
+
+            case "aluInBot":
+                return "?";
+
+            case "16intoSignExt":
+                // add all other lines that are only for visibility
+                return null;
 
         }
     }
@@ -849,7 +957,7 @@ function visualize () {
 
 
     function control (lineName){
-        console.log ("function control opcode: ", MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(0, 6)));
+        if (debug) {console.log ("function control opcode: ", MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(0, 6)));}
         if (MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(0, 6)) === 0 ) {
             // R format math
             for (var i = 0; i < elements.length; i++) {
@@ -987,29 +1095,23 @@ function visualize () {
 
     var temp = CurrentLine["args"];
 
-    console.log("this is CurrentLine.args[0]: ", temp[0]);
-    console.log("is registers global? ", allRegisterValues[temp[0]]);
-    //console.log("getting at args: ", CurrentLine["args"]);
-
-    //console.log ("mipsValues array is :", mipsValues );
-
+    if (debug) {
+        console.log("this is CurrentLine.args[0]: ", temp[0]);
+        console.log("is registers global? ", allRegisterValues[temp[0]]);
+        //console.log("getting at args: ", CurrentLine["args"]);
+        //console.log ("mipsValues array is :", mipsValues );
+    }
 
 
 
     // Print to console the complete line from mips_emulator.js: mipsCode.code[currentLine-1]
-    if (true) {
+    if (debug) {
         opCode = CurrentLine["assembledInstruction"].slice(0,6);
         console.log("the value of CurrentLine in visual_mips.html is :", CurrentLine);
         console.log("CurrentLine.assembledInstruction in visual_mips.html is :", CurrentLine["assembledInstruction"]);
         console.log("This is the opCode: ", opCode);
     }
 
-
-
-
-    // THIS IS INSTRUCTION TEXT, INSTRUCTION FORMAT AND BINARY INSTRUCT PRINTED AT TOP.
-    instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
-    var instructionIn = CurrentLine["text"];
 
 
 
@@ -1046,6 +1148,55 @@ function visualize () {
 
     // Create the pipeline stage buttons & uses data from dataKeys to name the buttons
 
+
+
+    console.log ("selecting all idecode class: ", d3.selectAll(".idecode"));
+    var inData = d3.selectAll(".idecode");
+    var theElementId = inData[[0]];
+    //var thistemp = theElementID[5].id;
+    //console.log ("anotherThing[5].id is : ", thistemp);
+
+    //console.log ("WELL mipsValues[elements[anotherThing[5].id]]: ", elements[0]);
+    //var Mtemp = elements[thistemp];
+
+
+
+// Put this code into a function pass it the class and stage.
+    for (var i = 0; i < elements.length; i++) {
+        var Btemp = mipsValues[elements[i]];
+        console.log("nameOfElement in the loop: ", elements[i]);
+        if (Btemp.stage == "ID") {  // this will be the stage passed into the function.
+
+            for (var j = 0; j < theElementId.length; j++) {
+                console.log("If (elements[i] == theElementID[j] ", elements[i], "==", theElementId[j].id);
+                if (elements[i] == theElementId[j].id) {
+                    console.log("YEA Found match elements[i] == theElementId[j] ");
+                    var Btemp = mipsValues[elements[i]];
+                    console.log("elements[i].vis is: ", Btemp.vis);
+                    if (Btemp.vis == true) {
+                        console.log("OK draw this thing black");
+                    } else {
+                        console.log("OK this element is grey dont draw");
+
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    //console.log("trying to crack theThing: ", anotherThing[6].id);
+
+
+
+
+   // var dataFiltered = dataNested.filter(function (d) { return d.key === 'red' });
+
+    //dataFiltered = dataNested.filter(function (d) { return d.key === value });
+
+
+
     if (!initialized) {
 
         d3.select("#modal-buttons").selectAll("button.teams").data(dataKeys).enter()
@@ -1060,6 +1211,7 @@ function visualize () {
     }
 
     function setBlack (someClass){
+        // need to not set black the elements that are vis false.
         done =  (d3.selectAll(someClass)
             .transition()
             .style('opacity', 1)
@@ -1074,6 +1226,8 @@ function visualize () {
             .style("stroke", "black"));
         return done
     }
+
+
 
     function setGrey (someClass){
         done =  (d3.selectAll(someClass)
@@ -1241,6 +1395,19 @@ function visualize () {
         }
     }
 
-    console.log("testing value of elements: ", mipsValues[elements[15]].val);
+    function setElementToGrey(anElement){
+        var temp = ("#" + anElement);
+        console.log ("HELLO setElementToGrey ", temp);
+
+        done =  d3.select(temp)
+            .style("fill", "lightgrey")
+            .style("stroke", "lightgrey");
+
+        return done
+
+    }
+
+
+    //console.log("testing value of elements: ", mipsValues[elements[15]].val);
     console.log("This is the mipsValues: ", mipsValues);
 }
