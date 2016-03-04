@@ -94,9 +94,11 @@ function visualize () {
 
         '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE-->' +
         '<text id="inst20Txt" class="idecode" x="162" y="287" font-size="9px" fill="lightgrey" >Instruction [20-16]</text>' +
-        '<line id="inst20ToRR2" class="idecodeObj" x1="158" y1=292 x2="259" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
+        '<line id="inst20ToCircle" class="idecodeObj" x1="158" y1=292 x2="213" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
+        '<line id="inst20ToRR2" class="idecodeObj" x1="213" y1=292 x2="259" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
+
         '<!-- Arrow point end of line-->' +
-        '<path id="inst20MUX0" class="idecodeObj" d="M 259,292 259,290 263,292 259,294 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="inst20MUX0Arrow" class="idecodeObj" d="M 259,292 259,290 263,292 259,294 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<circle id= "inst20Circle" class="idecodeObj" cx="158" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></circle>' +
 
         '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE BRANCHES TO MUX  -->' +
@@ -221,7 +223,10 @@ function visualize () {
         '<path id="RD1ToAluResultArrow" class="idecodeObj" d="M 413,285 413,283 417,285 413,287 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- LINE READ DATA 2 TO MUX ALU RESULT -->' +
-        '<line id="RD2ToAluResult" class="idecodeObj" x1="355" y1=325 x2="377" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line id="RD2ToAluResultCircle" class="idecodeObj" x1="355" y1=325 x2="362" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
+
+        '<line id="RD2ToAluResult" class="idecodeObj" x1="362" y1=325 x2="377" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
+
         '<!-- Arrow point end of line-->' +
         '<path id="RD2ToAluResultArrow" class="idecodeObj" d="M 377,325 377,323 381,325 377,327 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
@@ -305,48 +310,45 @@ function visualize () {
         '<text id="mainAluTxtALU2" class="excode" x="450" y="323" font-size="10px" fill="lightgrey" >ALU</text>' +
         '<text id="mainAluTxtResult" class="excode" x="445" y="333" font-size="10px" fill="lightgrey" >result</text>' +
 
-        '<!-- ALU RESULT TO ADDRESS -->' +
-        '<line class="excodeObj" x1="475" y1=320 x2="491" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path class="excodeObj" d="M 491,320 491,318 495,320, 491,322 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- ALU ZERO TO OR -->' +
-        '<path class="excodeObj, extorqObj" d="M 481,169 477,169 480,290 475,290" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<path id="aluZeroToOrLine" class="excodeObj, extorqObj" d="M 481,169 477,169 480,290 475,290" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
 
         '<g transform="translate(5,10)">' +
         '<!-- SHIFT LEFT 2 ELLIPSE-->' +
-        '<ellipse class="excodeObj" cx="390" cy="130" rx="20" ry="15" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,390,130)" ></ellipse>' +
-        '<text class="excode notR" x="378" y="128" font-size="11px" fill="lightgrey" >Shift</text>' +
-        '<text class="excode notR" x="378" y="138" font-size="11px" fill="lightgrey" >left 2</text>' +
+        '<ellipse id="shiftLeft2Ell" class="excodeObj" cx="390" cy="130" rx="20" ry="15" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,390,130)" ></ellipse>' +
+        '<text id="shiftLeft2EllTxtShift" class="excode notR" x="378" y="128" font-size="11px" fill="lightgrey" >Shift</text>' +
+        '<text id="shiftLeft2EllTxtLeft2" class="excode notR" x="378" y="138" font-size="11px" fill="lightgrey" >left 2</text>' +
         '</g>' +
-        '<line class="excodeObj notRObj" x1="410" y1="138" x2="418" y2="138" stroke="lightgrey" stroke-width="2px" ></line>' +
+
+        '<!-- LINE SHIFT LEFT 2 TO ALU BOTT INPUT-->' +
+        '<line id="shiftLeft2ToAluIn" class="excodeObj" x1="410" y1="138" x2="418" y2="138" stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="excodeObj notRObj" d="M 418,138 418,136 422,138 418,140 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="shiftLeft2ToAluInArrow" class="excodeObj" d="M 418,138 418,136 422,138 418,140 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- ALU SHIFT left 2 to PC-->' +
         '<g transform="translate(425,60)">' +
-        '<path class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft1" class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft2" class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft3" class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft4" class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft5" class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft6" class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path id="aluShiftLeft7" class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
         '</g>' +
-        '<text class="excode" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
-        '<text class="excode" x="450" y="94" font-size="11px" fill="lightgrey" >ALU</text>' +
-        '<text class="excode" x="450" y="104" font-size="11px" fill="lightgrey" >result</text>' +
+        '<text id="aluShiftTxtAdd" class="excode" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
+        '<text id="aluShiftTxtAlu" class="excode" x="450" y="94" font-size="11px" fill="lightgrey" >ALU</text>' +
+        '<text id="aluShiftTxtResult" class="excode" x="450" y="104" font-size="11px" fill="lightgrey" >result</text>' +
 
         '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
-        '<path class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<line class="excode" x1="493" y1=375 x2="493" y2="375" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<path id="lineRD2toMemWD" class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="excodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="lineRD2toMemWDArrow" class="excodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- LINE ALU RESULT TO MUX -->' +
-        '<line class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line id="lineAluResult2Mux" class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="excodeObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="AluResult2MuxArrow" class="excodeObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<!-- END ### EX ###-->' +
         '</g>' +
 
@@ -354,63 +356,61 @@ function visualize () {
         '<!-- START ### MEM ###-->' +
         '<g id="MEM">' +
         '<!-- DATA MEMORY-->' +
-        '<rect class="memcodeObj" x="500" y="290" width="65" height="110" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
-        '<text class="memcode" x="503" y="325" font-size="10px" fill="lightgrey" >Address</text>' +
-        '<text class="memcode" x="540" y="318" font-size="10px" fill="lightgrey" >Read</text>' +
-        '<text class="memcode" x="542" y="328" font-size="10px" fill="lightgrey" >data</text>' +
-        '<text class="memcode" x="503" y="370" font-size="10px" fill="lightgrey" >Write</text>' +
-        '<text class="memcode" x="503" y="380" font-size="10px" fill="lightgrey" >data</text>' +
-        '<text class="memcode" x="538" y="385" font-size="11px" fill="lightgrey" >Data</text>' +
-        '<text class="memcode" x="522" y="395" font-size="11px" fill="lightgrey" >memory</text>' +
+        '<rect id="dataMemRect" class="memcodeObj" x="500" y="290" width="65" height="110" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
+        '<text id="dataMemRectTxtAdd" class="memcode" x="503" y="325" font-size="10px" fill="lightgrey" >Address</text>' +
+        '<text id="dataMemRectTxtRead" class="memcode" x="540" y="318" font-size="10px" fill="lightgrey" >Read</text>' +
+        '<text id="dataMemRectTxtData" class="memcode" x="542" y="328" font-size="10px" fill="lightgrey" >data</text>' +
+        '<text id="dataMemRectTxtWrite" class="memcode" x="503" y="370" font-size="10px" fill="lightgrey" >Write</text>' +
+        '<text id="dataMemRectTxt2Data" class="memcode" x="503" y="380" font-size="10px" fill="lightgrey" >data</text>' +
+        '<text id="dataMemRectTxt3Data" id="dataMemRect" class="memcode" x="538" y="385" font-size="11px" fill="lightgrey" >Data</text>' +
+        '<text id="dataMemRectTxtMem" class="memcode" x="522" y="395" font-size="11px" fill="lightgrey" >memory</text>' +
 
         '<!-- LINE BETWEEN DATA MEMORY AND WB MUX-->' +
-        '<line class="memcodeObj" x1="566" y1=324 x2="575" y2="324" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line id="lineDataMemToMux" class="memcodeObj" x1="566" y1=324 x2="575" y2="324" stroke="lightgrey" stroke-width="2px" ></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="memcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="DataMemToMuxArrow" class="memcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+        '<!-- ALU RESULT TO ADDRESS -->' +
+        '<line id="aluResultToAddr" class="memcodeObj" x1="475" y1=320 x2="484" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<line id="aluResultToAddr1" class="memcodeObj" x1="484" y1=320 x2="491" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<!-- Arrow point end of line-->' +
+        '<path id="aluResultToAddrArrow" class="memcodeObj" d="M 491,320 491,318 495,320, 491,322 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- JUNCTION BETWEEN DATA MEMORY AND WB MUX-->' +
-        '<circle class="memcodeObj" cx="484" cy="320"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+        '<circle id="aluResultToAddrCircle"class="memcodeObj" cx="484" cy="320"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
 
         '<!-- LINE ALU RESULT TO WB MUX-->' +
-        '<path class="memcodeObj" d="M 575,350 572,350 572,415 484,415 484,320" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<line class="memcode" x1="575" y1=350 x2="575" y2="350" stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<path id="lineAluResultToMux0" class="memcodeObj" d="M 575,350 572,350 572,415 484,415 484,320" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="memcodeObj" d="M 575,350 575,348 579,350 575,352 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="AluResultToMux0Arrow" class="memcodeObj" d="M 575,350 575,348 579,350 575,352 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
         '<!-- ALU RESULT MUX -->' +
         '<g transform="translate(510,50)">' + '' +
-        '<path class="memcodeObj" d="M 1.51 23 L 27.49 23 C 38.82 23 48 28.6 48 35.5 C 48 42.4 38.82 48 27.49 48 L 1.51 48 C -9.82 48 -19 42.4 -19 35.5 C -19 28.6 -9.82 23 1.51 23 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,14.5,35.5)" pointer-events="none" ></path>' +
+        '<path id="pcAluResultMux" class="memcodeObj" d="M 1.51 23 L 27.49 23 C 38.82 23 48 28.6 48 35.5 C 48 42.4 38.82 48 27.49 48 L 1.51 48 C -9.82 48 -19 42.4 -19 35.5 C -19 28.6 -9.82 23 1.51 23 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,14.5,35.5)" pointer-events="none" ></path>' +
         '</g>' +
-        '<text class="memcode" x="522" y="65" font-size="12px" fill="lightgrey" >0</text>' +
-        '<text class="memcode" x="520" y="80" font-size="12px" fill="lightgrey" >M</text>' +
-        '<text class="memcode" x="521" y="90" font-size="12px" fill="lightgrey" >u</text>' +
-        '<text class="memcode" x="521" y="100" font-size="12px" fill="lightgrey" >x</text>' +
-        '<text class="memcode" x="522" y="114" font-size="12px" fill="lightgrey" >1</text>' +
+        '<text id="pcAluResultMuxTxt0" class="memcode" x="522" y="65" font-size="12px" fill="lightgrey" >0</text>' +
+        '<text id="pcAluResultMuxTxtM" class="memcode" x="520" y="80" font-size="12px" fill="lightgrey" >M</text>' +
+        '<text id="pcAluResultMuxTxtU" class="memcode" x="521" y="90" font-size="12px" fill="lightgrey" >u</text>' +
+        '<text id="pcAluResultMuxTxtX" class="memcode" x="521" y="100" font-size="12px" fill="lightgrey" >x</text>' +
+        '<text id="pcAluResultMuxTxt1" class="memcode" x="522" y="114" font-size="12px" fill="lightgrey" >1</text>' +
 
         '<!-- OR -->' +
-        '<!-- this is the 1st gen and gate -->' +
-        '<!--g transform="translate(480,15)">' + '' +
-        '<path class="memcodeObj, memtorqObj" d="M 1 133.5 C 1 132.84 1.11 132.2 1.3 131.73 C 1.49 131.26 1.75 131 2.02 131 L 17.08 131 C 19.47 133.69 21 139.55 21 146 C 21 152.45 19.47 158.31 17.08 161 L 2.02 161 C 1.75 161 1.49 160.74 1.3 160.27 C 1.11 159.8 1 159.16 1 158.5 L 1 133.5 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
-        '</g-->' +
-        '<path class="memcodeObj, memtorqObj" d="M  525,119 525,160 510,160" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<!-- LINE OR GATE TO PC ALU MUX -->' +
+        '<path id="lineORToAluMux" class="memcodeObj, memtorqObj" d="M  525,119 525,160 510,160" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<text id="lineORToAluMuxTxtPCSrc" class="memcode, memtorq" x="530" y="164" font-size="10px" fill="lightgrey" >PCSrc</text>' +
 
-        '<!--text class="memcode, memtorq" x="483" y="164" font-size="10px" fill="lightgrey" >Jump</text-->' +
-        '<text class="memcode, memtorq" x="530" y="164" font-size="10px" fill="lightgrey" >PCSrc</text>' +
-
+        '<!-- OR GATE -->' +
         '<g transform="translate(479,144)">' +
-        '<path class="memcodeObj, memtorqObj"d="M 2 4.5 C 2 3.84 2.16 3.2 2.45 2.73 C 2.73 2.26 3.12 2 3.53 2 L 26.12 2 C 29.7 4.69 32 10.55 32 17 C 32 23.45 29.7 29.31 26.12 32 L 3.53 32 C 3.12 32 2.73 31.74 2.45 31.27 C 2.16 30.8 2 30.16 2 29.5 L 2 4.5 Z" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/>' +
+        '<path id="oRGate" class="memcodeObj, memtorqObj"d="M 2 4.5 C 2 3.84 2.16 3.2 2.45 2.73 C 2.73 2.26 3.12 2 3.53 2 L 26.12 2 C 29.7 4.69 32 10.55 32 17 C 32 23.45 29.7 29.31 26.12 32 L 3.53 32 C 3.12 32 2.73 31.74 2.45 31.27 C 2.16 30.8 2 30.16 2 29.5 L 2 4.5 Z" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/>' +
         '</g>' +
-        '<!-- arrow -->' +
-        '<!--line class="memcode, memtorqObj" x1="525" y1="130" x2="525" y2="127" stroke="lightgrey" stroke-width="2px"></line-->' +
-        '<!-- Arrow point end of line-->' +
-        '<!--path class="memcodeObj"  d="M 525,127 523,127 525,123 527,127 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path-->' +
 
         '<!-- LINE ALU RESULT MUX TO PC -->' +
-        '<path class="memcodeObj"  d="M 25,275 22,275 22,23 545,23 545,84 536,84" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<path id="aluMuxToPC" class="memcodeObj"  d="M 25,275 22,275 22,23 545,23 545,84 536,84" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
         '<!-- arrow -->' +
         '<line class="memcode"  x1="23" y1="275" x2="26" y2="275" stroke-width="2px"></line>' +
         '<!-- Arrow point end of line-->' +
-        '<path class="memcodeObj" d="M 26,275 26,273 30,275 26,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="aluMuxToPCArrow" class="memcodeObj" d="M 26,275 26,273 30,275 26,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<!-- END ### MEM ###-->' +
         '</g>' +
 
@@ -419,20 +419,21 @@ function visualize () {
         '<g id="WB">' +
         '<!-- MEMORY MUX -->' +
         '<g transform="translate(580,310)">' +
-        '<path class="wbcodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none" ></path>' +
-        '<path class="wbcodeObj" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none" ></path>' +
+        '<path id="memoryMux" class="wbcodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none" ></path>' +
+        '<path id="memoryMux2" class="wbcodeObj" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none" ></path>' +
         '</g>' +
-        '<text class="wbcode" x="590" y="325" font-size="10px" fill="lightgrey" >1</text>' +
-        '<text class="wbcode" x="588" y="335" font-size="10px" fill="lightgrey" >M</text>' +
-        '<text class="wbcode" x="589" y="343" font-size="10px" fill="lightgrey" >u</text>' +
-        '<text class="wbcode" x="589" y="351" font-size="10px" fill="lightgrey" >x</text>' +
-        '<text class="wbcode" x="590" y="361" font-size="10px" fill="lightgrey" >0</text>' +
+
+        '<text id="memoryMuxTxt1" class="wbcode" x="590" y="325" font-size="10px" fill="lightgrey" >1</text>' +
+        '<text id="memoryMuxTxtM" class="wbcode" x="588" y="335" font-size="10px" fill="lightgrey" >M</text>' +
+        '<text id="memoryMuxTxtU" class="wbcode" x="589" y="343" font-size="10px" fill="lightgrey" >u</text>' +
+        '<text id="memoryMuxTxtX" class="wbcode" x="589" y="351" font-size="10px" fill="lightgrey" >x</text>' +
+        '<text id="memoryMuxTxt0" class="wbcode" x="590" y="361" font-size="10px" fill="lightgrey" >0</text>' +
 
         '<!-- LINE MEMORY MUX TO REGISTER WRITE DATA  -->' +
-        '<path class="wbcodeObj" d="M 265,360 256,360 256,476 614,476 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line>' +
+        '<path id="lineMemMuxToRD" class="wbcodeObj" d="M 265,360 256,360 256,476 614,476 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<!--line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line-->' +
         '<!-- Arrow point end of line-->' +
-        '<path class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+        '<path id="MemMuxToRDArrow" class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
         '<!-- END ### WB ###-->' +
         '</g>' +
 
@@ -517,9 +518,9 @@ function visualize () {
         'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
         'instMemTxtAddress', 'instMemTxtInst', 'instMemTxt31', 'instMemTxtIns31', 'instMemTxtMem',
         'pcAluObj1', 'pcAluObj2', 'pcAluObj3', 'pcAluObj4', 'pcAluObj5',
-        'pcAluObj6', 'pcAluObj7', 'addTxt', 'instToRR1',
+        'pcAluObj6', 'pcAluObj7', 'addTxt', 'instToRR1', 'inst20ToCircle',
         'inst31Txt', 'inst31Arrow', 'inst25Txt', 'inst25Arrow', 'inst25Circle',
-        'inst20Txt', 'inst20MUX0','inst20Circle','inst20ToMux','inst20MuxArrow',
+        'inst20Txt', 'inst20MUX0Arrow','inst20Circle','inst20ToMux','inst20MuxArrow',
         'inst20MuxCircle', 'inst15Txt', 'inst15Arrow', 'inst15Circle', 'instMemLine',
         'instMemCircle', 'instDistLine', 'inst15To0Txt', 'regMuxTxt0', 'regMuxTxtM',
         'regMuxTxtU', 'regMuxTxtX', 'regMuxTxt1', 'regMuxToRegFileLine', 'regMuxToRegFileArrow',
@@ -528,14 +529,26 @@ function visualize () {
         'ctrlEllToAluOp', 'ctrlEllToMemWriteTxt', 'ctrlEllToMemWrite', 'ctrlEllToAluSrcTxt', 'ctrlEllToAluSrc',
         'ctrlEllToRegWriteTxt', 'ctrlEllToRegWrite', 'regFileRect', 'regFileRectTxt', 'readData1Txt',
         'readReg2Txt', 'readData2Txt', 'writeRegTxt', 'writeData', 'registerFileLableTxt',
+        'RD2ToAluResultCircle',
         'RD1ToAluResult', 'RD1ToAluResultArrow', 'RD2ToAluResult','signExtEllip', 'signExtEllipTxtSign',
         'Mux1ToShiftLeft2Line',  'Mux1ToShiftLeftArrow', 'signExt32ToMux1Circle', 'signExt32ToMux1Ln', 'signExt32ToMux1Arrow',
         'aluControlEll', 'aluControlEllTxtALU', 'aluControlEllTxtCtrl', 'aluControlEllToAlu', 'muxIntoAlu1',
         'muxIntoAlu2', 'muxIntoAluBott', 'muxIntoAluBottArrow', 'RD2ToAluResultArrow', 'muxIntoAluTxt0',
         'muxIntoAluTxtM', 'muxIntoAluTxtU', 'muxIntoAluTxtX', 'muxIntoAluTxt1', 'mainAlu1',
         'mainAlu2', 'mainAlu3', 'mainAlu4', 'mainAlu5', 'mainAlu6',
-
         'mainAlu7', 'mainAluTxt0', 'mainAluTxtALU', 'mainAluTxtALU2', 'mainAluTxtResult',
+        'aluResultToAddr', 'aluResultToAddr1', 'aluResultToAddrArrow', 'aluResultToAddrCircle', 'aluZeroToOrLine',
+        'shiftLeft2Ell', 'shiftLeft2EllTxtShift', 'shiftLeft2EllTxtLeft2', 'shiftLeft2ToAluIn', 'shiftLeft2ToAluInArrow',
+        'aluShiftLeft1', 'aluShiftLeft2', 'aluShiftLeft3', 'aluShiftLeft4', 'aluShiftLeft5',
+        'aluShiftLeft6', 'aluShiftLeft7', 'aluShiftTxtAdd', 'aluShiftTxtAlu', 'aluShiftTxtResult',
+        'lineRD2toMemWD', 'lineRD2toMemWDArrow', 'lineAluResult2Mux', 'AluResult2MuxArrow', 'dataMemRect',
+        'dataMemRectTxtAdd', 'dataMemRectTxtRead', 'dataMemRectTxtData', 'dataMemRectTxtWrite', 'dataMemRectTxt2Data',
+        'dataMemRectTxt3Data', 'dataMemRectTxtMem', 'lineDataMemToMux', 'DataMemToMuxArrow', 'lineAluResultToMux0',
+        'AluResultToMux0Arrow', 'pcAluResultMux', 'pcAluResultMuxTxt0', 'pcAluResultMuxTxtM', 'pcAluResultMuxTxtU',
+        'pcAluResultMuxTxtX', 'pcAluResultMuxTxt1', 'oRGate', 'lineORToAluMux', 'lineORToAluMuxTxtPCSrc',
+        'aluMuxToPC', 'aluMuxToPCArrow', 'memoryMux', 'memoryMux2', 'memoryMuxTxt1',
+        'memoryMuxTxtM', 'memoryMuxTxtU', 'memoryMuxTxtX', 'memoryMuxTxt0', 'lineMemMuxToRD',
+        'MemMuxToRDArrow',
         'addAluToMux', 'addAluToMuxArrow', 'fourAluToAluTopCircle', 'fourAluToAluTopLine', 'fourAluToAluTopArrow',
         'signExtEllipTxtExt', 'RegFileRD2Circle', 'signExtEllToMux1', 'Mux1ToShiftLeft2',
         'inst20ToMux', 'inst15ToMux', 'inst15ToSignExt', 'inst5ToAluCtrlTxt', 'inst5ToAluCtrl',
@@ -681,7 +694,6 @@ function visualize () {
                 break;
 
             //ID elements
-            // elements with values
             case "inst31Txt":
             case "inst31ToCtrl":
             case "inst31Arrow":
@@ -690,8 +702,9 @@ function visualize () {
             case "inst25Arrow":
             case "inst25Circle":
             case "inst20Txt":
+            case "inst20ToCircle":
             case "inst20ToRR2":
-            case "inst20MUX0":
+            case "inst20MUX0Arrow":
             case "inst20Circle":
             case "inst20ToMux":
             case "inst20MuxArrow":
@@ -743,6 +756,7 @@ function visualize () {
             case "registerFileLableTxt":
             case "RD1ToAluResult":
             case "RD1ToAluResultArrow":
+            case "RD2ToAluResultCircle":
             case "RD2ToAluResult":
             case "RD2ToAluResultArrow":
             case "signExtEllip":
@@ -813,12 +827,70 @@ function visualize () {
             case "mainAluTxtALU":
             case "mainAluTxtALU2":
             case "mainAluTxtResult":
-
-
+            case 'aluZeroToOrLine':
+            case 'shiftLeft2Ell':
+            case 'shiftLeft2EllTxtShift':
+            case 'shiftLeft2EllTxtLeft2':
+            case 'shiftLeft2ToAluIn':
+            case 'shiftLeft2ToAluInArrow':
+            case 'aluShiftLeft1':
+            case 'aluShiftLeft2':
+            case 'aluShiftLeft3':
+            case 'aluShiftLeft4':
+            case 'aluShiftLeft5':
+            case 'aluShiftLeft6':
+            case 'aluShiftLeft7':
+            case 'aluShiftTxtAdd':
+            case 'aluShiftTxtAlu':
+            case 'aluShiftTxtResult':
+            case 'lineRD2toMemWD':
+            case 'lineRD2toMemWDArrow':
+            case 'lineAluResult2Mux':
+            case 'AluResult2MuxArrow':
                 return "EX";
                 break;
 
-            case "WD" :
+            // MEM elements
+            case 'dataMemRect':
+            case 'dataMemRectTxtAdd':
+            case 'dataMemRectTxtRead':
+            case 'dataMemRectTxtData':
+            case 'dataMemRectTxtWrite':
+            case 'dataMemRectTxt2Data':
+            case 'dataMemRectTxt3Data':
+            case 'dataMemRectTxtMem':
+            case 'lineDataMemToMux':
+            case 'DataMemToMuxArrow':
+            case 'aluResultToAddr':
+            case 'aluResultToAddr1':
+            case 'aluResultToAddrArrow':
+            case 'aluResultToAddrCircle':
+            case 'lineAluResultToMux0':
+            case 'AluResultToMux0Arrow':
+            case 'pcAluResultMux':
+            case 'pcAluResultMuxTxt0':
+            case 'pcAluResultMuxTxtM':
+            case 'pcAluResultMuxTxtU':
+            case 'pcAluResultMuxTxtX':
+            case 'pcAluResultMuxTxt1':
+            case 'oRGate':
+            case 'lineORToAluMux':
+            case 'lineORToAluMuxTxtPCSrc':
+            case 'aluMuxToPC':
+            case 'aluMuxToPCArrow':
+                return "MEM";
+                break;
+
+            // MEM elements
+            case 'memoryMux':
+            case 'memoryMux2':
+            case 'memoryMuxTxt1':
+            case 'memoryMuxTxtM':
+            case 'memoryMuxTxtU':
+            case 'memoryMuxTxtX':
+            case 'memoryMuxTxt0':
+            case 'lineMemMuxToRD':
+            case 'MemMuxToRDArrow':
                 return "WB";
                 break;
 
@@ -912,6 +984,7 @@ function visualize () {
                     .attr("y", 443);
 
                 break;
+
             case "EX":
 
                 for (var i = 0; i < elements.length; i++) {
@@ -937,6 +1010,59 @@ function visualize () {
                     .attr("y", 495);
 
                 break;
+
+            case "MEM":
+
+                for (var i = 0; i < elements.length; i++) {
+                    var anElement = mipsValues[elements[i]];
+                    // perhpas another way similar to append in main?
+                    if (anElement.stage == "MEM" && anElement.vis) {
+                        console.log("displayElementValues case ID is: ", anElement.stage);
+                        //create the html element and append to the IF tag.
+                        d3.select("#MEM").append("text")
+                            .text(anElement.val)
+                            .style("font-size", "9px")
+                            .attr("class", "idecode lineValues")
+                            .attr("x", anElement.coordinates[0])
+                            .attr("y", anElement.coordinates[1]);
+                    }
+                }
+                // Display values that will not fit on processor graphic
+                /*d3.select("#EX").append("text")
+                    .text("ALUSrc Mux to ALU in: ")
+                    .style("font-size", "9px")
+                    .attr("class", "ifetch")
+                    .attr("x", 10)
+                    .attr("y", 495);
+                */
+                break;
+
+            case "WB":
+
+                for (var i = 0; i < elements.length; i++) {
+                    var anElement = mipsValues[elements[i]];
+                    // perhpas another way similar to append in main?
+                    if (anElement.stage == "WB" && anElement.vis) {
+                        console.log("displayElementValues case ID is: ", anElement.stage);
+                        //create the html element and append to the IF tag.
+                        d3.select("#WB").append("text")
+                            .text(anElement.val)
+                            .style("font-size", "9px")
+                            .attr("class", "idecode lineValues")
+                            .attr("x", anElement.coordinates[0])
+                            .attr("y", anElement.coordinates[1]);
+                    }
+                }
+                // Display values that will not fit on processor graphic
+                /*d3.select("#EX").append("text")
+                 .text("ALUSrc Mux to ALU in: ")
+                 .style("font-size", "9px")
+                 .attr("class", "ifetch")
+                 .attr("x", 10)
+                 .attr("y", 495);
+                 */
+                break;
+
             default:
                 console.log("displayElementValues: something went horribly wrong");
 
@@ -972,6 +1098,41 @@ function visualize () {
                         case "signExt32ToMux1Ln":
                         case "signExt32ToMux1Arrow":
                         case "signExt32ToMux1Circle":
+                        case "aluResultToAddr1":
+                        case "aluResultToAddrArrow":
+                        case "shiftLeft2Ell":
+                        case "shiftLeft2EllTxtShift":
+                        case "shiftLeft2EllTxtLeft2":
+                        case "shiftLeft2ToAluIn":
+                        case "shiftLeft2ToAluInArrow":
+                        case "aluShiftLeft1":
+                        case "aluShiftLeft2":
+                        case "aluShiftLeft3":
+                        case "aluShiftLeft4":
+                        case "aluShiftLeft5":
+                        case "aluShiftLeft6":
+                        case "aluShiftLeft7":
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'dataMemRect':
+                        case 'dataMemRectTxtAdd':
+                        case 'dataMemRectTxtRead':
+                        case 'dataMemRectTxtData':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'dataMemRectTxt3Data':
+                        case 'dataMemRectTxtMem':
+                        case 'lineDataMemToMux':
+                        case 'DataMemToMuxArrow':
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt1':
+                        case "regMuxTxt0":
+                        case 'memoryMuxTxt1':
                             return false;
                             break;
 
@@ -991,6 +1152,44 @@ function visualize () {
                         case "readReg2Txt":
                         case "inst5ToAluCtrl":
                         case "inst5ToAluCtrlArrow":
+                        case "regMuxTxt1":
+                        case "inst20ToRR2":
+                        case "inst20MUX0Arrow":
+                        case "readData2Txt":
+                        case "RD2ToAluResultCircle":
+                        case "RD2ToAluResult":
+                        case "RD2ToAluResultArrow":
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt0':
+                        case "RegFileRD2Circle":
+                        case "Mux1ToShiftLeft2":
+                        case "Mux1ToShiftLeftArrow":
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'shiftLeft2Ell':
+                        case 'shiftLeft2EllTxtShift':
+                        case 'shiftLeft2EllTxtLeft2':
+                        case 'shiftLeft2ToAluIn':
+                        case 'shiftLeft2ToAluInArrow':
+                        case 'aluShiftLeft1':
+                        case 'aluShiftLeft2':
+                        case 'aluShiftLeft3':
+                        case 'aluShiftLeft4':
+                        case 'aluShiftLeft5':
+                        case 'aluShiftLeft6':
+                        case 'aluShiftLeft7':
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case "fourAluToAluTopLine":
+                        case "fourAluToAluTopArrow":
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'lineAluResultToMux0':
+                        case 'AluResultToMux0Arrow':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'memoryMuxTxt0':
                             return false;
                             break;
 
@@ -1567,6 +1766,7 @@ function visualize () {
         }
 
         if(datapoint === "RESTART"){
+            // TODO: Need to add torqObj to this logic.
             // change this to function calls as in play.
             done =  (d3.selectAll(".ifetch,.idecode, .excode, .wbcode, .memcode")
                     .transition()
