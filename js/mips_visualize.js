@@ -473,8 +473,12 @@ function visualize () {
     // TODO: use hex for values other than the instruction thus RD etc.
 
     //TODO: grey out visualize button if instruction does not work.
-    //TODO: Rivoire sent the control imputs for mux
-    // TODO: All created items need a specific class, remove all items in the class!
+
+    // TODO: All created items need a specific class, remove all items in the class to clear the visualization.
+
+    //TODO: Implement BEQ: Use the first line value.
+
+    //TODO: See page 98 chap 2 figure 2.5 for instruction coding and what is relevant in SW LW ADDI
 
 
     var iftoggle = 0;
@@ -515,6 +519,7 @@ function visualize () {
     var elements = [
         'pc', 'pcTxt', 'pcToInstMem', 'pcArrow', 'pcCircle',
         'pcAluIn', 'pcAddArrow', 'fourAluIn', 'inst31ToCtrl', 'regDst',  'aluSrc',
+        'aluOp0', 'aluOp1', 'inst5ToAluCtrl',
         'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
         'instMemTxtAddress', 'instMemTxtInst', 'instMemTxt31', 'instMemTxtIns31', 'instMemTxtMem',
         'pcAluObj1', 'pcAluObj2', 'pcAluObj3', 'pcAluObj4', 'pcAluObj5',
@@ -548,13 +553,13 @@ function visualize () {
         'pcAluResultMuxTxtX', 'pcAluResultMuxTxt1', 'oRGate', 'lineORToAluMux', 'lineORToAluMuxTxtPCSrc',
         'aluMuxToPC', 'aluMuxToPCArrow', 'memoryMux', 'memoryMux2', 'memoryMuxTxt1',
         'memoryMuxTxtM', 'memoryMuxTxtU', 'memoryMuxTxtX', 'memoryMuxTxt0', 'lineMemMuxToRD',
-        'MemMuxToRDArrow',
+        'MemMuxToRDArrow', 'aluCtrlOut',
         'addAluToMux', 'addAluToMuxArrow', 'fourAluToAluTopCircle', 'fourAluToAluTopLine', 'fourAluToAluTopArrow',
         'signExtEllipTxtExt', 'RegFileRD2Circle', 'signExtEllToMux1', 'Mux1ToShiftLeft2',
         'inst20ToMux', 'inst15ToMux', 'inst15ToSignExt', 'inst5ToAluCtrlTxt', 'inst5ToAluCtrl',
         'inst5ToAluCtrlArrow', 'instToAluCtrlCircle', 'registerMux1','registerMux2',
-        'jump', 'branch', 'memRead', 'memToReg', 'aluOp0',
-        'aluOp1', 'memWrite', 'regWrite', 'RR1', 'RR2', 'WR',
+        'jump', 'branch', 'memRead', 'memToReg',
+        'memWrite', 'regWrite', 'RR1', 'RR2', 'WR',
         'WD', 'RD1', 'RD2', 'signExt32', 'aluInBot',
         "intoSignExt16", "intoSignExtArrow16", "signExt16Txt", "signExt16DiagLine", "signExt32Txt",
         "signExt32DiagLine"
@@ -643,6 +648,7 @@ function visualize () {
             "aluOp1": [425, 452],
             "memWrite": [525, 286],
             "aluSrc": [389, 309],
+            "aluCtrlOut" :[437, 425],
             "regWrite": [307, 245],
             "signExt32": [10, 456],
             "aluInBot": [110, 495],
@@ -778,6 +784,7 @@ function visualize () {
             case "RR1":
             case "RR2":
             case "WR" :
+            case "WD":
             case "RD1":
             case "RD2":
             case "regDst":
@@ -807,6 +814,7 @@ function visualize () {
             case "aluControlEllTxtALU":
             case "aluControlEllTxtCtrl":
             case "aluControlEllToAlu":
+            case "aluCtrlOut":
             case "muxIntoAlu1":
             case "muxIntoAlu2":
             case "muxIntoAluBott":
@@ -910,6 +918,8 @@ function visualize () {
     });
 
 
+
+
     // display the element values by stage
     function displayElementValues(datapoint, stageClass) {
         // update only lines relevant to this instruction type and specific inst
@@ -922,18 +932,31 @@ function visualize () {
         switch (datapoint) {
 
             case "IF":
+                // The code below is repeated and should be replaced with a function.
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if ((anElement.stage === "IF") && anElement.vis) {
+                    if (anElement.stage === "IF") {
                         console.log("displayElementValues case IF is: ", anElement.stage);
                         //create the html element and append to the IF tag.
+                        if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
                         d3.select("#IF").append("text")
                             .text(anElement.val)
                             .style("font-size", "9px")
+                            .attr("id", elements[i])
                             .attr("class", "ifetch lineValues")
                             .attr("x", anElement.coordinates[0])
                             .attr("y", anElement.coordinates[1]);
+                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            d3.select("#IF").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "ifetch lineValues")
+                                .style("fill", "lightgrey")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        }
                     }
                 }
                 // lable the PC value below the PC rectangle element
@@ -951,19 +974,32 @@ function visualize () {
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if ((anElement.stage === "ID") && anElement.vis) {
+                    if (anElement.stage === "ID") {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //console.log("displayElementValues ID element is ", elements[i]);
                         //create the html element and append to the IF tag.
-                        d3.select("#ID").append("text")
-                            .text(anElement.val)
-                            .style("font-size", "9px")
-                            .attr("class", "idecode lineValues")
-                            .attr("x", anElement.coordinates[0])
-                            .attr("y", anElement.coordinates[1]);
+                        if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#ID").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "idecode lineValues")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            d3.select("#ID").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "idecode lineValues")
+                                .style("fill", "lightgrey")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        }
                     }
                 }
                 // Display values that will not fit on processor graphic
+
                 d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
@@ -990,15 +1026,27 @@ function visualize () {
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if (anElement.stage == "EX" && anElement.vis) {
+                    if (anElement.stage == "EX") {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
-                        d3.select("#EX").append("text")
-                            .text(anElement.val)
-                            .style("font-size", "9px")
-                            .attr("class", "idecode lineValues")
-                            .attr("x", anElement.coordinates[0])
-                            .attr("y", anElement.coordinates[1]);
+                        if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#EX").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "excode lineValues")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            d3.select("#EX").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "excode lineValues")
+                                .style("fill", "lightgrey")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        }
                     }
                 }
                 // Display values that will not fit on processor graphic
@@ -1016,15 +1064,27 @@ function visualize () {
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if (anElement.stage == "MEM" && anElement.vis) {
+                    if (anElement.stage == "MEM") {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
-                        d3.select("#MEM").append("text")
-                            .text(anElement.val)
-                            .style("font-size", "9px")
-                            .attr("class", "idecode lineValues")
-                            .attr("x", anElement.coordinates[0])
-                            .attr("y", anElement.coordinates[1]);
+                        if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#MEM").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "memcode lineValues")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#MEM").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "memcode lineValues")
+                                .style("fill", "lightgrey")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        }
                     }
                 }
                 // Display values that will not fit on processor graphic
@@ -1042,15 +1102,27 @@ function visualize () {
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     // perhpas another way similar to append in main?
-                    if (anElement.stage == "WB" && anElement.vis) {
+                    if (anElement.stage == "WB") {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
-                        d3.select("#WB").append("text")
-                            .text(anElement.val)
-                            .style("font-size", "9px")
-                            .attr("class", "idecode lineValues")
-                            .attr("x", anElement.coordinates[0])
-                            .attr("y", anElement.coordinates[1]);
+                        if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#WB").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "wbcode lineValues")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#WB").append("text")
+                                .text(anElement.val)
+                                .style("font-size", "9px")
+                                .attr("id", elements[i])
+                                .attr("class", "wbcode lineValues")
+                                .style("fill", "lightgrey")
+                                .attr("x", anElement.coordinates[0])
+                                .attr("y", anElement.coordinates[1]);
+                        }
                     }
                 }
                 // Display values that will not fit on processor graphic
@@ -1069,6 +1141,8 @@ function visualize () {
         }
 
     }
+
+
 
 
     function setElementVisibility(element) {
@@ -1141,9 +1215,69 @@ function visualize () {
                     }
             }
 
-        } else if (instructionFormat === "I") {
+        }
+        if (instructionFormat === "I") {
             switch (CurrentLine["instruction"]) {
                 case "LW":
+                    switch (element) {
+                        case "inst15Txt":
+                        case "inst15ToMux":
+                        case "inst15Arrow":
+                        case "RR2":
+                        case "RD2":
+                        case "readReg2Txt":
+                        case "inst5ToAluCtrl":
+                        case "inst5ToAluCtrlArrow":
+                        case "regMuxTxt1":
+                        case "inst20ToRR2":
+                        case "inst20MUX0Arrow":
+                        case "readData2Txt":
+                        case "RD2ToAluResultCircle":
+                        case "RD2ToAluResult":
+                        case "RD2ToAluResultArrow":
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt0':
+                        case "RegFileRD2Circle":
+                        case "Mux1ToShiftLeft2":
+                        case "Mux1ToShiftLeftArrow":
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'shiftLeft2Ell':
+                        case 'shiftLeft2EllTxtShift':
+                        case 'shiftLeft2EllTxtLeft2':
+                        case 'shiftLeft2ToAluIn':
+                        case 'shiftLeft2ToAluInArrow':
+                        case 'aluShiftLeft1':
+                        case 'aluShiftLeft2':
+                        case 'aluShiftLeft3':
+                        case 'aluShiftLeft4':
+                        case 'aluShiftLeft5':
+                        case 'aluShiftLeft6':
+                        case 'aluShiftLeft7':
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case "fourAluToAluTopLine":
+                        case "fourAluToAluTopArrow":
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'lineAluResultToMux0':
+                        case 'AluResultToMux0Arrow':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'memoryMuxTxt0':
+                            return false;
+                            break;
+
+                        default:
+                            return true;
+                    }
+            }
+
+        }
+        if (instructionFormat === "I") {
+            switch (CurrentLine["instruction"]) {
+                case "SW":
                     switch (element) {
                         case "inst15Txt":
                         case "inst15ToMux":
@@ -1199,6 +1333,8 @@ function visualize () {
             }
 
         }
+
+
     }
 
     // gets the data (values) for element
@@ -1267,10 +1403,10 @@ function visualize () {
                 break;
 
             case "inst5ToAluCtrl":
-                if (debug) {
-                    console.log("inst5ToAluCtrl: ", CurrentLine["assembledInstruction"].slice(30, -1));
+                if (true) {
+                    console.log("inst5ToAluCtrl: ", CurrentLine["assembledInstruction"].slice(-8, -1));
                 }
-                return CurrentLine["assembledInstruction"].slice(30, -1);
+                return CurrentLine["assembledInstruction"].slice(-8, -1);
                 break;
 
             case "regDst":
@@ -1311,6 +1447,7 @@ function visualize () {
                 break;
 
             case"WD":
+                //TODO: value from data memory mux out.
                 return "?";
                 break;
 
@@ -1328,10 +1465,14 @@ function visualize () {
                 return regValue.val;
                 break;
             case "signExt32":
-                var regValue =  MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
-                console.log("SignExt32 regValue is: ", regValue);
-                console.log("SignExt32 regValue sign extended to 32: ", MIPS.numberToBinaryString(regValue, 32));
-                return MIPS.numberToBinaryString(regValue, 32);
+                try {
+                    var regValue =  MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
+                    console.log("SignExt32 regValue is: ", regValue);
+                    console.log("SignExt32 regValue sign extended to 32: ", MIPS.numberToBinaryString(regValue, 32));
+                    return MIPS.numberToBinaryString(regValue, 32);
+                } catch (error) {
+                    console.log("Something went wrong in signExt32 " + error);
+                }
                 break;
 
             case "aluInBot":
@@ -1339,17 +1480,92 @@ function visualize () {
                     var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
                     return regValue.val;
                 } else {
-                    var regValue =  MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
-                    return MIPS.numberToBinaryString(regValue, 32);
+                    try {
+                        var regValue = MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
+                        return MIPS.numberToBinaryString(regValue, 32);
+                    } catch (error) {
+                        console.log("Something went wrong in aluInBot " + error);
+                    }
                 }
                 break;
 
-            case "16intoSignExt":
+            case "aluCtrlOut":
+                var AluOp0 = mipsValues[elements[11]].val;
+                var AluOp1 = mipsValues[elements[12]].val;
+                var Inst5ToALUCtr = mipsValues[elements[13]].val;
+                    if (debug){
+                    console.log("Validate values AluOp0: ", AluOp0);
+                    console.log("Validate values AluOp1: ", AluOp1);
+                    console.log("Validate values Inst5ToALUCtr: ", Inst5ToALUCtr.slice(-5));
+                    console.log("Validate values Inst5ToALUCtr no slice: ", Inst5ToALUCtr);}
+                return getAluControl (AluOp0, AluOp1, Inst5ToALUCtr.slice(-5));
+                break;
+
+            case "aluResult":
+                return "from a function ALU";
                 // add all other lines that are only for visibility
+                // Use Mallory's C++ as example need only to implement AND and OR bitwise
+                // Use convert to number then simple math x-y or x+y etc. 
                 return null;
 
         }
     }
+
+
+
+
+
+    function getAluControl (AluOp0, AluOp1, Inst5ToALUCtr) {
+        // does not work with lables.
+
+        try {
+            var strValue =  MIPS.binaryStringToNumber(Inst5ToALUCtr);
+            if (debug){
+            console.log ("getAluControl Inst5ToALUCtr: ", Inst5ToALUCtr);
+            console.log ("getAluControl strValue: ", strValue);}
+
+            if (AluOp0 === "0"  && AluOp1 === "0") {
+                // Adding
+                return "0010";
+
+            } else if (AluOp1 === "1") {
+                // Subtracting
+                return "0110";
+
+            } else if (AluOp0 === "1"){
+                    switch (strValue) {
+                        case 0:
+                            return "0010";
+                            break;
+                        case 2:
+                            return "0010";
+                            break;
+                        case 4:
+                            return "0000";
+                            break;
+                        case 5:
+                            return "0001";
+                            break;
+                        case 10:
+                            return "0111";
+                            break;
+                        default : console.log ("getAluControl: Oops something broke!");
+
+                    }
+            }
+        } catch (error) {
+            console.log("Something went wrong in getAluControl: " + error);
+        }
+    }
+
+
+
+
+
+    function getAluResult (){
+        return "nothing yet";
+    }
+
 
 
     function control(lineName) {
@@ -1364,7 +1580,7 @@ function visualize () {
                 if (tempElement === lineName) {
                     switch (lineName) {
                         case "regDst":
-                        case "aluOp1":
+                        case "aluOp0":
                         case "regWrite":
                             return "1";
                             break;
@@ -1372,7 +1588,7 @@ function visualize () {
                         case "branch":
                         case "memRead":
                         case "memToReg":
-                        case "aluOp0":
+                        case "aluOp1":
                         case "memWrite":
                         case "aluSrc":
                             return "0";
@@ -1439,13 +1655,13 @@ function visualize () {
                 if (tempElement === lineName) {
                     switch (tempElement) {
                         case "branch":
-                        case "aluOp1":
+                        case "aluOp0":
                             return tempElement.val = 1;
                             break;
                         case "jump":
                         case "memRead":
                         case "memToReg":
-                        case "aluOp0":
+                        case "aluOp1":
                         case "regDst":
                         case "regWrite":
                         case "memWrite":
@@ -1491,14 +1707,14 @@ function visualize () {
 
 
     // Print to console the data from mips_emulator.js
-    if (debug) {
+    if (true) {
+        var temp = CurrentLine["args"];
         console.log("is registers global? ", allRegisterValues[temp[0]]);
         console.log("mipsValues array is :", mipsValues);
         console.log("the value of CurrentLine in visual_mips.html is :", CurrentLine);
         console.log("CurrentLine['assembledInstruction'] in visual_mips.html is :", CurrentLine["assembledInstruction"]);
         opCode = CurrentLine["assembledInstruction"].slice(0, 6);
         console.log("This is the opCode: ", opCode);
-        var temp = CurrentLine["args"];
         console.log("this is CurrentLine['args']: ", temp[0]);
     }
 
