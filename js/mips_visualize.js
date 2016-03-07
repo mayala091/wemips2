@@ -311,7 +311,7 @@ function visualize () {
         '<text id="mainAluTxtResult" class="excode" x="445" y="333" font-size="10px" fill="lightgrey" >result</text>' +
 
 
-        '<!-- ALU ZERO TO OR -->' +
+        '<!-- ALU ZERO TO AND -->' +
         '<path id="aluZeroToOrLine" class="excodeObj, extorqObj" d="M 481,169 477,169 480,290 475,290" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
 
         '<g transform="translate(5,10)">' +
@@ -337,8 +337,8 @@ function visualize () {
         '<path id="aluShiftLeft7" class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
         '</g>' +
         '<text id="aluShiftTxtAdd" class="excode" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
-        '<text id="aluShiftTxtAlu" class="excode" x="450" y="94" font-size="11px" fill="lightgrey" >ALU</text>' +
-        '<text id="aluShiftTxtResult" class="excode" x="450" y="104" font-size="11px" fill="lightgrey" >result</text>' +
+        '<text id="aluShiftTxtAlu" class="excode" x="435" y="92" font-size="11px" fill="lightgrey" >Branch</text>' +
+        '<text id="aluShiftTxtResult" class="excode" x="450" y="102" font-size="11px" fill="lightgrey" >ALU</text>' +
 
         '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
         '<path id="lineRD2toMemWD" class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
@@ -395,12 +395,12 @@ function visualize () {
         '<text id="pcAluResultMuxTxtX" class="memcode" x="521" y="100" font-size="12px" fill="lightgrey" >x</text>' +
         '<text id="pcAluResultMuxTxt1" class="memcode" x="522" y="114" font-size="12px" fill="lightgrey" >1</text>' +
 
-        '<!-- OR -->' +
+        '<!-- AND -->' +
         '<!-- LINE OR GATE TO PC ALU MUX -->' +
-        '<path id="lineORToAluMux" class="memcodeObj, memtorqObj" d="M  525,119 525,160 510,160" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<text id="lineORToAluMuxTxtPCSrc" class="memcode, memtorq" x="530" y="164" font-size="10px" fill="lightgrey" >PCSrc</text>' +
+        '<path id="lineANDToAluMux" class="memcodeObj, memtorqObj" d="M  525,119 525,160 510,160" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+        '<text id="lineANDToAluMuxTxtPCSrc" class="memcode, memtorq" x="530" y="164" font-size="10px" fill="lightgrey" >PCSrc</text>' +
 
-        '<!-- OR GATE -->' +
+        '<!-- AND GATE -->' +
         '<g transform="translate(479,144)">' +
         '<path id="oRGate" class="memcodeObj, memtorqObj"d="M 2 4.5 C 2 3.84 2.16 3.2 2.45 2.73 C 2.73 2.26 3.12 2 3.53 2 L 26.12 2 C 29.7 4.69 32 10.55 32 17 C 32 23.45 29.7 29.31 26.12 32 L 3.53 32 C 3.12 32 2.73 31.74 2.45 31.27 C 2.16 30.8 2 30.16 2 29.5 L 2 4.5 Z" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/>' +
         '</g>' +
@@ -518,8 +518,20 @@ function visualize () {
     // change svg elements id tags to match the items in elements
     var elements = [
         'pc', 'pcTxt', 'pcToInstMem', 'pcArrow', 'pcCircle',
-        'pcAluIn', 'pcAddArrow', 'fourAluIn', 'inst31ToCtrl', 'regDst',  'aluSrc',
-        'aluOp0', 'aluOp1', 'inst5ToAluCtrl',
+    /*   0       1         2             3          4                                                                */
+        'pcAluIn', 'pcAddArrow', 'fourAluIn', 'inst31ToCtrl', 'regDst', 'aluSrc',
+    /*   5                6             7          8             9          10                                       */
+
+        'aluOp0', 'aluOp1', 'inst5ToAluCtrl', 'RD1', 'aluInBot', 'aluCtrlOut',
+    /*   11          12         13              14       15         16                                               */
+
+        'zero', 'aluResult', 'branch', 'PCSrc', 'PcAdderResult', 'inst15ToSignExt',
+    /*   17         18          19        20          21            22                                               */
+
+        'signExt32', 'shiftLeft2', 'PcSl2AddResult',
+    /*   23               24            25               26          27            28                                */
+
+
         'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
         'instMemTxtAddress', 'instMemTxtInst', 'instMemTxt31', 'instMemTxtIns31', 'instMemTxtMem',
         'pcAluObj1', 'pcAluObj2', 'pcAluObj3', 'pcAluObj4', 'pcAluObj5',
@@ -550,17 +562,17 @@ function visualize () {
         'dataMemRectTxtAdd', 'dataMemRectTxtRead', 'dataMemRectTxtData', 'dataMemRectTxtWrite', 'dataMemRectTxt2Data',
         'dataMemRectTxt3Data', 'dataMemRectTxtMem', 'lineDataMemToMux', 'DataMemToMuxArrow', 'lineAluResultToMux0',
         'AluResultToMux0Arrow', 'pcAluResultMux', 'pcAluResultMuxTxt0', 'pcAluResultMuxTxtM', 'pcAluResultMuxTxtU',
-        'pcAluResultMuxTxtX', 'pcAluResultMuxTxt1', 'oRGate', 'lineORToAluMux', 'lineORToAluMuxTxtPCSrc',
+        'pcAluResultMuxTxtX', 'pcAluResultMuxTxt1', 'oRGate', 'lineANDToAluMux', 'lineANDToAluMuxTxtPCSrc',
         'aluMuxToPC', 'aluMuxToPCArrow', 'memoryMux', 'memoryMux2', 'memoryMuxTxt1',
         'memoryMuxTxtM', 'memoryMuxTxtU', 'memoryMuxTxtX', 'memoryMuxTxt0', 'lineMemMuxToRD',
-        'MemMuxToRDArrow', 'aluCtrlOut',
+        'MemMuxToRDArrow',
         'addAluToMux', 'addAluToMuxArrow', 'fourAluToAluTopCircle', 'fourAluToAluTopLine', 'fourAluToAluTopArrow',
         'signExtEllipTxtExt', 'RegFileRD2Circle', 'signExtEllToMux1', 'Mux1ToShiftLeft2',
-        'inst20ToMux', 'inst15ToMux', 'inst15ToSignExt', 'inst5ToAluCtrlTxt', 'inst5ToAluCtrl',
+        'inst20ToMux', 'inst15ToMux', 'inst5ToAluCtrlTxt', 'inst5ToAluCtrl',
         'inst5ToAluCtrlArrow', 'instToAluCtrlCircle', 'registerMux1','registerMux2',
-        'jump', 'branch', 'memRead', 'memToReg',
+        'jump', 'memRead', 'memToReg',
         'memWrite', 'regWrite', 'RR1', 'RR2', 'WR',
-        'WD', 'RD1', 'RD2', 'signExt32', 'aluInBot',
+        'WD', 'RD1', 'RD2',
         "intoSignExt16", "intoSignExtArrow16", "signExt16Txt", "signExt16DiagLine", "signExt32Txt",
         "signExt32DiagLine"
     ];
@@ -625,6 +637,7 @@ function visualize () {
             //IF elements
             "pc": [30, 365],
             "pcAluIn": [25, 50],
+            "PcAdderResult": [168, 101],
 
             //ID elements
             "inst31ToCtrl": [170, 201],
@@ -657,7 +670,16 @@ function visualize () {
             "signExt16Txt": [273, 402],
             "signExt16DiagLine": [273, 405],
             "signExt32Txt": [343, 402],
-            "signExt32DiagLine": [343, 405]
+            "signExt32DiagLine": [343, 405],
+            "zero": [485, 170],
+            "aluResult": [65, 508],
+            "PCSrc": [528, 130],
+
+
+            // EX elements
+            "shiftLeft2":[65, 521],
+            "PcSl2AddResult": [95, 534]
+
         };
 
         return coordinates[lineName] || defaultFormat;
@@ -805,10 +827,11 @@ function visualize () {
             case "signExt32Txt":
             case "signExt32DiagLine":
             case "inst5ToAluCtrlTxt":
+            case "PcAdderResult":
                 return "ID";
                 break;
 
-            // IF elements
+            // EX elements
             case "aluInBot":
             case "aluControlEll":
             case "aluControlEllTxtALU":
@@ -855,6 +878,11 @@ function visualize () {
             case 'lineRD2toMemWDArrow':
             case 'lineAluResult2Mux':
             case 'AluResult2MuxArrow':
+            case 'zero':
+            case 'aluResult':
+            case "shiftLeft2":
+            case "PcSl2AddResult":
+
                 return "EX";
                 break;
 
@@ -882,10 +910,11 @@ function visualize () {
             case 'pcAluResultMuxTxtX':
             case 'pcAluResultMuxTxt1':
             case 'oRGate':
-            case 'lineORToAluMux':
-            case 'lineORToAluMuxTxtPCSrc':
+            case 'lineANDToAluMux':
+            case 'lineANDToAluMuxTxtPCSrc':
             case 'aluMuxToPC':
             case 'aluMuxToPCArrow':
+            case 'PCSrc':
                 return "MEM";
                 break;
 
@@ -1003,21 +1032,22 @@ function visualize () {
                 d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch")
+                    .attr("class", "idecode")
                     .attr("x", 10)
                     .attr("y", 469);
                 d3.select("#ID").append("text")
                     .text("RD2: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch")
+                    .attr("class", "idecode")
                     .attr("x", 10)
                     .attr("y", 482);
                 d3.select("#ID").append("text")
                     .text("Sign Extended 32 bit value: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch")
+                    .attr("class", "idecode")
                     .attr("x", 10)
                     .attr("y", 443);
+
 
                 break;
 
@@ -1053,9 +1083,27 @@ function visualize () {
                 d3.select("#EX").append("text")
                     .text("ALUSrc Mux to ALU in: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch")
+                    .attr("class", "excode")
                     .attr("x", 10)
                     .attr("y", 495);
+                d3.select("#EX").append("text")
+                    .text("ALU Result: ")
+                    .style("font-size", "9px")
+                    .attr("class", "excode")
+                    .attr("x", 10)
+                    .attr("y", 508);
+                d3.select("#EX").append("text")
+                    .text("Shift Left 2: ")
+                    .style("font-size", "9px")
+                    .attr("class", "excode")
+                    .attr("x", 10)
+                    .attr("y", 521);
+                d3.select("#EX").append("text")
+                    .text("Branch ALU Result: ")
+                    .style("font-size", "9px")
+                    .attr("class", "excode")
+                    .attr("x", 10)
+                    .attr("y", 534);
 
                 break;
 
@@ -1125,14 +1173,6 @@ function visualize () {
                         }
                     }
                 }
-                // Display values that will not fit on processor graphic
-                /*d3.select("#EX").append("text")
-                 .text("ALUSrc Mux to ALU in: ")
-                 .style("font-size", "9px")
-                 .attr("class", "ifetch")
-                 .attr("x", 10)
-                 .attr("y", 495);
-                 */
                 break;
 
             default:
@@ -1207,6 +1247,8 @@ function visualize () {
                         case 'muxIntoAluTxt1':
                         case "regMuxTxt0":
                         case 'memoryMuxTxt1':
+                        case "shiftLeft2":
+                        case  "PcSl2AddResult":
                             return false;
                             break;
 
@@ -1337,6 +1379,9 @@ function visualize () {
 
     }
 
+
+
+
     // gets the data (values) for element
     // TODO: Lines without values set to null
     function getElementData(lineName, LineNumber) {
@@ -1423,7 +1468,6 @@ function visualize () {
                 if (debug) {
                     console.log("getElementData: ", lineName);
                 }
-
                 return control(lineName);
                 break;
 
@@ -1462,13 +1506,16 @@ function visualize () {
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
                 //console.log("RD2 is: ", regValue.val);
                 // TODO: convert regVal.val to a binary string
-                return regValue.val;
+                return MIPS.numberToBinaryString(regValue.val);
                 break;
+
             case "signExt32":
                 try {
                     var regValue =  MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
-                    console.log("SignExt32 regValue is: ", regValue);
-                    console.log("SignExt32 regValue sign extended to 32: ", MIPS.numberToBinaryString(regValue, 32));
+                        if (debug) {
+                        console.log("SignExt32 regValue is: ", regValue);
+                        console.log("SignExt32 regValue sign extended to 32: ", MIPS.numberToBinaryString(regValue, 32));
+                        }
                     return MIPS.numberToBinaryString(regValue, 32);
                 } catch (error) {
                     console.log("Something went wrong in signExt32 " + error);
@@ -1478,7 +1525,7 @@ function visualize () {
             case "aluInBot":
                 if ((mipsValues[elements[10]].val) === "0") {
                     var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
-                    return regValue.val;
+                    return MIPS.numberToBinaryString(regValue.val);
                 } else {
                     try {
                         var regValue = MIPS.binaryStringToNumber(CurrentLine["assembledInstruction"].slice(19, -1));
@@ -1501,13 +1548,60 @@ function visualize () {
                 return getAluControl (AluOp0, AluOp1, Inst5ToALUCtr.slice(-5));
                 break;
 
-            case "aluResult":
-                return "from a function ALU";
-                // add all other lines that are only for visibility
-                // Use Mallory's C++ as example need only to implement AND and OR bitwise
-                // Use convert to number then simple math x-y or x+y etc. 
-                return null;
 
+            case "aluResult":
+            {
+                var Rd1 = mipsValues[elements[14]].val;
+                var AluInBott = mipsValues[elements[15]].val;
+                var AluOpCode = mipsValues[elements[16]].val;
+                    if (debug) {
+                    console.log("getElementData aluResult Rd1 is ", Rd1);
+                    console.log("getElementData aluResult AluInBott is ", AluInBott);
+                    console.log("getElementData aluResult AluOpCode is ", AluOpCode);}
+                return getAluResult(Rd1, AluInBott, AluOpCode);
+            }
+                break;
+
+            case "PCSrc":
+                var zero = mipsValues[elements[17]].val;
+                var branch = mipsValues[elements[19]].val;
+
+                if (true) {
+                    console.log("PCSrc zero is ", zero);
+                    console.log("PCSrc zero is ", branch);
+                }
+
+                if (zero === "0" && branch === "0") {
+                    return "0";
+                } else {
+                    return "1";
+                }
+                break;
+
+            case "PcAdderResult":
+                var top = mipsValues[elements[0]].val;
+                var bottom = "00000000000000000000000000000100";
+                return getAluAddResult(top, bottom);
+                break;
+
+            case "shiftLeft2":
+                console.log ("shiftLeft2 signExt32 is: ", mipsValues[elements[23]].val);
+                var temp = MIPS.binaryStringToNumber(mipsValues[elements[23]].val) << 2;
+                console.log ("shiftLeft2 signExt32 << 2 is: ", temp);
+                return MIPS.numberToBinaryString(temp, 32);
+                break;
+
+
+            case "PcSl2AddResult":
+            {
+                var AluInTop = mipsValues[elements[21]].val;
+                var AluInBott = mipsValues[elements[24]].val;
+                if (true) {
+                    console.log("PcSl2AddResult AluInTop is: ", AluInTop);
+                    console.log("PcSl2AddResult AluInBott is ", AluInBott);}
+                return getAluAddResult(AluInTop, AluInBott);
+            }
+                break;
         }
     }
 
@@ -1535,18 +1629,23 @@ function visualize () {
             } else if (AluOp0 === "1"){
                     switch (strValue) {
                         case 0:
+                            // ADD
                             return "0010";
                             break;
                         case 2:
-                            return "0010";
+                            // Subtracting
+                            return "0110";
                             break;
                         case 4:
+                            // AND
                             return "0000";
                             break;
                         case 5:
+                            // OR
                             return "0001";
                             break;
                         case 10:
+                            // SetLessThan: SLT
                             return "0111";
                             break;
                         default : console.log ("getAluControl: Oops something broke!");
@@ -1562,8 +1661,101 @@ function visualize () {
 
 
 
-    function getAluResult (){
-        return "nothing yet";
+    function getAluResult (Rd1, AluInBott, AluOpCode){
+        console.log ("In getAluResult AluOpCode is: ", AluOpCode);
+
+        switch (AluOpCode) {
+            // AND
+            case "0000":
+                var sum = Rd1 & AluInBott;
+                console.log ("getAluResult bitwise AND is: ", sum);
+
+                if (sum === 0) {
+                    mipsValues[elements[17]].val = "1";
+                }else {
+                    mipsValues[elements[17]].val = "0";
+                }
+                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
+
+                return MIPS.numberToBinaryString(sum,32);
+                break;
+
+            // OR
+            case "0001":
+                var sum = Rd1 | AluInBott;
+                console.log ("getAluResult bitwise OR is: ", sum);
+
+                if (sum === 0) {
+                    mipsValues[elements[17]].val = "1";
+                }else {
+                    mipsValues[elements[17]].val = "0";
+                }
+                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
+
+                return MIPS.numberToBinaryString(sum,32);
+                break;
+
+            //ADD
+            case "0010":
+                var sum = MIPS.binaryStringToUnsignedNumber(Rd1) + MIPS.binaryStringToUnsignedNumber(AluInBott);
+                console.log ("getAluResult ADD sum is: ", sum);
+
+                if (sum === 0) {
+                    mipsValues[elements[17]].val = "1";
+                }else {
+                    mipsValues[elements[17]].val = "0";
+                }
+                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
+
+                return MIPS.numberToBinaryString(sum,32);
+                break;
+
+            //SUB
+            case "0110":
+                var sum = MIPS.binaryStringToUnsignedNumber(Rd1) - MIPS.binaryStringToUnsignedNumber(AluInBott);
+                console.log ("getAluResult ADD sum is: ", sum);
+
+                if (sum === 0) {
+                    mipsValues[elements[17]].val = "1";
+                }else {
+                    mipsValues[elements[17]].val = "0";
+                }
+                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
+
+                return MIPS.numberToBinaryString(sum,32);
+                break;
+
+            // SLT: Set Less Than
+            case "0111":
+                var temp = MIPS.binaryStringToUnsignedNumber(Rd1) < MIPS.binaryStringToUnsignedNumber(AluInBott);
+                console.log ("getAluResult SLT result is: ", temp);
+
+                if (temp === 0) {
+                    mipsValues[elements[17]].val = "1";
+                }else {
+                    mipsValues[elements[17]].val = "0";
+                }
+                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
+
+                return MIPS.numberToBinaryString(temp,32);
+                break;
+
+            default : console.log("getAluResult: Invalid ")
+        }
+
+
+    }
+
+
+
+
+
+    function getAluAddResult (aluInTop, aluInBott){
+        var sum = MIPS.binaryStringToUnsignedNumber(aluInTop) + MIPS.binaryStringToUnsignedNumber(aluInBott);
+        console.log ("getAluAddResult ADD sum is: ", sum);
+
+        return MIPS.numberToBinaryString(sum,32);
+
     }
 
 
