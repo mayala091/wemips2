@@ -493,8 +493,19 @@ function visualize () {
     var previousLine = 0;
 
     // THIS IS INSTRUCTION TEXT, INSTRUCTION FORMAT AND BINARY INSTRUCT PRINTED AT TOP.
-    instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+    if (Lable !== null){
+        var lableAddress = MIPS.numberToBinaryString(Lable);
+        var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
+        console.log ("partialInst is: ", partialInst);
+
+    }
+    var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
+    console.log ("partialInst is: ", partialInst);
     var instructionIn = CurrentLine["text"];
+    console.log("CurrentLine[text] is: ", instructionIn);
+    console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+    instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+    console.log ("instruction format is: ", instructionFormat);
 
     var allRegs = [
         '$zero', '$at', '$v0', '$v1', '$a0', '$a1', '$a2', '$a3',
@@ -649,7 +660,7 @@ function visualize () {
             "RR1": [276, 270],
             "RR2": [276, 306],
             "WR": [276, 336],
-            "WD": [276, 364],
+            //"WD": [276, 364],  // Not displaying in the
             "RD1": [35, 469],
             "RD2": [35, 482],
             "regDst": [239, 364],
@@ -999,7 +1010,7 @@ function visualize () {
                 d3.select("#IF").append("text")
                     .text("PC: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch")
+                    .attr("class", "ifetch  lineValues")
                     .attr("x", 10)
                     .attr("y", 365);
 
@@ -1039,19 +1050,19 @@ function visualize () {
                 d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode")
+                    .attr("class", "idecode lineValues")
                     .attr("x", 10)
                     .attr("y", 469);
                 d3.select("#ID").append("text")
                     .text("RD2: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode")
+                    .attr("class", "idecode lineValues")
                     .attr("x", 10)
                     .attr("y", 482);
                 d3.select("#ID").append("text")
                     .text("Sign Extended 32 bit value: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode")
+                    .attr("class", "idecode lineValues")
                     .attr("x", 10)
                     .attr("y", 443);
 
@@ -1090,25 +1101,25 @@ function visualize () {
                 d3.select("#EX").append("text")
                     .text("ALUSrc Mux to ALU in: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode")
+                    .attr("class", "excode lineValues")
                     .attr("x", 10)
                     .attr("y", 495);
                 d3.select("#EX").append("text")
                     .text("ALU Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode")
+                    .attr("class", "excode lineValues")
                     .attr("x", 10)
                     .attr("y", 508);
                 d3.select("#EX").append("text")
                     .text("Shift Left 2 Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode")
+                    .attr("class", "excode lineValues")
                     .attr("x", 10)
                     .attr("y", 521);
                 d3.select("#EX").append("text")
                     .text("Branch ALU Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode")
+                    .attr("class", "excode lineValues")
                     .attr("x", 10)
                     .attr("y", 534);
 
@@ -1145,7 +1156,7 @@ function visualize () {
                 d3.select("#EX").append("text")
                     .text("Memory Read Data Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode")
+                    .attr("class", "excode lineValues")
                     .attr("x", 10)
                     .attr("y", 547);
 
@@ -1192,6 +1203,10 @@ function visualize () {
 
 
     function setElementVisibility(element) {
+        // TODO: can this be a two dim array?
+        // what is in common with each? fall through cases for differences.
+
+
         if (debug) {
             console.log("HELLO setElementVisibility LineName is: ", element);
         }
@@ -1323,11 +1338,8 @@ function visualize () {
                         default:
                             return true;
                     }
-            }
 
-        }
-        if (instructionFormat === "I") {
-            switch (CurrentLine["instruction"]) {
+
                 case "SW":
                     switch (element) {
                         case "inst15Txt":
@@ -1380,12 +1392,65 @@ function visualize () {
 
                         default:
                             return true;
+
+                    }
+
+                case "BEQ":
+                    switch (element) {
+                        case "inst15Txt":
+                        case "inst15ToMux":
+                        case "inst15Arrow":
+                        case "RR2":
+                        case "readReg2Txt":
+                        case "inst5ToAluCtrl":
+                        case "inst5ToAluCtrlArrow":
+                        case "regMuxTxt1":
+                        case "inst20ToRR2":
+                        case "inst20MUX0Arrow":
+                        case "readData2Txt":
+                        case "RD2ToAluResultCircle":
+                        case "RD2ToAluResult":
+                        case "RD2ToAluResultArrow":
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt0':
+                        case "RegFileRD2Circle":
+                        case "Mux1ToShiftLeft2":
+                        case "Mux1ToShiftLeftArrow":
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'shiftLeft2Ell':
+                        case 'shiftLeft2EllTxtShift':
+                        case 'shiftLeft2EllTxtLeft2':
+                        case 'shiftLeft2ToAluIn':
+                        case 'shiftLeft2ToAluInArrow':
+                        case 'aluShiftLeft1':
+                        case 'aluShiftLeft2':
+                        case 'aluShiftLeft3':
+                        case 'aluShiftLeft4':
+                        case 'aluShiftLeft5':
+                        case 'aluShiftLeft6':
+                        case 'aluShiftLeft7':
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case "fourAluToAluTopLine":
+                        case "fourAluToAluTopArrow":
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'lineAluResultToMux0':
+                        case 'AluResultToMux0Arrow':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'memoryMuxTxt0':
+                            return false;
+                            break;
+
+                        default:
+                            return true;
+
                     }
             }
-
         }
-
-
     }
 
 
@@ -2280,11 +2345,10 @@ function visualize () {
         if(datapoint == "Close") {
 
             d3.select("#displayInstructionText").remove();
-            d3.selectAll("ifetch lineValues").remove();
-            d3.selectAll("idecode lineValues").remove();
+            d3.selectAll(".lineValues").remove();
             d3.select("#displayInstructionFormat").remove();
             d3.select("#displayInstructionBinary").remove();
-            $("#myModal").modal();
+            $("#myModal").modal("hide");
         }
     }
 
