@@ -528,8 +528,8 @@ function visualize () {
         'zero', 'aluResult', 'branch', 'PCSrc', 'PcAdderResult', 'inst15ToSignExt',
     /*   17         18          19        20          21            22                                               */
 
-        'signExt32', 'shiftLeft2', 'PcSl2AddResult',
-    /*   23               24            25               26          27            28                                */
+        'signExt32', 'shiftLeft2', 'PcSl2AddResult', 'newPc', 'memoryReadDataResult', 'memToReg',
+    /*   23               24            25             26            27                   28                         */
 
 
         'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
@@ -570,7 +570,7 @@ function visualize () {
         'signExtEllipTxtExt', 'RegFileRD2Circle', 'signExtEllToMux1', 'Mux1ToShiftLeft2',
         'inst20ToMux', 'inst15ToMux', 'inst5ToAluCtrlTxt', 'inst5ToAluCtrl',
         'inst5ToAluCtrlArrow', 'instToAluCtrlCircle', 'registerMux1','registerMux2',
-        'jump', 'memRead', 'memToReg',
+        'jump', 'memRead',
         'memWrite', 'regWrite', 'RR1', 'RR2', 'WR',
         'WD', 'RD1', 'RD2',
         "intoSignExt16", "intoSignExtArrow16", "signExt16Txt", "signExt16DiagLine", "signExt32Txt",
@@ -677,8 +677,13 @@ function visualize () {
 
 
             // EX elements
-            "shiftLeft2":[65, 521],
-            "PcSl2AddResult": [95, 534]
+            "shiftLeft2":[95, 521],
+            "PcSl2AddResult": [95, 534],
+            "newPc": [370, 35],
+
+            // MEM elements
+            "memoryReadDataResult":[120, 547]
+
 
         };
 
@@ -806,11 +811,10 @@ function visualize () {
             case "RR1":
             case "RR2":
             case "WR" :
-            case "WD":
             case "RD1":
             case "RD2":
             case "regDst":
-            case "jump":
+            //case "jump":  // future implementation
             case "branch":
             case "memRead":
             case "memToReg":
@@ -827,7 +831,6 @@ function visualize () {
             case "signExt32Txt":
             case "signExt32DiagLine":
             case "inst5ToAluCtrlTxt":
-            case "PcAdderResult":
                 return "ID";
                 break;
 
@@ -915,6 +918,8 @@ function visualize () {
             case 'aluMuxToPC':
             case 'aluMuxToPCArrow':
             case 'PCSrc':
+            case 'newPc':
+            case 'memoryReadDataResult':
                 return "MEM";
                 break;
 
@@ -928,6 +933,8 @@ function visualize () {
             case 'memoryMuxTxt0':
             case 'lineMemMuxToRD':
             case 'MemMuxToRDArrow':
+            case "PcAdderResult":
+            case "WD":
                 return "WB";
                 break;
 
@@ -1093,7 +1100,7 @@ function visualize () {
                     .attr("x", 10)
                     .attr("y", 508);
                 d3.select("#EX").append("text")
-                    .text("Shift Left 2: ")
+                    .text("Shift Left 2 Result: ")
                     .style("font-size", "9px")
                     .attr("class", "excode")
                     .attr("x", 10)
@@ -1135,14 +1142,13 @@ function visualize () {
                         }
                     }
                 }
-                // Display values that will not fit on processor graphic
-                /*d3.select("#EX").append("text")
-                    .text("ALUSrc Mux to ALU in: ")
+                d3.select("#EX").append("text")
+                    .text("Memory Read Data Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch")
+                    .attr("class", "excode")
                     .attr("x", 10)
-                    .attr("y", 495);
-                */
+                    .attr("y", 547);
+
                 break;
 
             case "WB":
@@ -1233,6 +1239,8 @@ function visualize () {
                         case 'lineRD2toMemWDArrow':
                         case 'lineAluResult2Mux':
                         case 'AluResult2MuxArrow':
+                        case "fourAluToAluTopLine":
+                        case "fourAluToAluTopArrow":
                         case 'dataMemRect':
                         case 'dataMemRectTxtAdd':
                         case 'dataMemRectTxtRead':
@@ -1248,7 +1256,8 @@ function visualize () {
                         case "regMuxTxt0":
                         case 'memoryMuxTxt1':
                         case "shiftLeft2":
-                        case  "PcSl2AddResult":
+                        case "PcSl2AddResult":
+                        case "memoryReadDataResult":
                             return false;
                             break;
 
@@ -1491,14 +1500,18 @@ function visualize () {
                 break;
 
             case"WD":
-                //TODO: value from data memory mux out.
-                return "?";
+                if ((mipsValues[elements[28]].val) === "0") {
+                    return mipsValues[elements[18]].val;
+                } else {
+                    return mipsValues[elements[27]].val;
+                }
                 break;
 
             case"RD1":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))]];
-                //console.log("RD1 is: ", regValue.val);
+                console.log("RD1 is: ", regValue.val);
                 // TODO: convert regVal.val to a binary string
+                //return MIPS.numberToBinaryString(regValue.val, 32);
                 return MIPS.numberToBinaryString(regValue.val, 32);
                 break;
 
@@ -1558,7 +1571,7 @@ function visualize () {
                     console.log("getElementData aluResult Rd1 is ", Rd1);
                     console.log("getElementData aluResult AluInBott is ", AluInBott);
                     console.log("getElementData aluResult AluOpCode is ", AluOpCode);}
-                return getAluResult(Rd1, AluInBott, AluOpCode);
+                return MIPS.binaryStringToNumber(getAluResult(Rd1, AluInBott, AluOpCode));
             }
                 break;
 
@@ -1593,19 +1606,52 @@ function visualize () {
 
 
             case "PcSl2AddResult":
-            {
                 var AluInTop = mipsValues[elements[21]].val;
                 var AluInBott = mipsValues[elements[24]].val;
                 if (true) {
                     console.log("PcSl2AddResult AluInTop is: ", AluInTop);
                     console.log("PcSl2AddResult AluInBott is ", AluInBott);}
                 return getAluAddResult(AluInTop, AluInBott);
-            }
                 break;
+
+            case "newPc":
+                if ((mipsValues[elements[20]].val) === "0") {
+                    return mipsValues[elements[21]].val;
+                } else {
+                    return mipsValues[elements[23]].val;
+                }
+                break;
+
+            case "memoryReadDataResult":
+               /* var getAddrVal = "#stackEntry-" + (mipsValues[elements[18]].val + 3);  //offset from stack display error
+                    //var classSelector = "stackVal stackspacer lastRegChanged";  // the class of the element
+                    console.log("getAddrVal is: ", getAddrVal);
+                var temps = d3.select(getAddrVal).text();
+                    console.log ("testingMemoryReadData is: ", temps);
+                var fields = temps.split(/:/);
+                var memWriteData = fields[2];
+                    console.log ("writeDataYEA is: ", memWriteData);
+                return memWriteData;
+                break;
+                */
+                try {
+                    var getAddrVal = "#stackEntry-" + (mipsValues[elements[18]].val + 3);  //offset from stack display error
+                    //var classSelector = "stackVal stackspacer lastRegChanged";  // the class of the element
+                    console.log("getAddrVal is: ", getAddrVal);
+                    var temps = d3.select(getAddrVal).text();
+                    console.log ("testingMemoryReadData is: ", temps);
+                    var fields = temps.split(/:/);
+                    var memWriteData = fields[2];
+                    console.log ("writeDataYEA is: ", memWriteData);
+                    return memWriteData;
+                } catch (error) {
+                    console.log("Something went wrong in memoryReadDataResult " + error);
+                    return "00000000000000000000000000000000";
+                }
+                break;
+
         }
     }
-
-
 
 
 
@@ -1697,7 +1743,7 @@ function visualize () {
 
             //ADD
             case "0010":
-                var sum = MIPS.binaryStringToUnsignedNumber(Rd1) + MIPS.binaryStringToUnsignedNumber(AluInBott);
+                var sum = MIPS.binaryStringToNumber(Rd1) + MIPS.binaryStringToNumber(AluInBott);
                 console.log ("getAluResult ADD sum is: ", sum);
 
                 if (sum === 0) {
@@ -1712,7 +1758,7 @@ function visualize () {
 
             //SUB
             case "0110":
-                var sum = MIPS.binaryStringToUnsignedNumber(Rd1) - MIPS.binaryStringToUnsignedNumber(AluInBott);
+                var sum = MIPS.binaryStringToNumber(Rd1) - MIPS.binaryStringToNumber(AluInBott);
                 console.log ("getAluResult ADD sum is: ", sum);
 
                 if (sum === 0) {
@@ -2233,16 +2279,12 @@ function visualize () {
 
         if(datapoint == "Close") {
 
-            d3.select("#displayInstructionText")
-                .remove();
-
-            d3.select("#displayInstructionFormat")
-                .remove();
-
-            d3.select("#displayInstructionBinary")
-                .remove();
-
-            $("#myModal").modal("hide");
+            d3.select("#displayInstructionText").remove();
+            d3.selectAll("ifetch lineValues").remove();
+            d3.selectAll("idecode lineValues").remove();
+            d3.select("#displayInstructionFormat").remove();
+            d3.select("#displayInstructionBinary").remove();
+            $("#myModal").modal();
         }
     }
 
