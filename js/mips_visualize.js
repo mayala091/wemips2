@@ -480,6 +480,8 @@ function visualize () {
 
     //TODO: See page 98 chap 2 figure 2.5 for instruction coding and what is relevant in SW LW ADDI
 
+    // How would setting lines based on controll signals work with this code?
+
 
     var iftoggle = 0;
     var idtoggle = 0;
@@ -487,25 +489,40 @@ function visualize () {
     var memtoggle = 0;
     var wbtoggle = 0;
     var done;
-    var dataKeys = ["PLAY", "IF", "ID", "EX", "MEM", "WB", "RESTART", "Close"];
+    //var dataKeys = ["PLAY", "IF", "ID", "EX", "MEM", "WB", "RESTART", "Close"];
+    var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Close"];
     var debug = false;
     var pc = 32768;
     var previousLine = 0;
 
     // THIS IS INSTRUCTION TEXT, INSTRUCTION FORMAT AND BINARY INSTRUCT PRINTED AT TOP.
     if (Lable !== null){
-        var lableAddress = MIPS.numberToBinaryString(Lable);
-        var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
+        var lableAddress = Lable;
+        var partialInst = CurrentLine["assembledInstruction"].slice(0, 19);
         console.log ("partialInst is: ", partialInst);
+        console.log ("the lable  is: ", lableAddress);
+        console.log ("the lable is binary16 bit: ", MIPS.numberToBinaryString(lableAddress, 16));
 
+
+        var addressBinary =  partialInst + MIPS.numberToBinaryString(lableAddress, 16) + " I";
+        CurrentLine["assembledInstruction"] = addressBinary;
+        console.log("CurrentLine with lable as binary is: ", addressBinary);
+        instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+        console.log("instruction format is: ", instructionFormat);
+        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+        var instructionIn = CurrentLine["text"];
+
+
+
+    } else {
+        var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
+        console.log("partialInst is: ", partialInst);
+        var instructionIn = CurrentLine["text"];
+        console.log("CurrentLine[text] is: ", instructionIn);
+        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+        instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+        console.log("instruction format is: ", instructionFormat);
     }
-    var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
-    console.log ("partialInst is: ", partialInst);
-    var instructionIn = CurrentLine["text"];
-    console.log("CurrentLine[text] is: ", instructionIn);
-    console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
-    instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
-    console.log ("instruction format is: ", instructionFormat);
 
     var allRegs = [
         '$zero', '$at', '$v0', '$v1', '$a0', '$a1', '$a2', '$a3',
@@ -660,7 +677,7 @@ function visualize () {
             "RR1": [276, 270],
             "RR2": [276, 306],
             "WR": [276, 336],
-            //"WD": [276, 364],  // Not displaying in the
+            "WD": [440, 508],
             "RD1": [35, 469],
             "RD2": [35, 482],
             "regDst": [239, 364],
@@ -674,7 +691,7 @@ function visualize () {
             "aluSrc": [389, 309],
             "aluCtrlOut" :[437, 425],
             "regWrite": [307, 245],
-            "signExt32": [10, 456],
+            "signExt32": [470, 495],
             "aluInBot": [110, 495],
             "intoSignExt16": [268, 412],
             "intoSignExtArrow16": [285, 412],
@@ -716,6 +733,7 @@ function visualize () {
             case "pcArrow":
             case "pcCircle":
             case "pcAddArrow":
+            case "PcAdderResult":
             case "fourAluIn":
             case "fourAluArrow":
             case "fourTxt":
@@ -930,7 +948,6 @@ function visualize () {
             case 'aluMuxToPCArrow':
             case 'PCSrc':
             case 'newPc':
-            case 'memoryReadDataResult':
                 return "MEM";
                 break;
 
@@ -944,8 +961,8 @@ function visualize () {
             case 'memoryMuxTxt0':
             case 'lineMemMuxToRD':
             case 'MemMuxToRDArrow':
-            case "PcAdderResult":
             case "WD":
+            case 'memoryReadDataResult':
                 return "WB";
                 break;
 
@@ -1063,8 +1080,8 @@ function visualize () {
                     .text("Sign Extended 32 bit value: ")
                     .style("font-size", "9px")
                     .attr("class", "idecode lineValues")
-                    .attr("x", 10)
-                    .attr("y", 443);
+                    .attr("x", 350)
+                    .attr("y", 495);
 
 
                 break;
@@ -1153,13 +1170,6 @@ function visualize () {
                         }
                     }
                 }
-                d3.select("#EX").append("text")
-                    .text("Memory Read Data Result: ")
-                    .style("font-size", "9px")
-                    .attr("class", "excode lineValues")
-                    .attr("x", 10)
-                    .attr("y", 547);
-
                 break;
 
             case "WB":
@@ -1190,6 +1200,19 @@ function visualize () {
                         }
                     }
                 }
+                d3.select("#WB").append("text")
+                    .text("Memory Read Data Result: ")
+                    .style("font-size", "9px")
+                    .attr("class", "wbcode lineValues")
+                    .attr("x", 10)
+                    .attr("y", 547);
+                d3.select("#WB").append("text")
+                    .text("Write Data Result: ")
+                    .style("font-size", "9px")
+                    .attr("class", "wbcode lineValues")
+                    .attr("x", 350)
+                    .attr("y", 508);
+
                 break;
 
             default:
@@ -1345,24 +1368,15 @@ function visualize () {
                         case "inst15Txt":
                         case "inst15ToMux":
                         case "inst15Arrow":
-                        case "RR2":
-                        case "readReg2Txt":
+                        case "shiftLeft2":
                         case "inst5ToAluCtrl":
                         case "inst5ToAluCtrlArrow":
-                        case "regMuxTxt1":
-                        case "inst20ToRR2":
-                        case "inst20MUX0Arrow":
-                        case "readData2Txt":
-                        case "RD2ToAluResultCircle":
                         case "RD2ToAluResult":
                         case "RD2ToAluResultArrow":
                         case 'pcAluResultMuxTxt1':
                         case 'muxIntoAluTxt0':
-                        case "RegFileRD2Circle":
                         case "Mux1ToShiftLeft2":
                         case "Mux1ToShiftLeftArrow":
-                        case 'lineRD2toMemWD':
-                        case 'lineRD2toMemWDArrow':
                         case 'shiftLeft2Ell':
                         case 'shiftLeft2EllTxtShift':
                         case 'shiftLeft2EllTxtLeft2':
@@ -1384,9 +1398,36 @@ function visualize () {
                         case 'AluResult2MuxArrow':
                         case 'lineAluResultToMux0':
                         case 'AluResultToMux0Arrow':
-                        case 'dataMemRectTxtWrite':
-                        case 'dataMemRectTxt2Data':
                         case 'memoryMuxTxt0':
+                        case "PcSl2AddResult":
+                        case 'lineDataMemToMux':
+                        case 'DataMemToMuxArrow':
+                        case 'memoryMux':
+                        case 'memoryMux2':
+                        case 'memoryMuxTxt1':
+                        case 'memoryMuxTxtM':
+                        case 'memoryMuxTxtU':
+                        case 'memoryMuxTxtX':
+                        case 'lineMemMuxToRD':
+                        case 'dataMemRectTxtRead':
+                        case 'dataMemRectTxtData':
+                        case "inst20MUXArrow":
+                        case "inst20MuxArrow":
+                        case "inst20ToMux":
+                        case "registerMux1":
+                        case "registerMux2":
+                        case "regMuxTxt0":
+                        case "regMuxTxtM":
+                        case "regMuxTxtU":
+                        case "regMuxTxtX":
+                        case "regMuxTxt1":
+                        case "regMuxToRegFileLine":
+                        case "regMuxToRegFileArrow":
+                        case "writeRegTxt":
+                        case "WR":
+                        case "MemMuxToRDArrow":
+                        case "writeData":
+                        case "memoryReadDataResult":
                             return false;
                             break;
 
@@ -1397,51 +1438,58 @@ function visualize () {
 
                 case "BEQ":
                     switch (element) {
+                        case "WR":
+                        case "writeRegTxt":
+                        case "signExt32ToMux1Ln":
+                        case "signExt32ToMux1Arrow":
+                        case "writeData":
+                        case "registerMux1":
+                        case "registerMux2":
+                        case "regMuxTxt0":
+                        case "regMuxTxtM":
+                        case "regMuxTxtU":
+                        case "regMuxTxtX":
+                        case "regMuxToRegFileLine":
+                        case "regMuxToRegFileArrow":
+                        case "inst20ToMux":
+                        case "inst20MuxArrow":
                         case "inst15Txt":
                         case "inst15ToMux":
                         case "inst15Arrow":
-                        case "RR2":
-                        case "readReg2Txt":
                         case "inst5ToAluCtrl":
                         case "inst5ToAluCtrlArrow":
                         case "regMuxTxt1":
-                        case "inst20ToRR2":
-                        case "inst20MUX0Arrow":
-                        case "readData2Txt":
-                        case "RD2ToAluResultCircle":
-                        case "RD2ToAluResult":
-                        case "RD2ToAluResultArrow":
-                        case 'pcAluResultMuxTxt1':
-                        case 'muxIntoAluTxt0':
-                        case "RegFileRD2Circle":
-                        case "Mux1ToShiftLeft2":
-                        case "Mux1ToShiftLeftArrow":
+                        case 'pcAluResultMuxTxt0':
+                        case 'muxIntoAluTxt1':
                         case 'lineRD2toMemWD':
                         case 'lineRD2toMemWDArrow':
-                        case 'shiftLeft2Ell':
-                        case 'shiftLeft2EllTxtShift':
-                        case 'shiftLeft2EllTxtLeft2':
-                        case 'shiftLeft2ToAluIn':
-                        case 'shiftLeft2ToAluInArrow':
-                        case 'aluShiftLeft1':
-                        case 'aluShiftLeft2':
-                        case 'aluShiftLeft3':
-                        case 'aluShiftLeft4':
-                        case 'aluShiftLeft5':
-                        case 'aluShiftLeft6':
-                        case 'aluShiftLeft7':
-                        case 'aluShiftTxtAdd':
-                        case 'aluShiftTxtAlu':
-                        case 'aluShiftTxtResult':
-                        case "fourAluToAluTopLine":
-                        case "fourAluToAluTopArrow":
-                        case 'lineAluResult2Mux':
-                        case 'AluResult2MuxArrow':
                         case 'lineAluResultToMux0':
                         case 'AluResultToMux0Arrow':
+                        case 'memoryMuxTxt0':
+                        case 'aluResultToAddr':
+                        case 'aluResultToAddr1':
+                        case 'aluResultToAddrArrow':
+                        case 'aluResultToAddrCircle':
+                        case 'dataMemRect':
+                        case 'dataMemRectTxtAdd':
+                        case 'dataMemRectTxtRead':
+                        case 'dataMemRectTxtData':
                         case 'dataMemRectTxtWrite':
                         case 'dataMemRectTxt2Data':
-                        case 'memoryMuxTxt0':
+                        case 'dataMemRectTxt3Data':
+                        case 'dataMemRectTxtMem':
+                        case 'lineDataMemToMux':
+                        case 'DataMemToMuxArrow':
+                        case 'memoryMux':
+                        case 'memoryMux2':
+                        case 'memoryMuxTxt1':
+                        case 'memoryMuxTxtM':
+                        case 'memoryMuxTxtU':
+                        case 'memoryMuxTxtX':
+                        case 'lineMemMuxToRD':
+                        case 'MemMuxToRDArrow':
+                        case 'aluResult':
+                        case 'memoryReadDataResult':
                             return false;
                             break;
 
@@ -1601,8 +1649,9 @@ function visualize () {
                 break;
 
             case "aluInBot":
-                if ((mipsValues[elements[10]].val) === "0") {
+                if ((mipsValues[elements[10]].val) == "0") {
                     var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
+                    console.log("aluInBot in regValue is: ", regValue.val);
                     return MIPS.numberToBinaryString(regValue.val);
                 } else {
                     try {
@@ -1618,7 +1667,7 @@ function visualize () {
                 var AluOp0 = mipsValues[elements[11]].val;
                 var AluOp1 = mipsValues[elements[12]].val;
                 var Inst5ToALUCtr = mipsValues[elements[13]].val;
-                    if (debug){
+                    if (true){
                     console.log("Validate values AluOp0: ", AluOp0);
                     console.log("Validate values AluOp1: ", AluOp1);
                     console.log("Validate values Inst5ToALUCtr: ", Inst5ToALUCtr.slice(-5));
@@ -1632,11 +1681,11 @@ function visualize () {
                 var Rd1 = mipsValues[elements[14]].val;
                 var AluInBott = mipsValues[elements[15]].val;
                 var AluOpCode = mipsValues[elements[16]].val;
-                    if (debug) {
+                    if (true) {
                     console.log("getElementData aluResult Rd1 is ", Rd1);
                     console.log("getElementData aluResult AluInBott is ", AluInBott);
                     console.log("getElementData aluResult AluOpCode is ", AluOpCode);}
-                return MIPS.binaryStringToNumber(getAluResult(Rd1, AluInBott, AluOpCode));
+                return getAluResult(Rd1, AluInBott, AluOpCode);
             }
                 break;
 
@@ -1680,37 +1729,28 @@ function visualize () {
                 break;
 
             case "newPc":
-                if ((mipsValues[elements[20]].val) === "0") {
+                if ((mipsValues[elements[20]].val) == "0") {
                     return mipsValues[elements[21]].val;
                 } else {
-                    return mipsValues[elements[23]].val;
+                    return mipsValues[elements[25]].val;
                 }
                 break;
 
             case "memoryReadDataResult":
-               /* var getAddrVal = "#stackEntry-" + (mipsValues[elements[18]].val + 3);  //offset from stack display error
-                    //var classSelector = "stackVal stackspacer lastRegChanged";  // the class of the element
-                    console.log("getAddrVal is: ", getAddrVal);
-                var temps = d3.select(getAddrVal).text();
-                    console.log ("testingMemoryReadData is: ", temps);
-                var fields = temps.split(/:/);
-                var memWriteData = fields[2];
-                    console.log ("writeDataYEA is: ", memWriteData);
-                return memWriteData;
-                break;
-                */
                 try {
-                    var getAddrVal = "#stackEntry-" + (mipsValues[elements[18]].val + 3);  //offset from stack display error
+                    var temp = MIPS.binaryStringToNumber(mipsValues[elements[18]].val);
+                    var getAddrVal = "#stackEntry-" + (temp + 3);  //offset from stack display error
                     //var classSelector = "stackVal stackspacer lastRegChanged";  // the class of the element
                     console.log("getAddrVal is: ", getAddrVal);
                     var temps = d3.select(getAddrVal).text();
-                    console.log ("testingMemoryReadData is: ", temps);
+                    console.log("testingMemoryReadData is: ", temps);
                     var fields = temps.split(/:/);
                     var memWriteData = fields[2];
-                    console.log ("writeDataYEA is: ", memWriteData);
-                    return memWriteData;
-                } catch (error) {
-                    console.log("Something went wrong in memoryReadDataResult " + error);
+                    memWriteData = memWriteData * 1;
+                    console.log("writeDataYEA is: ", MIPS.numberToBinaryString(memWriteData, 32));
+                    return MIPS.numberToBinaryString(memWriteData, 32);
+                } catch (error){
+                    console.log ("Error in memoryReadDataResult: ", error);
                     return "00000000000000000000000000000000";
                 }
                 break;
@@ -1721,23 +1761,29 @@ function visualize () {
 
 
     function getAluControl (AluOp0, AluOp1, Inst5ToALUCtr) {
-        // does not work with lables.
+        if (true) {
+        console.log ("getAluControl AluOp0 is: ", AluOp0);
+        console.log ("getAluControl AluOp1 is: ", AluOp1);}
 
-        try {
-            var strValue =  MIPS.binaryStringToNumber(Inst5ToALUCtr);
-            if (debug){
+            try {
+                var strValue = MIPS.binaryStringToNumber(Inst5ToALUCtr);
+            }catch (error){
+                console.log("Something went wrong in getAluControl: " + error);
+            }
+
+            if (true){
             console.log ("getAluControl Inst5ToALUCtr: ", Inst5ToALUCtr);
             console.log ("getAluControl strValue: ", strValue);}
 
-            if (AluOp0 === "0"  && AluOp1 === "0") {
+            if (AluOp0 == "0"  && AluOp1 == "0") {
                 // Adding
                 return "0010";
 
-            } else if (AluOp1 === "1") {
+            } else if (AluOp1 == "1") {
                 // Subtracting
                 return "0110";
 
-            } else if (AluOp0 === "1"){
+            } else if (AluOp0 == "1"){
                     switch (strValue) {
                         case 0:
                             // ADD
@@ -1763,9 +1809,6 @@ function visualize () {
 
                     }
             }
-        } catch (error) {
-            console.log("Something went wrong in getAluControl: " + error);
-        }
     }
 
 
@@ -1824,7 +1867,7 @@ function visualize () {
             //SUB
             case "0110":
                 var sum = MIPS.binaryStringToNumber(Rd1) - MIPS.binaryStringToNumber(AluInBott);
-                console.log ("getAluResult ADD sum is: ", sum);
+                console.log ("getAluResult Subtract sum is: ", sum);
 
                 if (sum === 0) {
                     mipsValues[elements[17]].val = "1";
@@ -1958,13 +2001,13 @@ function visualize () {
                 if (tempElement === lineName) {
                     switch (tempElement) {
                         case "branch":
-                        case "aluOp0":
+                        case "aluOp1":
                             return tempElement.val = 1;
                             break;
                         case "jump":
                         case "memRead":
                         case "memToReg":
-                        case "aluOp1":
+                        case "aluOp0":
                         case "regDst":
                         case "regWrite":
                         case "memWrite":
