@@ -11,18 +11,24 @@ function visualize () {
     $("#vis").append(
         //' <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Launch demo modal </button>' +
 
+
+
         '<!-- MODAL DEFINITION BEGINS  DO NOT CHANGE FOLLOWING LINES -->' +
+
         '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> ' +
-        '<div class="modal-dialog" role="document" style="width:740px;"> ' +
+        '<div class="modal-dialog" role="document" > ' +
+
         '<div class="modal-content"> ' +
-        '<div class="modal-header"> ' +
+        '<div class="modal-header" style="background-color: black;"> ' +
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> ' +
-        '<h4 class="modal-title" id="myModalLabel">MIPS Processor</h4> ' +
+        '<h3 class="modal-title" id="myModalLabel" style="color: white;">Visualization of MIPS Processor Instruction: </h3> ' +
         '</div> ' +
-        '<div class="modal-body" style="height:600px;" >' +
+        '<div class="modal-body" align="center">' +
         '<!-- MODAL DEFINITION END -->' +
 
-        '<svg id="processor" style="width:640px;height:560px;">' +
+        //'<svg id="processor" style="width:640px;height:560px;">' +
+        '<svg id="processor" height="70%" width="65%" viewBox="0 0 740 560" preserveAspectRatio="none">' +
+
         '<g id="start"> ' +
         '<g id="IF">' +
         '<!-- START ### IF ###--> ' +
@@ -214,8 +220,8 @@ function visualize () {
         '<!--Write data-->' +
         '<text id="writeData" class="idecode" x="276" y="354" font-size="10px" fill="lightgrey" >WD</text>' +
 
-        '<!--Register File Lable-->' +
-        '<text id="registerFileLableTxt" class="idecode" x="306" y="366" font-size="11px" fill="lightgrey" >Registers</text>' +
+        '<!--Register File Label-->' +
+        '<text id="registerFileLabelTxt" class="idecode" x="306" y="366" font-size="11px" fill="lightgrey" >Registers</text>' +
 
         '<!-- LINE READ DATA 1 TO ALU RESULT -->' +
         '<line id="RD1ToAluResult" class="idecodeObj" x1="355" y1=285 x2="413" y2="285" stroke="lightgrey" stroke-width="2px" ></line>' +
@@ -474,9 +480,7 @@ function visualize () {
 
     //TODO: grey out visualize button if instruction does not work.
 
-    // TODO: All created items need a specific class, remove all items in the class to clear the visualization.
-
-    //TODO: Implement BEQ: Use the first line value.
+    // TODO: All created items need a specific class tag, remove all items in the class tag to clear the visualization.
 
     //TODO: See page 98 chap 2 figure 2.5 for instruction coding and what is relevant in SW LW ADDI
 
@@ -491,37 +495,48 @@ function visualize () {
     var done;
     //var dataKeys = ["PLAY", "IF", "ID", "EX", "MEM", "WB", "RESTART", "Close"];
     var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Close"];
-    var debug = false;
     var pc = 32768;
     var previousLine = 0;
+    var debug = false;
 
-    // THIS IS INSTRUCTION TEXT, INSTRUCTION FORMAT AND BINARY INSTRUCT PRINTED AT TOP.
-    if (Lable !== null){
-        var lableAddress = Lable;
+
+    // BEQ instructions do not have an assocated binary address this is used to create one.
+    // TODO: make a function for this code.
+    if (LabelLineNo !== null){
+        var labelAddress = LabelLineNo;
         var partialInst = CurrentLine["assembledInstruction"].slice(0, 19);
-        console.log ("partialInst is: ", partialInst);
-        console.log ("the lable  is: ", lableAddress);
-        console.log ("the lable is binary16 bit: ", MIPS.numberToBinaryString(lableAddress, 16));
+        var addressBinary =  partialInst + MIPS.numberToBinaryString(labelAddress, 16) + " I";
 
-
-        var addressBinary =  partialInst + MIPS.numberToBinaryString(lableAddress, 16) + " I";
         CurrentLine["assembledInstruction"] = addressBinary;
-        console.log("CurrentLine with lable as binary is: ", addressBinary);
         instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
-        console.log("instruction format is: ", instructionFormat);
-        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+
         var instructionIn = CurrentLine["text"];
+        var tempFields = instructionIn.split(/#/);
+        instructionIn = tempFields[0];
+
+        if (debug){
+        console.log ("partialInst is: ", partialInst);
+        console.log ("the label  is: ", labelAddress);
+        console.log ("the label is binary16 bit: ", MIPS.numberToBinaryString(labelAddress, 16));
+        console.log("CurrentLine with label as binary is: ", addressBinary);
+        console.log("CurrentLine[text] no comment is: ", instructionIn);
+        console.log("instruction format is: ", instructionFormat);
+        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);}
 
 
 
     } else {
         var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
-        console.log("partialInst is: ", partialInst);
         var instructionIn = CurrentLine["text"];
-        console.log("CurrentLine[text] is: ", instructionIn);
-        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+        var tempFields = instructionIn.split(/#/);
+        instructionIn = tempFields[0];
         instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
-        console.log("instruction format is: ", instructionFormat);
+
+        if (debug) {
+        console.log("partialInst is: ", partialInst);
+        console.log("CurrentLine[text] no comment is: ", instructionIn);
+        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+        console.log("instruction format is: ", instructionFormat);}
     }
 
     var allRegs = [
@@ -573,7 +588,7 @@ function visualize () {
         'ctrlEllipseToDataMem', 'ctrlEllipseToDataMemTxt', 'ctrlEllToDataMemMux','ctrlEllToDataMemMuxTxt', 'ctrlEllToAluOpTxt',
         'ctrlEllToAluOp', 'ctrlEllToMemWriteTxt', 'ctrlEllToMemWrite', 'ctrlEllToAluSrcTxt', 'ctrlEllToAluSrc',
         'ctrlEllToRegWriteTxt', 'ctrlEllToRegWrite', 'regFileRect', 'regFileRectTxt', 'readData1Txt',
-        'readReg2Txt', 'readData2Txt', 'writeRegTxt', 'writeData', 'registerFileLableTxt',
+        'readReg2Txt', 'readData2Txt', 'writeRegTxt', 'writeData', 'registerFilelabelTxt',
         'RD2ToAluResultCircle',
         'RD1ToAluResult', 'RD1ToAluResultArrow', 'RD2ToAluResult','signExtEllip', 'signExtEllipTxtSign',
         'Mux1ToShiftLeft2Line',  'Mux1ToShiftLeftArrow', 'signExt32ToMux1Circle', 'signExt32ToMux1Ln', 'signExt32ToMux1Arrow',
@@ -815,7 +830,7 @@ function visualize () {
             case "readData2Txt":
             case "writeRegTxt":
             case "writeData":
-            case "registerFileLableTxt":
+            case "registerFileLabelTxt":
             case "RD1ToAluResult":
             case "RD1ToAluResultArrow":
             case "RD2ToAluResultCircle":
@@ -1023,7 +1038,7 @@ function visualize () {
                         }
                     }
                 }
-                // lable the PC value below the PC rectangle element
+                // label the PC value below the PC rectangle element
                 d3.select("#IF").append("text")
                     .text("PC: ")
                     .style("font-size", "9px")
@@ -1226,13 +1241,13 @@ function visualize () {
 
 
     function setElementVisibility(element) {
-        // TODO: can this be a two dim array?
+        // TODO: build a logic table as a 2D array to replace this mess
         // what is in common with each? fall through cases for differences.
-
 
         if (debug) {
             console.log("HELLO setElementVisibility LineName is: ", element);
         }
+
         if (instructionFormat === "R") {
             switch (CurrentLine["instruction"]) {
                 case "ADD":
@@ -1459,7 +1474,6 @@ function visualize () {
                         case "inst5ToAluCtrl":
                         case "inst5ToAluCtrlArrow":
                         case "regMuxTxt1":
-                        case 'pcAluResultMuxTxt0':
                         case 'muxIntoAluTxt1':
                         case 'lineRD2toMemWD':
                         case 'lineRD2toMemWDArrow':
@@ -1623,15 +1637,11 @@ function visualize () {
             case"RD1":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))]];
                 console.log("RD1 is: ", regValue.val);
-                // TODO: convert regVal.val to a binary string
-                //return MIPS.numberToBinaryString(regValue.val, 32);
                 return MIPS.numberToBinaryString(regValue.val, 32);
                 break;
 
             case"RD2":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
-                //console.log("RD2 is: ", regValue.val);
-                // TODO: convert regVal.val to a binary string
                 return MIPS.numberToBinaryString(regValue.val);
                 break;
 
@@ -1695,10 +1705,10 @@ function visualize () {
 
                 if (true) {
                     console.log("PCSrc zero is ", zero);
-                    console.log("PCSrc zero is ", branch);
+                    console.log("PCSrc branch is ", branch);
                 }
 
-                if (zero === "0" && branch === "0") {
+                if (zero == "0" && branch == "0" || zero == "1" && branch == "0" || zero == "0" && branch == "1" ) {
                     return "0";
                 } else {
                     return "1";
@@ -2067,25 +2077,25 @@ function visualize () {
 
     // Display the current instruction text,  instruction format and instruction in binary
     // TODO: Need to update this info when current line changes. This needs to be a function.
-    d3.select("#start").append("text")
-        .text("Instruction: " + instructionIn)
-        .style("font-size", "14px")
-        .attr("id", "displayInstructionText")
-        .attr("x", 20)
-        .attr("y", 11);
+    d3.select("#myModalLabel").append("text")
+        .text(instructionIn)
+        .style("font-size", "16px")
+        .attr("id", "displayInstructionText");
+        //.attr("x", 20)
+        //.attr("y", 11);
 
     d3.select("#start").append("text")
         .text("Format: " + instructionFormat)
         .style("font-size", "12px")
         .attr("id", "displayInstructionFormat")
-        .attr("x", 285)
+        .attr("x", 400)
         .attr("y", 11);
 
     d3.select("#start").append("text")
-        .text("Binary: " + CurrentLine["assembledInstruction"].slice(0, -1))
+        .text("Instruction in Binary: " + CurrentLine["assembledInstruction"].slice(0, -1))
         .style("font-size", "12px")
         .attr("id", "displayInstructionBinary")
-        .attr("x", 365)
+        .attr("x", 10)
         .attr("y", 11);
 
 
@@ -2388,6 +2398,7 @@ function visualize () {
         if(datapoint == "Close") {
 
             d3.select("#displayInstructionText").remove();
+            d3.select("#myModalLabel").remove();
             d3.selectAll(".lineValues").remove();
             d3.select("#displayInstructionFormat").remove();
             d3.select("#displayInstructionBinary").remove();
