@@ -1,0 +1,14 @@
+Summary of changes
+
+- Added mips_assembler.js for translating mips instructions to machine language code
+- Implemented a new tab "Assembly" to display a log of the machine language code as it is run
+- Implemented a new tab "All" to display all register contents while stepping through instructions
+- Added tests for mips_assembler to tests.js
+- Fixed bugs in SLTI and SLTIU instruction implementations
+    - Both implementations incorrectly attempted to store the result in $rd. Both were updated to correctly
+      store the result in $rt.
+- Corrected extraneous comma, missing code tags, and other minor syntax errors
+- Resized MIPS editor window to allow for more room for data tabs
+- Added css code for spacing and line separators in "All" tab to improve readability
+- Bug fix removed %ra from read only data declaration
+- Bug fix corrected "Enable auto switching" text and check box
