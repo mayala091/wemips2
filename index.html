@@ -77,11 +77,17 @@
 # guide linked in the menu. restore below to stackTest in examples
 
 
-ADD $s0, $zero, $s1
-ADDI $s1, $zero, 9
+ADD $s0, $zero, $t1 #This is a test comment
+ADD $s1, $zero, $t2
+ADD $s2, $zero, $t3
+ADD $s3, $zero, $t4
+ADD $s4, $zero, $t5
+ADD $s5, $zero, $t6
+ADD $s6, $zero, $t7
 SW $s0, -10($sp)
 SW $s1, -9($sp)
 LW $s2, -9($sp)
+BEQ $s1, $s2, exit
 ADDI $sp, $sp, -1
 ADDI $sp, $sp, -2
 ADDI $sp, $sp, -3
@@ -90,6 +96,7 @@ ADDI $sp, $sp, -9
 ADDI $sp, $sp, -14
 ADDI $sp, $sp, -23
 ADDI $sp, $sp, -37
+exit:
 LB $s3, 0($sp)</textarea>
           </div>
           <br />

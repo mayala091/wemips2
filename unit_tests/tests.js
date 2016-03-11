@@ -708,87 +708,87 @@ module("Assembly", {
 
 test("ADD", function() {
 	ME.setCode('ADD $s0, $s1, $s2');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 10001 10010 10000 00000 100000");
 });
 
 
 test("ADDI", function() {
 	ME.setCode('ADDI $t8, $t1, -4247');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001000 01001 11000 1110111101101001");
 });
 
 test("ADDU", function() {
 	ME.setCode('ADDU $v1, $a0, $a1');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 00100 00101 00011 00000 100001");
 });
 
 test("ADDIU", function() {
 	ME.setCode('ADDIU $t9, $t1, -15387');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001001 01001 11001 1100001111100101");
 });
 
 test("SUB", function() {
 	ME.setCode('SUB $t0, $t1, $t2');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 01001 01010 01000 00000 100010");
 });
 
 
 test("SUBU", function() {
 	ME.setCode('SUBU $t3, $t4, $t5');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 01100 01101 01011 00000 100011");
 });
 
 test("LUI", function() {
 	ME.setCode('LUI $s5, 10352');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001111 00000 10101 0010100001110000");
 });
 
 test("AND", function() {
 	ME.setCode('AND $s0, $s1, $s2');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 10001 10010 10000 00000 100100");
 });
 
 test("ANDI", function() {
 	ME.setCode('ANDI $t4, $a2, 7665');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001100 00110 01100 0001110111110001");
 });
 
 test("NOR", function() {
 	ME.setCode('NOR $sp, $s7, $a1');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 10111 00101 11101 00000 100111");
 });
 
 test("OR", function() {
 	ME.setCode('OR $t8, $t2, $gp');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 01010 11100 11000 00000 100101");
 });
 
 test("ORI", function() {
 	ME.setCode('ORI $v1, $s5, 5057');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001101 10101 00011 0001001111000001");
 });
 
 test("SLL", function() {
 	ME.setCode('SLL $t9, $t7, 8');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 00000 01111 11001 01000 000000");
 });
 
 test("SRL", function() {
 	ME.setCode('SRL $s0, $a0, 27');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 00000 00100 10000 11011 000010");
 });
 
@@ -796,7 +796,7 @@ test("BEQ", function() {
 	ME.setCode(
 		'BEQ $zero, $zero, foo\nfoo:'
 	);
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000100 00000 00000 foo");
 });
 
@@ -806,7 +806,7 @@ test("BNE", function() {
 		"BNE $t8, $t2, loop_body\nloop_body:"
 	);
 
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000101 11000 01010 loop_body");
 });
 
@@ -815,7 +815,7 @@ test("J", function() {
 		'J baz\nbaz:'
 	);
 
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000010 baz");
 });
 
@@ -825,87 +825,87 @@ test("JAL", function() {
 		'bar:'
 	]);
 
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000011 bar");
 });
 
 test("JR", function() {
 	ME.setCode('JR $s3');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 10011 00000 00000 00000 001000");
 });
 
 test("LW", function() {
 	ME.setCode('LW $s6, 13780($k0)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "100011 11010 10110 0011010111010100");
 });
 
 test("SW", function() {
 	ME.setCode('SW $fp, -17668($t1)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "101011 01001 11110 1011101011111100");
 });
 
 test("LH", function() {
 	ME.setCode('LH $v1, -23193($k1)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "100001 11011 00011 1010010101100111");
 });
 
 /* TODO: LHU is not implemented
 test("LHU", function() {
 	ME.setCode('LHU $zero, 20363($s0)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "100101 10000 00000 0100111110001011");
 });
 */
 
 test("SH", function() {
 	ME.setCode('SH $s2, -10250($s6)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "101001 10110 10010 1101011111110110");
 });
 
 test("LB", function() {
 	ME.setCode('LB $a3, 16856($t5)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "100000 01101 00111 0100000111011000");
 });
 
 test("LBU", function() {
 	ME.setCode('LBU $v0, -4($sp)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "100100 11101 00010 1111111111111100");
 });
 
 test("SB", function() {
 	ME.setCode('SB $a2, 22571($a3)');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "101000 00111 00110 0101100000101011");
 });
 
 test("SLT", function() {
 	ME.setCode('SLT $s4, $t7, $s3');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 01111 10011 10100 00000 101010");
 });
 
 test("SLTI", function() {
 	ME.setCode('SLTI $v0, $t2, 20135');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001010 01010 00010 0100111010100111");
 });
 
 test("SLTU", function() {
 	ME.setCode('SLTU $v0, $a2, $a1');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "000000 00110 00101 00010 00000 101011");
 });
 
 test("SLTIU", function() {
 	ME.setCode('SLTIU $s3, $t5, 32679');
-	var assembly = ME.getAssembledLine(1);
+	var assembly = ME.getAssembledLine(1).slice(0, -2);
 	equal(assembly, "001011 01101 10011 0111111110100111");
 });
 

@@ -44,7 +44,7 @@ function visualize () {
                                 '<!-- MODAL DEFINITION END -->' +
 
                                 //'<svg id="processor" style="width:640px;height:560px;">' +
-                                '<svg class="col-md-7" id="processor" height="70%" width="65%" viewBox="0 0 655 560" preserveAspectRatio="none">' +
+                                '<svg class="col-md-8" id="processor" height="70%" width="60%" viewBox="0 0 750 560" preserveAspectRatio="none">' +
 
                                 '<g id="start"> ' +
                                 '<g id="IF">' +
@@ -475,7 +475,7 @@ function visualize () {
 
                     '</div>' +
 
-                                    '<div id="stages" class="col-md-5" align="right">' +
+                                    '<div id="stages" class="col-md-4" align="right">' +
 
                                         '<ul class="nav nav-tabs">' +
 
@@ -504,7 +504,7 @@ function visualize () {
                                         '</li>'+
 
                                         '<li>'+
-                                        '<a href="#resetl-stages" data-toggle="tab">Reset</a>' +
+                                            '<a href="#resetl-stages" data-toggle="tab">Reset</a>' +
                                         '</li>'+
 
                                         '</ul>'+
@@ -513,7 +513,7 @@ function visualize () {
                     '</div>' +
 
                     '<!-- MODAL FOOTER DEFINITION BEGINS DO NOT CHANGE FOLLOWING LINES -->' +
-                    '<div id="modal-buttons" class="modal-footer" style="text-align:center;background-color: black;"> ' +
+                    '<div id="modal-buttons" class="modal-footer" style="text-align:center; background-color: black;"> ' +
                 '</div>' +
             '</div>' +
         '</div>' +
@@ -1490,6 +1490,7 @@ function visualize () {
                         case "regMuxToRegFileArrow":
                         case "writeRegTxt":
                         case "WR":
+                        case "WD":
                         case "MemMuxToRDArrow":
                         case "writeData":
                         case "memoryReadDataResult":

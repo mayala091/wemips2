@@ -5,3 +5,5 @@
 # need to get Mark's code added and see how its all going to fit together
 
 # can we use a table instead of calculating the values on the wires every time?
+
+# when running assembly command LW and SW the correct values are not displayed on the stack.

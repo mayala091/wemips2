@@ -13,6 +13,7 @@ function MipsError(message) {
 
 // used by mips_visualize.js
 var CurrentLine;
+var LabelLineNo = null;
 var allRegisterValues = {};
 var startingRegisters = {};
 // used by mips_visualize.js for initialization.
@@ -398,23 +399,21 @@ function mipsEmulator(mipsArgs){
          * and object.nextLine which is the line that is about to be run.
          */
         step: function(){
-            if(debug) console.log("Running line: " + currentLine + " - " + JSON.stringify(mipsCode.code[currentLine]));
+            if(true) console.log("Running line: " + currentLine + " - " + JSON.stringify(mipsCode.code[currentLine]));
             // check if we are finished with the emulation
             if(currentLine > mipsCode.code.length - 1) return finishEmulation();
             if(!mipsCode.code[currentLine]) throw new MipsError("Line " + currentLine + " does not exist");
             if(mipsCode.code[currentLine].error) throw new MipsError(mipsCode.code[currentLine].error);
             if(mipsCode.code[currentLine].ignore) incrementLine();
             // we need to check again, because the remainder of the lines could have been comments or blank.
-
+            CurrentLine = mipsCode.code[currentLine];
+            setVisualizeButton(CurrentLine["instruction"]);
+            //console.log ("In STEP CurrentLine[instruction] is: ", CurrentLine["instruction"]);
 
             var ret = {
                 lineRan: Number(currentLine)
             };
             runLine(mipsCode.code[currentLine]);
-            //Global CurrentLine pass to mips_visualize
-            CurrentLine = mipsCode.code[currentLine-1];
-            //console.log("this is the value of CurrentLine: ", CurrentLine);
-            //console.log("this is the value of mipsCode.code[currentLine]: ", mipsCode.code[currentLine-1]);
             ret.nextLine = currentLine;
             if(currentLine > mipsCode.code.length - 1) finishEmulation();
             return ret;
@@ -443,7 +442,10 @@ function mipsEmulator(mipsArgs){
          */
         goToLabel: function(label){
             var line = mipsCode.labels[label];
-            if(debug) console.log("Getting label: "+ label + " - " +JSON.stringify(line) );
+            LabelLineNo = line.lineNo;
+            console.log("label line No.: ", label);
+            if(true) console.log("Getting label: "+ label + " - " +JSON.stringify(line) );
+
             if(line){
                 ME.setLine(line.lineNo);
                 return currentLine; // TODO: probably don't need a return value here, instead, listen for an onChangeLineNumber handler
@@ -485,7 +487,29 @@ function mipsEmulator(mipsArgs){
     // should this be here?
 
 
+    // Set the visualize button based on instruction.
+    function setVisualizeButton(instruction){
+        switch (instruction){
+            case "ADD":
+            case "LW":
+            case "SW":
+            case "BEQ":
+                try {
+                    return document.getElementById('visualize').disabled = false;
+                }catch (error){
+                    console.log ("setVisualizeButton something broke: ", error);
+                }
+                break;
+            default:
+                try {
+                    return  document.getElementById('visualize').disabled=true;
+                }catch (error){
+                    console.log ("setVisualizeButton something broke: ", error);
+                }
 
+                break;
+        }
+    }
 
     function finishEmulation(){
         ME.running = false;
@@ -710,7 +734,8 @@ function mipsEmulator(mipsArgs){
                 }
             };
 
-        // In the else case, the regex didn't match, possible error?
+
+            // In the else case, the regex didn't match, possible error?
         } else {
             // TODO: check for special cases
             if(debug) console.log("----> No matches");
@@ -721,10 +746,9 @@ function mipsEmulator(mipsArgs){
         return LINE;
     }
 
-    // global for mips_visualize.js
+    // globals for mips_visualize.js
     allRegisterValues = registers;
-    allRegisters = allRegs;
-    //console.log("allRegistersValues is: ", allRegistersValues);
+
 
     // Set the starting code if there was any.
     if(mipsArgs.startingCode) ME.setCode(mipsArgs.startingCode);

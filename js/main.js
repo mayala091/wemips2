@@ -71,7 +71,7 @@ $(document).ready(function () {
             window.alert(message);
         },
         onStackChange: addStackAddress,
-        // Set the starting code to be the defualt in the editor.
+        // Set the starting code to be the default in the editor.
         startingCode: $("#editor").val()
     });
     var running = false;
@@ -220,8 +220,8 @@ $(document).ready(function () {
         lines = lines || {};
         lastLineNoRun = lines.lineRan || lastLineNoRun || null;
         nextLine = lines.nextLine || me.getLineNumber();
-        // if(debug) console.log("Active line: " + lastLineNoRun);
-        // if(debug) console.log("Next line: " + nextLine);
+        if(true) console.log("Active line: " + lastLineNoRun);
+        if(true) console.log("Next line: " + nextLine);
         $("#currentLineInput").val(nextLine);
         if(lastRunMarker) lastRunMarker.clear();
         if(lastLineNoRun)
@@ -423,9 +423,8 @@ $(document).ready(function () {
                 + indexNice + '</button>'
             );
         });
-        //$("#visualize").append(
-         //   ' <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"> Visualize </button>'
-        //);
+        // set visualize button to disabled
+        document.getElementById('visualize').disabled=true;
     }
     var showRelative;
     function switchAddressMode(e){
