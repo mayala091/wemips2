@@ -21,7 +21,7 @@ function visualize () {
                 '<div class="modal-header" style="background-color: black;"> ' +
                 '<div class="row">' +
                     '<div id="title" class="col-md-4" align="left">' +
-                        '<h3 class="modal-title" id="myModalLabel" style="color: white;">Visualization of MIPS Instruction: </h3> ' +
+                        '<h3 class="modal-title" id="myModalLabel" style="margin-left: 40px;color: white;">Visualization of MIPS Instruction: </h3> ' +
                     '</div> ' +
 
                     '<div id="instruction" class="col-sm-2" style="color:white;" align="left">' +
@@ -44,7 +44,7 @@ function visualize () {
                                 '<!-- MODAL DEFINITION END -->' +
 
                                 //'<svg id="processor" style="width:640px;height:560px;">' +
-                                '<svg class="col-lg-7" id="processor" height="70%" width="65%" viewBox="0 0 655 560" preserveAspectRatio="none">' +
+                                '<svg class="col-md-7" id="processor" height="70%" width="65%" viewBox="0 0 655 560" preserveAspectRatio="none">' +
 
                                 '<g id="start"> ' +
                                 '<g id="IF">' +
@@ -475,32 +475,36 @@ function visualize () {
 
                     '</div>' +
 
-                                    '<div id="stages" class="col-md-4" align="right">' +
+                                    '<div id="stages" class="col-md-5" align="right">' +
 
                                         '<ul class="nav nav-tabs">' +
 
                                         '<li class="active">' +
-                                        '<a href="#all-stages" data-toggle="tab">ALL</a>' +
+                                            '<a href="#IF-stages" data-toggle="tab">IF</a>'+
                                         '</li>'+
 
                                         '<li>'+
-                                        '<a href="#if-stages" data-toggle="tab">IF</a>'+
+                                            '<a href="#ID-stages" data-toggle="tab">ID</a>'+
                                         '</li>'+
 
                                         '<li>'+
-                                        '<a href="#ID-stages" data-toggle="tab">ID</a>'+
+                                            '<a href="#EX-stages" data-toggle="tab">EX</a>'+
                                         '</li>'+
 
                                         '<li>'+
-                                        '<a href="#EX-stages" data-toggle="tab">EX</a>'+
+                                            '<a href="#MEM-stages" data-toggle="tab">MEM</a>'+
                                         '</li>'+
 
                                         '<li>'+
-                                        '<a href="#MEM-stages" data-toggle="tab">MEM</a>'+
+                                            '<a href="#WB-stages" data-toggle="tab">WB</a>'+
                                         '</li>'+
 
                                         '<li>'+
-                                        '<a href="#WB-stages" data-toggle="tab">WB</a>'+
+                                             '<a href="#all-stages" data-toggle="tab">ALL</a>' +
+                                        '</li>'+
+
+                                        '<li>'+
+                                        '<a href="#resetl-stages" data-toggle="tab">Reset</a>' +
                                         '</li>'+
 
                                         '</ul>'+
