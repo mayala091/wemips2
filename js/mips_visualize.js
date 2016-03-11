@@ -17,459 +17,505 @@ function visualize () {
 
         '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> ' +
         '<div class="modal-dialog" role="document" > ' +
-
-        '<div class="modal-content"> ' +
-        '<div class="modal-header" style="background-color: black;"> ' +
-        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> ' +
-        '<h3 class="modal-title" id="myModalLabel" style="color: white;">Visualization of MIPS Processor Instruction: </h3> ' +
-        '</div> ' +
-        '<div class="modal-body" align="center">' +
-        '<!-- MODAL DEFINITION END -->' +
-
-        //'<svg id="processor" style="width:640px;height:560px;">' +
-        '<svg id="processor" height="70%" width="65%" viewBox="0 0 740 560" preserveAspectRatio="none">' +
-
-        '<g id="start"> ' +
-        '<g id="IF">' +
-        '<!-- START ### IF ###--> ' +
-        '<!-- PC RECT --> ' +
-        '<rect id="pc" class="ifetchObj" x="35" y="240" width="25" height="70" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
-        '<text id="pcTxt" class="ifetch" x="38" y="280" fill="lightgrey" font-size="12px"  >PC</text>' +
-
-        '<!-- LINE PC TO INSTRUCTION MEMORY -->' +
-        '<line id="pcToInstMem" class="ifetchObj" x1="60" y1="275" x2="71" y2="275" stroke="lightgrey" stroke-width="2px"></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="pcArrow" class="ifetchObj" d="M 71,275 71,273 75,275 71,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- CIRCLE -->' +
-        '<circle id="pcCircle" class="ifetchObj" cx="66" cy="275"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></circle>' +
-
-        '<!-- LINE PC TO ADD TOP -->' +
-        '<path id="pcAluIn" class="ifetchObj" d="M 105,55 66,55 66,275" style="fill:none;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="pcAddArrow" class="ifetchObj" d="M 105,55 105,53 109,55 105,57 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<g>' +
-        '<!-- 4 TO ADD BOTTOM-->' +
-        '<line id="fourAluIn" class="ifetchObj" x1="90" y1="120" x2="105" y2="120" style="stroke:lightgrey;stroke-width:2px;"></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="fourAluArrow" class="ifetchObj" d="M 105,120 105,118 109,120 105,122 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<text id="fourTxt" class="ifetch" x="80" y="123" fill="lightgrey" font-size="11px"  >4</text>' +
-        '</g>' +
-
-        '<!-- INSTRUCTION MEMORY RECT-->' +
-        '<g id="instMem">' +
-        '<rect id="instMemRect" class="ifetchObj" x="80" y="260" width="65" height="90" style="fill:none;stroke:lightgrey;stroke-width:2px;"></rect>' +
-        '<text id="instMemTxtRead" class="ifetch" x="84" y="272" fill="lightgrey" font-size="9px" >Read</text>' +
-        '<text id="instMemTxtAddress" class="ifetch" x="84" y="284" fill="lightgrey" font-size="9px" >address</text>' +
-        '<text id="instMemTxtInst" class="ifetch" x="90" y="304" fill="lightgrey" font-size="9px" >Instruction</text>' +
-        '<text id="instMemTxt31" class="ifetch" x="114" y="316" fill="lightgrey" font-size="9px" >[31-0]</text>' +
-        '<text id="instMemTxtIns31" class="ifetch" x="88" y="336" fill="lightgrey" font-size="9px" >Instruction</text>' +
-        '<text id="instMemTxtMem" class="ifetch" x="92" y="346" fill="lightgrey"  font-size="9px" >memory</text>' +
-        '</g>' +
-
-        '<!-- PC ADD ALU-->' +
-        '<g id="pcAlu" transform="translate(110,40)">' +
-        '<path id="pcAluObj1" class="ifetchObj" d="M -17.27 20.05 L 20.82 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,1.77,20.05)" pointer-events="none"></path>' +
-        '<path id="pcAluObj2" class="ifetchObj" d="M -17.27 81.95 L 20.82 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,1.77,81.95)" pointer-events="none"></path>' +
-        '<path id="pcAluObj3" class="ifetchObj" d="M 6.85 49.81 L 61.61 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,34.23,49.81)" pointer-events="none"></path>' +
-        '<path id="pcAluObj4" class="ifetchObj" d="M 2 1.33 L 34.5 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
-        '<path id="pcAluObj5" class="ifetchObj" d="M 2 101.33 L 34.5 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
-        '<path id="pcAluObj6" class="ifetchObj" d="M 2 63 L 5.64 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
-        '<path id="pcAluObj7" class="ifetchObj" d="M 5.64 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
-        '</g>' +
-        '<text id="addTxt" class="ifetch" x="120" y="95" fill="lightgrey" font-size="11px" >Add</text>' +
-        '<!-- END ### IF ###-->' +
-        '</g>' +
-
-        '<!-- START ### ID ###-->' +
-        '<g id="ID">' +
-        '<g id="instLines">' +
-        '<!-- Instruction [31-26] INSTRUCTION DISTRIBUTION LINE-->' +
-        '<text id="inst31Txt" class="idecode" x="158" y="185" font-size="9px" fill="lightgrey"  >Instruction [31-26]</text>' +
-        '<line id="inst31ToCtrl"class="idecodeObj" x1="158" y1=190 x2="226" y2="190" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="inst31Arrow" class="idecodeObj"  d="M 226,190 226,188 230,190 226,192 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- Instruction [25-21] INSTRUCTION DISTRIBUTION LINE-->' +
-        '<text id="inst25Txt" class="idecode" x="162" y="255" font-size="9px" fill="lightgrey" >Instruction [25-21]</text>' +
-        '<line  id="instToRR1" class="idecodeObj" x1="158" y1=260 x2="259" y2="260" stroke="lightgrey" stroke-width="2px"></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="inst25Arrow" class="idecodeObj" d="M 259,260 259,258 263,260 259,262 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<circle id="inst25Circle" class="idecodeObj" cx="158" cy="260"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-
-        '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE-->' +
-        '<text id="inst20Txt" class="idecode" x="162" y="287" font-size="9px" fill="lightgrey" >Instruction [20-16]</text>' +
-        '<line id="inst20ToCircle" class="idecodeObj" x1="158" y1=292 x2="213" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
-        '<line id="inst20ToRR2" class="idecodeObj" x1="213" y1=292 x2="259" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
-
-        '<!-- Arrow point end of line-->' +
-        '<path id="inst20MUX0Arrow" class="idecodeObj" d="M 259,292 259,290 263,292 259,294 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<circle id= "inst20Circle" class="idecodeObj" cx="158" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></circle>' +
-
-        '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE BRANCHES TO MUX  -->' +
-        '<path id="inst20ToMux" class="idecodeObj notRObj" d="M  233,310 213,310 213,292" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="inst20MuxArrow" class="idecodeObj notRObj" d="M 228,310 228,308 232,310 228,312 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<circle id="inst20MuxCircle" class="idecodeObj notRObj" cx="213" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-
-        '<!-- Instruction [15-11] INSTRUCTION DISTRIBUTION LINE-->' +
-        '<text id= "inst15Txt" class="idecode" x="162" y="340" font-size="9px" fill="lightgrey" >Instruction [15-11]</text>' +
-        '<line id="inst15ToMux" class="idecodeObj" x1="158" y1=345 x2="228" y2="345" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="inst15Arrow" class="idecodeObj" d="M 228,345 228,343 232,345 228,347 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<circle id= "inst15Circle" class="idecodeObj" cx="158" cy="345"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-
-        '<!-- INST MEM RECT TO  DIST LINE-->' +
-        '<line id="instMemLine" class="idecodeObj" x1="145" y1=300 x2="158" y2="300"  stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<circle id="instMemCircle" class="idecodeObj" cx="158" cy=300  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-
-        '<!-- VERTICAL INSTRUCTION DISTRIBUTION LINE-->' +
-        '<line id="instDistLine" class="idecodeObj" x1="158" y1=412 x2="158" y2="190" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
-
-        '<!-- Instruction [15-0] INSTRUCTION DISTRIBUTION LINE-->' +
-        '<text id="inst15To0Txt" class="idecode" x="162" y="407" font-size="9px" fill="lightgrey" >Instruction [15-0]</text>' +
-        '<line id="inst15ToSignExt" class="idecodeObj" x1="158" y1=412 x2="268" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<line " id="intoSignExt16" class="idecodeObj notRObj" x1="268" y1=412 x2="285" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="intoSignExtArrow16" class="idecodeObj notRObj" d="M 285,412 285,410 289,412 285,414 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- 16 DIAG LINE 32 DIAG LINE AT SIGN EXTEND-->' +
-        '<text id="signExt16Txt" class="idecode notR" x="273" y="402" font-size="11px" fill="lightgrey" >16</text>' +
-        '<line id="signExt16DiagLine" class="idecodeObj notRObj" x1="273" y1=405 x2="283" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
-        '<text id="signExt32Txt" class="idecode notR" x="343" y="402" font-size="11px" fill="lightgrey" >32</text>' +
-        '<line id="signExt32DiagLine" class="idecodeObj notRObj" x1="343" y1=405 x2="353" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
-
-        '<!-- Instruction [5-0] INSTRUCTION DISTRIBUTION LINE TO ALU CONTROL-->' +
-        '<text id="inst5ToAluCtrlTxt" class="idecode" x="275" y="460" font-size="9px" fill="lightgrey" >Instruction [5-0]</text>' +
-        '<path id="inst5ToAluCtrl" class="idecodeObj" d="M 386,420 372,420 372,465 268,465 268,412" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="inst5ToAluCtrlArrow" class="idecodeObj" d="M 380,420 380,418 384,420 380,422 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<circle id="instToAluCtrlCircle" class="idecodeObj" cx="268" cy="412"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-        '</g>' +
-
-        '<!-- REGISTER MUX -->' +
-        '<g id="registerMux" transform="translate(235,300)">' +
-        '<path id="registerMux1" class="idecodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none"></path>' +
-        '<path id="registerMux2" class="idecodeObj" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none"></path>' +
-        '</g>' +
-        '<text id="regMuxTxt0" class="idecode" x="245" y="313" font-size="10px" fill="lightgrey" >0</text>' +
-        '<text id="regMuxTxtM" class="idecode" x="243" y="325" font-size="10px" fill="lightgrey" >M</text>' +
-        '<text id="regMuxTxtU" class="idecode" x="244" y="333" font-size="10px" fill="lightgrey" >u</text>' +
-        '<text id="regMuxTxtX" class="idecode" x="244" y="341" font-size="10px" fill="lightgrey" >x</text>' +
-        '<text id="regMuxTxt1" class="idecode" x="245" y="351" font-size="10px" fill="lightgrey" >1</text>' +
-
-        '<!-- LINE REGISTER MUX TO REGISTER FILE -->' +
-        '<line id="regMuxToRegFileLine" class="idecodeObj" x1="260" y1=327 x2="264" y2="327" stroke="lightgrey" stroke-width="2px"></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="regMuxToRegFileArrow" class="idecodeObj" d="M 264,327 264,325 268,327 264,329 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- CONTROL ELLIPSE -->' +
-        '<ellipse id="controlEllipse" class="idecodeObj, idtorqObj" cx="260" cy="190" rx="55" ry="25" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,260,190)" ></ellipse>' +
-        '<text id="controlEllipseTxt" class="idtorq" x="240" y="195" font-size="11px" fill="lightgrey" >Control</text>' +
-
-        '<!-- CONTROL ELLIPSE TO INSTRUCTION MUX -->' +
-        '<path id="regDistToInstMux" class="idecodeObj, idtorqObj" d="M 273,144 295,144 295,125 150,125 150,368 248,368 248,355" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<text id="regDistTxt" class="idtorq" x="300" y="140" font-size="9px" fill="lightgrey" >RegDst</text>' +
-
-        '<!-- CONTROL ELLIPSE TO OR GATE -->' +
-        '<path id="ctrlEllipseToOR" class="idecodeObj, idtorqObj" d="M 482,153 455,153 455,165 283,165" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<text id= "ctrlEllipseToORText" class="idtorq" x="290" y="160" font-size="9px" fill="lightgrey" >Brach</text>' +
-
-        '<!-- CONTROL ELLIPSE TO DATA MEMORY -->' +
-        '<text id="ctrlEllipseToDataMemTxt" class="idecode, idtorq" x="290" y="177" font-size="9px" fill="lightgrey" >MemRead</text>' +
-        '<path id="ctrlEllipseToDataMem" class="idecodeObj, idtorqObj" d="M 540,400 540,430 625,430 625,180 283,180" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- CONTROL ELLIPSE TO DATA MEMORY MUX -->' +
-        '<text id="ctrlEllToDataMemMuxTxt" class="idecode, idtorq" x="290" y="192" font-size="9px" fill="lightgrey" >MemtoReg</text>' +
-        '<path id="ctrlEllToDataMemMux" class="idecodeObj, idtorqObj" d="M 593,311 593,195 283,195" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- CONTROL ELLIPSE TO ALUOP -->' +
-        '<text id="ctrlEllToAluOpTxt" class="idecode, idtorq" x="290" y="205" font-size="9px" fill="lightgrey" >ALUOp</text>' +
-        '<path id="ctrlEllToAluOp" class="idecodeObj, idtorqObj" d="M 411,444 411,472 367,472 367,207 283,207" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- CONTROL ELLIPSE TO MEMWRITE -->' +
-        '<text id="ctrlEllToMemWriteTxt" class="idecode, idtorq" x="290" y="217" font-size="9px" fill="lightgrey" >MemWrite</text>' +
-        '<path id="ctrlEllToMemWrite" class="idecodeObj, idtorqObj" d="M 535,290 535,220 280,220" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- CONTROL ELLIPSE TO ALUSRC -->' +
-        '<text id="ctrlEllToAluSrcTxt" class="idecode, idtorq" x="290" y="231" font-size="9px" fill="lightgrey" >ALUSrc</text>' +
-        '<path id="ctrlEllToAluSrc" class="idecodeObj, idtorqObj" d="M 398,320 398,234 274,234" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- CONTROL ELLIPSE TO REGWRITE -->' +
-        '<text id="ctrlEllToRegWriteTxt" class="idecode, idtorq" x="315" y="245" font-size="9px" fill="lightgrey" >RegWrite</text>' +
-        '<path id="ctrlEllToRegWrite" class="idecodeObj, idtorqObj" d="M 305,250 305,245 263,245" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- REGISTER FILE RECT-->' +
-        '<!--Read register 1-->' +
-        '<rect id="regFileRect" class="idecodeObj" x="270" y="250" width="85" height="120" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
-        '<text id="regFileRectTxt" class="idecode" x="276" y="261" font-size="10px" fill="lightgrey" >RR1</text>' +
-
-        '<!--Read data 1-->' +
-        '<text id="readData1Txt" class="idecode" x="322" y="276" font-size="10px" fill="lightgrey" >RD1</text>' +
-
-        '<!--Read register 2-->' +
-        '<text id="readReg2Txt" class="idecode" x="276" y="296" font-size="10px" fill="lightgrey" >RR2</text>' +
-
-        '<!--Read data 2-->' +
-        '<text id="readData2Txt" class="idecode" x="322" y="324" font-size="10px" fill="lightgrey" >RD2</text>' +
-
-        '<!--Write register-->' +
-        '<text id="writeRegTxt"class="idecode" x="276" y="326" font-size="10px" fill="lightgrey" >WR</text>' +
-
-        '<!--Write data-->' +
-        '<text id="writeData" class="idecode" x="276" y="354" font-size="10px" fill="lightgrey" >WD</text>' +
-
-        '<!--Register File Label-->' +
-        '<text id="registerFileLabelTxt" class="idecode" x="306" y="366" font-size="11px" fill="lightgrey" >Registers</text>' +
-
-        '<!-- LINE READ DATA 1 TO ALU RESULT -->' +
-        '<line id="RD1ToAluResult" class="idecodeObj" x1="355" y1=285 x2="413" y2="285" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="RD1ToAluResultArrow" class="idecodeObj" d="M 413,285 413,283 417,285 413,287 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- LINE READ DATA 2 TO MUX ALU RESULT -->' +
-        '<line id="RD2ToAluResultCircle" class="idecodeObj" x1="355" y1=325 x2="362" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
-
-        '<line id="RD2ToAluResult" class="idecodeObj" x1="362" y1=325 x2="377" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
-
-        '<!-- Arrow point end of line-->' +
-        '<path id="RD2ToAluResultArrow" class="idecodeObj" d="M 377,325 377,323 381,325 377,327 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- SIGN-EXTED ELLIPSE-->' +
-        '<text id="signExtEllipTxtSign" class="idecode" x="299" y="407" font-size="11px" fill="lightgrey" >Sign-</text>' +
-        '<text id="signExtEllipTxtExt" class="idecode" x="299" y="420" font-size="11px" fill="lightgrey" >extend</text>' +
-        '<ellipse id="signExtEllip" class="idecodeObj" cx="315" cy="410" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,315,410)" ></ellipse>s' +
-
-        '<!-- REGISTER FILE READ DATA2 TO MEMORY WRITE DATA JUNCTION-->' +
-        '<circle id="RegFileRD2Circle" class="idecodeObj" cx="362" cy=325  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-
-
-        '<!-- LINE SIGN-EXTED ELLIPSE TO MUX 1-->' +
-        '<path id="signExtEllToMux1" class="idecodeObj" d="M 372,350 372,412 335,412" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- LINE MUX 1 CIRCLE TO SHIFT LEFT 2-->' +
-        '<path id="Mux1ToShiftLeft2" class="idecodeObj" d="M 375,140 372,140 372,350" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<line id="Mux1ToShiftLeft2Line" class="idecodeObj" x1="372" y1=140 x2="373" y2="140"  stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="Mux1ToShiftLeftArrow" class="idecodeObj" d="M 373,140 373,138 377,140 373,142 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- LINE SIGN-EXTED 32 TO MUX 1 ALU IN JUNCTION-->' +
-        '<circle id="signExt32ToMux1Circle" class="idecodeObj" cx="372" cy="350"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-        '<line id="signExt32ToMux1Ln" class="idecodeObj" x1="372" y1=350 x2="377" y2="350" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="signExt32ToMux1Arrow" class="idecodeObj" d="M 377,350 377,348 381,350 377,352 z" style="fill:lighgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- LINE +4 ADD ALU TO SHIFT LEFT 2 ALU RESULT -->' +
-        '<path id="addAluToMux" class="idecodeObj" d="M 145,90, 345,90 345,57 505,57" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="addAluToMuxArrow" class="idecodeObj" d="M 505,57 505,55 509,57 505,59 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- +4 ADD ALU TO SHIFT LEFT 2 ALU TOP IN -->' +
-        '<!-- CIRCLE -->' +
-        '<circle id="fourAluToAluTopCircle" class="idecodeObj" cx="345" cy="78"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-        '<!-- LINE +4 ADD TO SHIFT LEFT 2 ALU TOP IN-->' +
-        '<line id="fourAluToAluTopLine" class="idecodeObj" x1="345" y1="78" x2="417" y2="78" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="fourAluToAluTopArrow" class="idecodeObj" d="M 417,78 417,76 421,78 417,80 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<!-- END ### ID ###-->' +
-        '</g>' +
-
-
-        '<!-- START ### EX ###-->' +
-        '<g id="EX">' +
-        '<!-- ALU CONTROL ELLIPSE-->' +
-        '<ellipse id="aluControlEll" class="excodeObj, extorqObj" cx="410" cy="415" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,410,415)" ></ellipse>' +
-        '<text id="aluControlEllTxtALU" class="excode, extorq" x="398" y="410" font-size="11px" fill="lightgrey" >ALU</text>' +
-        '<text id="aluControlEllTxtCtrl" class="excode, extorq" x="392" y="422" font-size="11px" fill="lightgrey" >control</text>' +
-
-        '<!-- ALU CONTROL ELLIPSE TO ALU-->' +
-        '<path id="aluControlEllToAlu" class="excodeObj, extorqObj" d="M 445,350 445,415 431,415" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<!-- MUX INTO ALU -->' +
-        '<g transform="translate(384,310)">' +
-        '<path id="muxIntoAlu1" class="excodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none"></path>' +
-        '<path id="muxIntoAlu2" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '</g>' +
-        '<line id="muxIntoAluBott" class="excodeObj" x1="408" y1=340 x2="413" y2="340" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="muxIntoAluBottArrow" class="excodeObj" d="M 413,340 413,338 417,340 413,342 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<text id="muxIntoAluTxt0" class="excode" x="394" y="322" font-size="10px" fill="lightgrey" >0</text>' +
-        '<text id="muxIntoAluTxtM" class="excode" x="392" y="332" font-size="10px" fill="lightgrey" >M</text>' +
-        '<text id="muxIntoAluTxtU" class="excode" x="393" y="340" font-size="10px" fill="lightgrey" >u</text>' +
-        '<text id="muxIntoAluTxtX" class="excode" x="393" y="348" font-size="10px" fill="lightgrey" >x</text>' +
-        '<text id="muxIntoAluTxt1" class="excode" x="394" y="358" font-size="10px" fill="lightgrey" >1</text>' +
-
-        '<!-- Main ALU -->' +
-        '<g transform="translate(420,260)">' +
-        '<path id="mainAlu1" class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
-        '<path id="mainAlu2" class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
-        '<path id="mainAlu3" class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
-        '<path id="mainAlu4" class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path id="mainAlu5" class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path id="mainAlu6" class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path id="mainAlu7" class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '</g>' +
-        '<text id="mainAluTxt0" class="excode" x="450" y="290" font-size="10px" fill="lightgrey" >Zero</text>' +
-        '<text id="mainAluTxtALU" class="excode" x="430" y="314" font-size="10px" fill="lightgrey" >ALU</text>' +
-        '<text id="mainAluTxtALU2" class="excode" x="450" y="323" font-size="10px" fill="lightgrey" >ALU</text>' +
-        '<text id="mainAluTxtResult" class="excode" x="445" y="333" font-size="10px" fill="lightgrey" >result</text>' +
-
-
-        '<!-- ALU ZERO TO AND -->' +
-        '<path id="aluZeroToOrLine" class="excodeObj, extorqObj" d="M 481,169 477,169 480,290 475,290" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-
-        '<g transform="translate(5,10)">' +
-        '<!-- SHIFT LEFT 2 ELLIPSE-->' +
-        '<ellipse id="shiftLeft2Ell" class="excodeObj" cx="390" cy="130" rx="20" ry="15" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,390,130)" ></ellipse>' +
-        '<text id="shiftLeft2EllTxtShift" class="excode notR" x="378" y="128" font-size="11px" fill="lightgrey" >Shift</text>' +
-        '<text id="shiftLeft2EllTxtLeft2" class="excode notR" x="378" y="138" font-size="11px" fill="lightgrey" >left 2</text>' +
-        '</g>' +
-
-        '<!-- LINE SHIFT LEFT 2 TO ALU BOTT INPUT-->' +
-        '<line id="shiftLeft2ToAluIn" class="excodeObj" x1="410" y1="138" x2="418" y2="138" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="shiftLeft2ToAluInArrow" class="excodeObj" d="M 418,138 418,136 422,138 418,140 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- ALU SHIFT left 2 to PC-->' +
-        '<g transform="translate(425,60)">' +
-        '<path id="aluShiftLeft1" class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
-        '<path id="aluShiftLeft2" class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
-        '<path id="aluShiftLeft3" class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
-        '<path id="aluShiftLeft4" class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path id="aluShiftLeft5" class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path id="aluShiftLeft6" class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '<path id="aluShiftLeft7" class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '</g>' +
-        '<text id="aluShiftTxtAdd" class="excode" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
-        '<text id="aluShiftTxtAlu" class="excode" x="435" y="92" font-size="11px" fill="lightgrey" >Branch</text>' +
-        '<text id="aluShiftTxtResult" class="excode" x="450" y="102" font-size="11px" fill="lightgrey" >ALU</text>' +
-
-        '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
-        '<path id="lineRD2toMemWD" class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="lineRD2toMemWDArrow" class="excodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- LINE ALU RESULT TO MUX -->' +
-        '<line id="lineAluResult2Mux" class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="AluResult2MuxArrow" class="excodeObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<!-- END ### EX ###-->' +
-        '</g>' +
-
-
-        '<!-- START ### MEM ###-->' +
-        '<g id="MEM">' +
-        '<!-- DATA MEMORY-->' +
-        '<rect id="dataMemRect" class="memcodeObj" x="500" y="290" width="65" height="110" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
-        '<text id="dataMemRectTxtAdd" class="memcode" x="503" y="325" font-size="10px" fill="lightgrey" >Address</text>' +
-        '<text id="dataMemRectTxtRead" class="memcode" x="540" y="318" font-size="10px" fill="lightgrey" >Read</text>' +
-        '<text id="dataMemRectTxtData" class="memcode" x="542" y="328" font-size="10px" fill="lightgrey" >data</text>' +
-        '<text id="dataMemRectTxtWrite" class="memcode" x="503" y="370" font-size="10px" fill="lightgrey" >Write</text>' +
-        '<text id="dataMemRectTxt2Data" class="memcode" x="503" y="380" font-size="10px" fill="lightgrey" >data</text>' +
-        '<text id="dataMemRectTxt3Data" id="dataMemRect" class="memcode" x="538" y="385" font-size="11px" fill="lightgrey" >Data</text>' +
-        '<text id="dataMemRectTxtMem" class="memcode" x="522" y="395" font-size="11px" fill="lightgrey" >memory</text>' +
-
-        '<!-- LINE BETWEEN DATA MEMORY AND WB MUX-->' +
-        '<line id="lineDataMemToMux" class="memcodeObj" x1="566" y1=324 x2="575" y2="324" stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="DataMemToMuxArrow" class="memcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- ALU RESULT TO ADDRESS -->' +
-        '<line id="aluResultToAddr" class="memcodeObj" x1="475" y1=320 x2="484" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<line id="aluResultToAddr1" class="memcodeObj" x1="484" y1=320 x2="491" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="aluResultToAddrArrow" class="memcodeObj" d="M 491,320 491,318 495,320, 491,322 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- JUNCTION BETWEEN DATA MEMORY AND WB MUX-->' +
-        '<circle id="aluResultToAddrCircle"class="memcodeObj" cx="484" cy="320"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-
-
-        '<!-- LINE ALU RESULT TO WB MUX-->' +
-        '<path id="lineAluResultToMux0" class="memcodeObj" d="M 575,350 572,350 572,415 484,415 484,320" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="AluResultToMux0Arrow" class="memcodeObj" d="M 575,350 575,348 579,350 575,352 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-        '<!-- ALU RESULT MUX -->' +
-        '<g transform="translate(510,50)">' + '' +
-        '<path id="pcAluResultMux" class="memcodeObj" d="M 1.51 23 L 27.49 23 C 38.82 23 48 28.6 48 35.5 C 48 42.4 38.82 48 27.49 48 L 1.51 48 C -9.82 48 -19 42.4 -19 35.5 C -19 28.6 -9.82 23 1.51 23 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,14.5,35.5)" pointer-events="none" ></path>' +
-        '</g>' +
-        '<text id="pcAluResultMuxTxt0" class="memcode" x="522" y="65" font-size="12px" fill="lightgrey" >0</text>' +
-        '<text id="pcAluResultMuxTxtM" class="memcode" x="520" y="80" font-size="12px" fill="lightgrey" >M</text>' +
-        '<text id="pcAluResultMuxTxtU" class="memcode" x="521" y="90" font-size="12px" fill="lightgrey" >u</text>' +
-        '<text id="pcAluResultMuxTxtX" class="memcode" x="521" y="100" font-size="12px" fill="lightgrey" >x</text>' +
-        '<text id="pcAluResultMuxTxt1" class="memcode" x="522" y="114" font-size="12px" fill="lightgrey" >1</text>' +
-
-        '<!-- AND -->' +
-        '<!-- LINE OR GATE TO PC ALU MUX -->' +
-        '<path id="lineANDToAluMux" class="memcodeObj, memtorqObj" d="M  525,119 525,160 510,160" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<text id="lineANDToAluMuxTxtPCSrc" class="memcode, memtorq" x="530" y="164" font-size="10px" fill="lightgrey" >PCSrc</text>' +
-
-        '<!-- AND GATE -->' +
-        '<g transform="translate(479,144)">' +
-        '<path id="oRGate" class="memcodeObj, memtorqObj"d="M 2 4.5 C 2 3.84 2.16 3.2 2.45 2.73 C 2.73 2.26 3.12 2 3.53 2 L 26.12 2 C 29.7 4.69 32 10.55 32 17 C 32 23.45 29.7 29.31 26.12 32 L 3.53 32 C 3.12 32 2.73 31.74 2.45 31.27 C 2.16 30.8 2 30.16 2 29.5 L 2 4.5 Z" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/>' +
-        '</g>' +
-
-        '<!-- LINE ALU RESULT MUX TO PC -->' +
-        '<path id="aluMuxToPC" class="memcodeObj"  d="M 25,275 22,275 22,23 545,23 545,84 536,84" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!-- arrow -->' +
-        '<line class="memcode"  x1="23" y1="275" x2="26" y2="275" stroke-width="2px"></line>' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="aluMuxToPCArrow" class="memcodeObj" d="M 26,275 26,273 30,275 26,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<!-- END ### MEM ###-->' +
-        '</g>' +
-
-
-        '<!-- START ### WB ###-->' +
-        '<g id="WB">' +
-        '<!-- MEMORY MUX -->' +
-        '<g transform="translate(580,310)">' +
-        '<path id="memoryMux" class="wbcodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none" ></path>' +
-        '<path id="memoryMux2" class="wbcodeObj" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none" ></path>' +
-        '</g>' +
-
-        '<text id="memoryMuxTxt1" class="wbcode" x="590" y="325" font-size="10px" fill="lightgrey" >1</text>' +
-        '<text id="memoryMuxTxtM" class="wbcode" x="588" y="335" font-size="10px" fill="lightgrey" >M</text>' +
-        '<text id="memoryMuxTxtU" class="wbcode" x="589" y="343" font-size="10px" fill="lightgrey" >u</text>' +
-        '<text id="memoryMuxTxtX" class="wbcode" x="589" y="351" font-size="10px" fill="lightgrey" >x</text>' +
-        '<text id="memoryMuxTxt0" class="wbcode" x="590" y="361" font-size="10px" fill="lightgrey" >0</text>' +
-
-        '<!-- LINE MEMORY MUX TO REGISTER WRITE DATA  -->' +
-        '<path id="lineMemMuxToRD" class="wbcodeObj" d="M 265,360 256,360 256,476 614,476 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-        '<!--line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line-->' +
-        '<!-- Arrow point end of line-->' +
-        '<path id="MemMuxToRDArrow" class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-        '<!-- END ### WB ###-->' +
-        '</g>' +
-
-        '<!-- START TIMING LINES ### TM ### -->' +
-        '<!--line class="timing" id="iftime" x1="25" y1="490" x2="145" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
-        '<!--line class="timing" id="idtime" x1="147" y1="490" x2="365" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
-
-        '<!-- CREDIT AUTHOR FOR DIAGRAM -->' +
-        '<text class="ifetch" x="15" y="560" font-size="9px" >' +
-        'Figure 5.17: Patterson, D. and Hennessy, J. Computer Organization and Design. 3rd ed. Morgan Kaufmann, 2005. 307-14. Print. Reprinted with permission.' +
-        '</text>' +
-
-        '<div id="mainLine" align="center">' +
+            '<div class="modal-content"> ' +
+                '<div class="modal-header" style="background-color: black;"> ' +
+                '<div class="row">' +
+                    '<div id="title" class="col-md-4" align="left">' +
+                        '<h3 class="modal-title" id="myModalLabel" style="color: white;">Visualization of MIPS Instruction: </h3> ' +
+                    '</div> ' +
+
+                    '<div id="instruction" class="col-sm-2" style="color:white;" align="left">' +
+                    '</div> ' +
+
+                    '<div class="col-md-4" align="right" style="font-weight:bold;">' +
+                        '<a href="ProjectReadme.html" target="about_blank" >User Guide</a> | ' +
+                        '<a href="unit_tests/index.html" target="about_blank">Unit Tests</a> | ' +
+                        '<a href="docs/index.html" target="about_blank">Docs</a><br> ' +
+                    '</div> ' +
+                    '<div class="col-xs-1 col-md-offset-1" align="right">' +
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close" align="right"><span aria-hidden="true">&times;</span></button> ' +
+                    '</div> ' +
+
+                '</div>'+
+
+
+                '</div> ' +
+                    '<div class="modal-body" >' +
+                                '<!-- MODAL DEFINITION END -->' +
+
+                                //'<svg id="processor" style="width:640px;height:560px;">' +
+                                '<svg class="col-lg-7" id="processor" height="70%" width="65%" viewBox="0 0 655 560" preserveAspectRatio="none">' +
+
+                                '<g id="start"> ' +
+                                '<g id="IF">' +
+                                '<!-- START ### IF ###--> ' +
+                                '<!-- PC RECT --> ' +
+                                '<rect id="pc" class="ifetchObj" x="35" y="240" width="25" height="70" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
+                                '<text id="pcTxt" class="ifetch" x="38" y="280" fill="lightgrey" font-size="12px"  >PC</text>' +
+
+                                '<!-- LINE PC TO INSTRUCTION MEMORY -->' +
+                                '<line id="pcToInstMem" class="ifetchObj" x1="60" y1="275" x2="71" y2="275" stroke="lightgrey" stroke-width="2px"></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="pcArrow" class="ifetchObj" d="M 71,275 71,273 75,275 71,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- CIRCLE -->' +
+                                '<circle id="pcCircle" class="ifetchObj" cx="66" cy="275"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></circle>' +
+
+                                '<!-- LINE PC TO ADD TOP -->' +
+                                '<path id="pcAluIn" class="ifetchObj" d="M 105,55 66,55 66,275" style="fill:none;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="pcAddArrow" class="ifetchObj" d="M 105,55 105,53 109,55 105,57 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<g>' +
+                                '<!-- 4 TO ADD BOTTOM-->' +
+                                '<line id="fourAluIn" class="ifetchObj" x1="90" y1="120" x2="105" y2="120" style="stroke:lightgrey;stroke-width:2px;"></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="fourAluArrow" class="ifetchObj" d="M 105,120 105,118 109,120 105,122 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<text id="fourTxt" class="ifetch" x="80" y="123" fill="lightgrey" font-size="11px"  >4</text>' +
+                                '</g>' +
+
+                                '<!-- INSTRUCTION MEMORY RECT-->' +
+                                '<g id="instMem">' +
+                                '<rect id="instMemRect" class="ifetchObj" x="80" y="260" width="65" height="90" style="fill:none;stroke:lightgrey;stroke-width:2px;"></rect>' +
+                                '<text id="instMemTxtRead" class="ifetch" x="84" y="272" fill="lightgrey" font-size="9px" >Read</text>' +
+                                '<text id="instMemTxtAddress" class="ifetch" x="84" y="284" fill="lightgrey" font-size="9px" >address</text>' +
+                                '<text id="instMemTxtInst" class="ifetch" x="90" y="304" fill="lightgrey" font-size="9px" >Instruction</text>' +
+                                '<text id="instMemTxt31" class="ifetch" x="114" y="316" fill="lightgrey" font-size="9px" >[31-0]</text>' +
+                                '<text id="instMemTxtIns31" class="ifetch" x="88" y="336" fill="lightgrey" font-size="9px" >Instruction</text>' +
+                                '<text id="instMemTxtMem" class="ifetch" x="92" y="346" fill="lightgrey"  font-size="9px" >memory</text>' +
+                                '</g>' +
+
+                                '<!-- PC ADD ALU-->' +
+                                '<g id="pcAlu" transform="translate(110,40)">' +
+                                '<path id="pcAluObj1" class="ifetchObj" d="M -17.27 20.05 L 20.82 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,1.77,20.05)" pointer-events="none"></path>' +
+                                '<path id="pcAluObj2" class="ifetchObj" d="M -17.27 81.95 L 20.82 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,1.77,81.95)" pointer-events="none"></path>' +
+                                '<path id="pcAluObj3" class="ifetchObj" d="M 6.85 49.81 L 61.61 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,34.23,49.81)" pointer-events="none"></path>' +
+                                '<path id="pcAluObj4" class="ifetchObj" d="M 2 1.33 L 34.5 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
+                                '<path id="pcAluObj5" class="ifetchObj" d="M 2 101.33 L 34.5 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
+                                '<path id="pcAluObj6" class="ifetchObj" d="M 2 63 L 5.64 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
+                                '<path id="pcAluObj7" class="ifetchObj" d="M 5.64 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
+                                '</g>' +
+                                '<text id="addTxt" class="ifetch" x="120" y="95" fill="lightgrey" font-size="11px" >Add</text>' +
+                                '<!-- END ### IF ###-->' +
+                                '</g>' +
+
+                                '<!-- START ### ID ###-->' +
+                                '<g id="ID">' +
+                                '<g id="instLines">' +
+                                '<!-- Instruction [31-26] INSTRUCTION DISTRIBUTION LINE-->' +
+                                '<text id="inst31Txt" class="idecode" x="158" y="185" font-size="9px" fill="lightgrey"  >Instruction [31-26]</text>' +
+                                '<line id="inst31ToCtrl"class="idecodeObj" x1="158" y1=190 x2="226" y2="190" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="inst31Arrow" class="idecodeObj"  d="M 226,190 226,188 230,190 226,192 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- Instruction [25-21] INSTRUCTION DISTRIBUTION LINE-->' +
+                                '<text id="inst25Txt" class="idecode" x="162" y="255" font-size="9px" fill="lightgrey" >Instruction [25-21]</text>' +
+                                '<line  id="instToRR1" class="idecodeObj" x1="158" y1=260 x2="259" y2="260" stroke="lightgrey" stroke-width="2px"></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="inst25Arrow" class="idecodeObj" d="M 259,260 259,258 263,260 259,262 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<circle id="inst25Circle" class="idecodeObj" cx="158" cy="260"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+                                '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE-->' +
+                                '<text id="inst20Txt" class="idecode" x="162" y="287" font-size="9px" fill="lightgrey" >Instruction [20-16]</text>' +
+                                '<line id="inst20ToCircle" class="idecodeObj" x1="158" y1=292 x2="213" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
+                                '<line id="inst20ToRR2" class="idecodeObj" x1="213" y1=292 x2="259" y2="292" stroke="lightgrey" stroke-width="2px"></line>' +
+
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="inst20MUX0Arrow" class="idecodeObj" d="M 259,292 259,290 263,292 259,294 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<circle id= "inst20Circle" class="idecodeObj" cx="158" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></circle>' +
+
+                                '<!-- Instruction [20-16] INSTRUCTION DISTRIBUTION LINE BRANCHES TO MUX  -->' +
+                                '<path id="inst20ToMux" class="idecodeObj notRObj" d="M  233,310 213,310 213,292" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="inst20MuxArrow" class="idecodeObj notRObj" d="M 228,310 228,308 232,310 228,312 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<circle id="inst20MuxCircle" class="idecodeObj notRObj" cx="213" cy="292"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+                                '<!-- Instruction [15-11] INSTRUCTION DISTRIBUTION LINE-->' +
+                                '<text id= "inst15Txt" class="idecode" x="162" y="340" font-size="9px" fill="lightgrey" >Instruction [15-11]</text>' +
+                                '<line id="inst15ToMux" class="idecodeObj" x1="158" y1=345 x2="228" y2="345" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="inst15Arrow" class="idecodeObj" d="M 228,345 228,343 232,345 228,347 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<circle id= "inst15Circle" class="idecodeObj" cx="158" cy="345"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+                                '<!-- INST MEM RECT TO  DIST LINE-->' +
+                                '<line id="instMemLine" class="idecodeObj" x1="145" y1=300 x2="158" y2="300"  stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<circle id="instMemCircle" class="idecodeObj" cx="158" cy=300  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+                                '<!-- VERTICAL INSTRUCTION DISTRIBUTION LINE-->' +
+                                '<line id="instDistLine" class="idecodeObj" x1="158" y1=412 x2="158" y2="190" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+
+                                '<!-- Instruction [15-0] INSTRUCTION DISTRIBUTION LINE-->' +
+                                '<text id="inst15To0Txt" class="idecode" x="162" y="407" font-size="9px" fill="lightgrey" >Instruction [15-0]</text>' +
+                                '<line id="inst15ToSignExt" class="idecodeObj" x1="158" y1=412 x2="268" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<line " id="intoSignExt16" class="idecodeObj notRObj" x1="268" y1=412 x2="285" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="intoSignExtArrow16" class="idecodeObj notRObj" d="M 285,412 285,410 289,412 285,414 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- 16 DIAG LINE 32 DIAG LINE AT SIGN EXTEND-->' +
+                                '<text id="signExt16Txt" class="idecode notR" x="273" y="402" font-size="11px" fill="lightgrey" >16</text>' +
+                                '<line id="signExt16DiagLine" class="idecodeObj notRObj" x1="273" y1=405 x2="283" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+                                '<text id="signExt32Txt" class="idecode notR" x="343" y="402" font-size="11px" fill="lightgrey" >32</text>' +
+                                '<line id="signExt32DiagLine" class="idecodeObj notRObj" x1="343" y1=405 x2="353" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+
+                                '<!-- Instruction [5-0] INSTRUCTION DISTRIBUTION LINE TO ALU CONTROL-->' +
+                                '<text id="inst5ToAluCtrlTxt" class="idecode" x="275" y="460" font-size="9px" fill="lightgrey" >Instruction [5-0]</text>' +
+                                '<path id="inst5ToAluCtrl" class="idecodeObj" d="M 386,420 372,420 372,465 268,465 268,412" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="inst5ToAluCtrlArrow" class="idecodeObj" d="M 380,420 380,418 384,420 380,422 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<circle id="instToAluCtrlCircle" class="idecodeObj" cx="268" cy="412"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+                                '</g>' +
+
+                                '<!-- REGISTER MUX -->' +
+                                '<g id="registerMux" transform="translate(235,300)">' +
+                                '<path id="registerMux1" class="idecodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none"></path>' +
+                                '<path id="registerMux2" class="idecodeObj" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none"></path>' +
+                                '</g>' +
+                                '<text id="regMuxTxt0" class="idecode" x="245" y="313" font-size="10px" fill="lightgrey" >0</text>' +
+                                '<text id="regMuxTxtM" class="idecode" x="243" y="325" font-size="10px" fill="lightgrey" >M</text>' +
+                                '<text id="regMuxTxtU" class="idecode" x="244" y="333" font-size="10px" fill="lightgrey" >u</text>' +
+                                '<text id="regMuxTxtX" class="idecode" x="244" y="341" font-size="10px" fill="lightgrey" >x</text>' +
+                                '<text id="regMuxTxt1" class="idecode" x="245" y="351" font-size="10px" fill="lightgrey" >1</text>' +
+
+                                '<!-- LINE REGISTER MUX TO REGISTER FILE -->' +
+                                '<line id="regMuxToRegFileLine" class="idecodeObj" x1="260" y1=327 x2="264" y2="327" stroke="lightgrey" stroke-width="2px"></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="regMuxToRegFileArrow" class="idecodeObj" d="M 264,327 264,325 268,327 264,329 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- CONTROL ELLIPSE -->' +
+                                '<ellipse id="controlEllipse" class="idecodeObj, idtorqObj" cx="260" cy="190" rx="55" ry="25" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,260,190)" ></ellipse>' +
+                                '<text id="controlEllipseTxt" class="idtorq" x="240" y="195" font-size="11px" fill="lightgrey" >Control</text>' +
+
+                                '<!-- CONTROL ELLIPSE TO INSTRUCTION MUX -->' +
+                                '<path id="regDistToInstMux" class="idecodeObj, idtorqObj" d="M 273,144 295,144 295,125 150,125 150,368 248,368 248,355" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<text id="regDistTxt" class="idtorq" x="300" y="140" font-size="9px" fill="lightgrey" >RegDst</text>' +
+
+                                '<!-- CONTROL ELLIPSE TO OR GATE -->' +
+                                '<path id="ctrlEllipseToOR" class="idecodeObj, idtorqObj" d="M 482,153 455,153 455,165 283,165" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<text id= "ctrlEllipseToORText" class="idtorq" x="290" y="160" font-size="9px" fill="lightgrey" >Brach</text>' +
+
+                                '<!-- CONTROL ELLIPSE TO DATA MEMORY -->' +
+                                '<text id="ctrlEllipseToDataMemTxt" class="idecode, idtorq" x="290" y="177" font-size="9px" fill="lightgrey" >MemRead</text>' +
+                                '<path id="ctrlEllipseToDataMem" class="idecodeObj, idtorqObj" d="M 540,400 540,430 625,430 625,180 283,180" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- CONTROL ELLIPSE TO DATA MEMORY MUX -->' +
+                                '<text id="ctrlEllToDataMemMuxTxt" class="idecode, idtorq" x="290" y="192" font-size="9px" fill="lightgrey" >MemtoReg</text>' +
+                                '<path id="ctrlEllToDataMemMux" class="idecodeObj, idtorqObj" d="M 593,311 593,195 283,195" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- CONTROL ELLIPSE TO ALUOP -->' +
+                                '<text id="ctrlEllToAluOpTxt" class="idecode, idtorq" x="290" y="205" font-size="9px" fill="lightgrey" >ALUOp</text>' +
+                                '<path id="ctrlEllToAluOp" class="idecodeObj, idtorqObj" d="M 411,444 411,472 367,472 367,207 283,207" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- CONTROL ELLIPSE TO MEMWRITE -->' +
+                                '<text id="ctrlEllToMemWriteTxt" class="idecode, idtorq" x="290" y="217" font-size="9px" fill="lightgrey" >MemWrite</text>' +
+                                '<path id="ctrlEllToMemWrite" class="idecodeObj, idtorqObj" d="M 535,290 535,220 280,220" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- CONTROL ELLIPSE TO ALUSRC -->' +
+                                '<text id="ctrlEllToAluSrcTxt" class="idecode, idtorq" x="290" y="231" font-size="9px" fill="lightgrey" >ALUSrc</text>' +
+                                '<path id="ctrlEllToAluSrc" class="idecodeObj, idtorqObj" d="M 398,320 398,234 274,234" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- CONTROL ELLIPSE TO REGWRITE -->' +
+                                '<text id="ctrlEllToRegWriteTxt" class="idecode, idtorq" x="315" y="245" font-size="9px" fill="lightgrey" >RegWrite</text>' +
+                                '<path id="ctrlEllToRegWrite" class="idecodeObj, idtorqObj" d="M 305,250 305,245 263,245" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- REGISTER FILE RECT-->' +
+                                '<!--Read register 1-->' +
+                                '<rect id="regFileRect" class="idecodeObj" x="270" y="250" width="85" height="120" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
+                                '<text id="regFileRectTxt" class="idecode" x="276" y="261" font-size="10px" fill="lightgrey" >RR1</text>' +
+
+                                '<!--Read data 1-->' +
+                                '<text id="readData1Txt" class="idecode" x="322" y="276" font-size="10px" fill="lightgrey" >RD1</text>' +
+
+                                '<!--Read register 2-->' +
+                                '<text id="readReg2Txt" class="idecode" x="276" y="296" font-size="10px" fill="lightgrey" >RR2</text>' +
+
+                                '<!--Read data 2-->' +
+                                '<text id="readData2Txt" class="idecode" x="322" y="324" font-size="10px" fill="lightgrey" >RD2</text>' +
+
+                                '<!--Write register-->' +
+                                '<text id="writeRegTxt"class="idecode" x="276" y="326" font-size="10px" fill="lightgrey" >WR</text>' +
+
+                                '<!--Write data-->' +
+                                '<text id="writeData" class="idecode" x="276" y="354" font-size="10px" fill="lightgrey" >WD</text>' +
+
+                                '<!--Register File Label-->' +
+                                '<text id="registerFileLabelTxt" class="idecode" x="306" y="366" font-size="11px" fill="lightgrey" >Registers</text>' +
+
+                                '<!-- LINE READ DATA 1 TO ALU RESULT -->' +
+                                '<line id="RD1ToAluResult" class="idecodeObj" x1="355" y1=285 x2="413" y2="285" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="RD1ToAluResultArrow" class="idecodeObj" d="M 413,285 413,283 417,285 413,287 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- LINE READ DATA 2 TO MUX ALU RESULT -->' +
+                                '<line id="RD2ToAluResultCircle" class="idecodeObj" x1="355" y1=325 x2="362" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
+
+                                '<line id="RD2ToAluResult" class="idecodeObj" x1="362" y1=325 x2="377" y2="325" stroke="lightgrey" stroke-width="2px" ></line>' +
+
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="RD2ToAluResultArrow" class="idecodeObj" d="M 377,325 377,323 381,325 377,327 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- SIGN-EXTED ELLIPSE-->' +
+                                '<text id="signExtEllipTxtSign" class="idecode" x="299" y="407" font-size="11px" fill="lightgrey" >Sign-</text>' +
+                                '<text id="signExtEllipTxtExt" class="idecode" x="299" y="420" font-size="11px" fill="lightgrey" >extend</text>' +
+                                '<ellipse id="signExtEllip" class="idecodeObj" cx="315" cy="410" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,315,410)" ></ellipse>s' +
+
+                                '<!-- REGISTER FILE READ DATA2 TO MEMORY WRITE DATA JUNCTION-->' +
+                                '<circle id="RegFileRD2Circle" class="idecodeObj" cx="362" cy=325  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+
+                                '<!-- LINE SIGN-EXTED ELLIPSE TO MUX 1-->' +
+                                '<path id="signExtEllToMux1" class="idecodeObj" d="M 372,350 372,412 335,412" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- LINE MUX 1 CIRCLE TO SHIFT LEFT 2-->' +
+                                '<path id="Mux1ToShiftLeft2" class="idecodeObj" d="M 375,140 372,140 372,350" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<line id="Mux1ToShiftLeft2Line" class="idecodeObj" x1="372" y1=140 x2="373" y2="140"  stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="Mux1ToShiftLeftArrow" class="idecodeObj" d="M 373,140 373,138 377,140 373,142 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- LINE SIGN-EXTED 32 TO MUX 1 ALU IN JUNCTION-->' +
+                                '<circle id="signExt32ToMux1Circle" class="idecodeObj" cx="372" cy="350"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+                                '<line id="signExt32ToMux1Ln" class="idecodeObj" x1="372" y1=350 x2="377" y2="350" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="signExt32ToMux1Arrow" class="idecodeObj" d="M 377,350 377,348 381,350 377,352 z" style="fill:lighgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- LINE +4 ADD ALU TO SHIFT LEFT 2 ALU RESULT -->' +
+                                '<path id="addAluToMux" class="idecodeObj" d="M 145,90, 345,90 345,57 505,57" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="addAluToMuxArrow" class="idecodeObj" d="M 505,57 505,55 509,57 505,59 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- +4 ADD ALU TO SHIFT LEFT 2 ALU TOP IN -->' +
+                                '<!-- CIRCLE -->' +
+                                '<circle id="fourAluToAluTopCircle" class="idecodeObj" cx="345" cy="78"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+                                '<!-- LINE +4 ADD TO SHIFT LEFT 2 ALU TOP IN-->' +
+                                '<line id="fourAluToAluTopLine" class="idecodeObj" x1="345" y1="78" x2="417" y2="78" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="fourAluToAluTopArrow" class="idecodeObj" d="M 417,78 417,76 421,78 417,80 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<!-- END ### ID ###-->' +
+                                '</g>' +
+
+
+                                '<!-- START ### EX ###-->' +
+                                '<g id="EX">' +
+                                '<!-- ALU CONTROL ELLIPSE-->' +
+                                '<ellipse id="aluControlEll" class="excodeObj, extorqObj" cx="410" cy="415" rx="30" ry="20" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,410,415)" ></ellipse>' +
+                                '<text id="aluControlEllTxtALU" class="excode, extorq" x="398" y="410" font-size="11px" fill="lightgrey" >ALU</text>' +
+                                '<text id="aluControlEllTxtCtrl" class="excode, extorq" x="392" y="422" font-size="11px" fill="lightgrey" >control</text>' +
+
+                                '<!-- ALU CONTROL ELLIPSE TO ALU-->' +
+                                '<path id="aluControlEllToAlu" class="excodeObj, extorqObj" d="M 445,350 445,415 431,415" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<!-- MUX INTO ALU -->' +
+                                '<g transform="translate(384,310)">' +
+                                '<path id="muxIntoAlu1" class="excodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none"></path>' +
+                                '<path id="muxIntoAlu2" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '</g>' +
+                                '<line id="muxIntoAluBott" class="excodeObj" x1="408" y1=340 x2="413" y2="340" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="muxIntoAluBottArrow" class="excodeObj" d="M 413,340 413,338 417,340 413,342 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<text id="muxIntoAluTxt0" class="excode" x="394" y="322" font-size="10px" fill="lightgrey" >0</text>' +
+                                '<text id="muxIntoAluTxtM" class="excode" x="392" y="332" font-size="10px" fill="lightgrey" >M</text>' +
+                                '<text id="muxIntoAluTxtU" class="excode" x="393" y="340" font-size="10px" fill="lightgrey" >u</text>' +
+                                '<text id="muxIntoAluTxtX" class="excode" x="393" y="348" font-size="10px" fill="lightgrey" >x</text>' +
+                                '<text id="muxIntoAluTxt1" class="excode" x="394" y="358" font-size="10px" fill="lightgrey" >1</text>' +
+
+                                '<!-- Main ALU -->' +
+                                '<g transform="translate(420,260)">' +
+                                '<path id="mainAlu1" class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
+                                '<path id="mainAlu2" class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
+                                '<path id="mainAlu3" class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
+                                '<path id="mainAlu4" class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '<path id="mainAlu5" class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '<path id="mainAlu6" class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '<path id="mainAlu7" class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '</g>' +
+                                '<text id="mainAluTxt0" class="excode" x="450" y="290" font-size="10px" fill="lightgrey" >Zero</text>' +
+                                '<text id="mainAluTxtALU" class="excode" x="430" y="314" font-size="10px" fill="lightgrey" >ALU</text>' +
+                                '<text id="mainAluTxtALU2" class="excode" x="450" y="323" font-size="10px" fill="lightgrey" >ALU</text>' +
+                                '<text id="mainAluTxtResult" class="excode" x="445" y="333" font-size="10px" fill="lightgrey" >result</text>' +
+
+
+                                '<!-- ALU ZERO TO AND -->' +
+                                '<path id="aluZeroToOrLine" class="excodeObj, extorqObj" d="M 481,169 477,169 480,290 475,290" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+
+                                '<g transform="translate(5,10)">' +
+                                '<!-- SHIFT LEFT 2 ELLIPSE-->' +
+                                '<ellipse id="shiftLeft2Ell" class="excodeObj" cx="390" cy="130" rx="20" ry="15" style="fill:none;stroke:lightgrey;stroke-width:2px;" transform="rotate(90,390,130)" ></ellipse>' +
+                                '<text id="shiftLeft2EllTxtShift" class="excode notR" x="378" y="128" font-size="11px" fill="lightgrey" >Shift</text>' +
+                                '<text id="shiftLeft2EllTxtLeft2" class="excode notR" x="378" y="138" font-size="11px" fill="lightgrey" >left 2</text>' +
+                                '</g>' +
+
+                                '<!-- LINE SHIFT LEFT 2 TO ALU BOTT INPUT-->' +
+                                '<line id="shiftLeft2ToAluIn" class="excodeObj" x1="410" y1="138" x2="418" y2="138" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="shiftLeft2ToAluInArrow" class="excodeObj" d="M 418,138 418,136 422,138 418,140 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- ALU SHIFT left 2 to PC-->' +
+                                '<g transform="translate(425,60)">' +
+                                '<path id="aluShiftLeft1" class="excodeObj" d="M -16.82 20.05 L 21.27 20.05" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,20.05)" pointer-events="none" ></path>' +
+                                '<path id="aluShiftLeft2" class="excodeObj" d="M -16.82 81.95 L 21.27 81.95" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,2.23,81.95)" pointer-events="none" ></path>' +
+                                '<path id="aluShiftLeft3" class="excodeObj" d="M 26.39 49.81 L 81.15 49.81" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,53.77,49.81)" pointer-events="none" ></path>' +
+                                '<path id="aluShiftLeft4" class="excodeObj" d="M 2 1.33 L 53.67 22.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '<path id="aluShiftLeft5" class="excodeObj" d="M 2 101.33 L 53.67 77.17" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '<path id="aluShiftLeft6" class="excodeObj" d="M 2 63 L 8.36 51" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '<path id="aluShiftLeft7" class="excodeObj" d="M 8.36 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '</g>' +
+                                '<text id="aluShiftTxtAdd" class="excode" x="435" y="115" font-size="11px" fill="lightgrey" >Add</text>' +
+                                '<text id="aluShiftTxtAlu" class="excode" x="435" y="92" font-size="11px" fill="lightgrey" >Branch</text>' +
+                                '<text id="aluShiftTxtResult" class="excode" x="450" y="102" font-size="11px" fill="lightgrey" >ALU</text>' +
+
+                                '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
+                                '<path id="lineRD2toMemWD" class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="lineRD2toMemWDArrow" class="excodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- LINE ALU RESULT TO MUX -->' +
+                                '<line id="lineAluResult2Mux" class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="AluResult2MuxArrow" class="excodeObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<!-- END ### EX ###-->' +
+                                '</g>' +
+
+
+                                '<!-- START ### MEM ###-->' +
+                                '<g id="MEM">' +
+                                '<!-- DATA MEMORY-->' +
+                                '<rect id="dataMemRect" class="memcodeObj" x="500" y="290" width="65" height="110" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
+                                '<text id="dataMemRectTxtAdd" class="memcode" x="503" y="325" font-size="10px" fill="lightgrey" >Address</text>' +
+                                '<text id="dataMemRectTxtRead" class="memcode" x="540" y="318" font-size="10px" fill="lightgrey" >Read</text>' +
+                                '<text id="dataMemRectTxtData" class="memcode" x="542" y="328" font-size="10px" fill="lightgrey" >data</text>' +
+                                '<text id="dataMemRectTxtWrite" class="memcode" x="503" y="370" font-size="10px" fill="lightgrey" >Write</text>' +
+                                '<text id="dataMemRectTxt2Data" class="memcode" x="503" y="380" font-size="10px" fill="lightgrey" >data</text>' +
+                                '<text id="dataMemRectTxt3Data" id="dataMemRect" class="memcode" x="538" y="385" font-size="11px" fill="lightgrey" >Data</text>' +
+                                '<text id="dataMemRectTxtMem" class="memcode" x="522" y="395" font-size="11px" fill="lightgrey" >memory</text>' +
+
+                                '<!-- LINE BETWEEN DATA MEMORY AND WB MUX-->' +
+                                '<line id="lineDataMemToMux" class="memcodeObj" x1="566" y1=324 x2="575" y2="324" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="DataMemToMuxArrow" class="memcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- ALU RESULT TO ADDRESS -->' +
+                                '<line id="aluResultToAddr" class="memcodeObj" x1="475" y1=320 x2="484" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<line id="aluResultToAddr1" class="memcodeObj" x1="484" y1=320 x2="491" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="aluResultToAddrArrow" class="memcodeObj" d="M 491,320 491,318 495,320, 491,322 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- JUNCTION BETWEEN DATA MEMORY AND WB MUX-->' +
+                                '<circle id="aluResultToAddrCircle"class="memcodeObj" cx="484" cy="320"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+
+                                '<!-- LINE ALU RESULT TO WB MUX-->' +
+                                '<path id="lineAluResultToMux0" class="memcodeObj" d="M 575,350 572,350 572,415 484,415 484,320" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="AluResultToMux0Arrow" class="memcodeObj" d="M 575,350 575,348 579,350 575,352 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- ALU RESULT MUX -->' +
+                                '<g transform="translate(510,50)">' + '' +
+                                '<path id="pcAluResultMux" class="memcodeObj" d="M 1.51 23 L 27.49 23 C 38.82 23 48 28.6 48 35.5 C 48 42.4 38.82 48 27.49 48 L 1.51 48 C -9.82 48 -19 42.4 -19 35.5 C -19 28.6 -9.82 23 1.51 23 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,14.5,35.5)" pointer-events="none" ></path>' +
+                                '</g>' +
+                                '<text id="pcAluResultMuxTxt0" class="memcode" x="522" y="65" font-size="12px" fill="lightgrey" >0</text>' +
+                                '<text id="pcAluResultMuxTxtM" class="memcode" x="520" y="80" font-size="12px" fill="lightgrey" >M</text>' +
+                                '<text id="pcAluResultMuxTxtU" class="memcode" x="521" y="90" font-size="12px" fill="lightgrey" >u</text>' +
+                                '<text id="pcAluResultMuxTxtX" class="memcode" x="521" y="100" font-size="12px" fill="lightgrey" >x</text>' +
+                                '<text id="pcAluResultMuxTxt1" class="memcode" x="522" y="114" font-size="12px" fill="lightgrey" >1</text>' +
+
+                                '<!-- AND -->' +
+                                '<!-- LINE OR GATE TO PC ALU MUX -->' +
+                                '<path id="lineANDToAluMux" class="memcodeObj, memtorqObj" d="M  525,119 525,160 510,160" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<text id="lineANDToAluMuxTxtPCSrc" class="memcode, memtorq" x="530" y="164" font-size="10px" fill="lightgrey" >PCSrc</text>' +
+
+                                '<!-- AND GATE -->' +
+                                '<g transform="translate(479,144)">' +
+                                '<path id="oRGate" class="memcodeObj, memtorqObj"d="M 2 4.5 C 2 3.84 2.16 3.2 2.45 2.73 C 2.73 2.26 3.12 2 3.53 2 L 26.12 2 C 29.7 4.69 32 10.55 32 17 C 32 23.45 29.7 29.31 26.12 32 L 3.53 32 C 3.12 32 2.73 31.74 2.45 31.27 C 2.16 30.8 2 30.16 2 29.5 L 2 4.5 Z" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/>' +
+                                '</g>' +
+
+                                '<!-- LINE ALU RESULT MUX TO PC -->' +
+                                '<path id="aluMuxToPC" class="memcodeObj"  d="M 25,275 22,275 22,23 545,23 545,84 536,84" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- arrow -->' +
+                                '<line class="memcode"  x1="23" y1="275" x2="26" y2="275" stroke-width="2px"></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="aluMuxToPCArrow" class="memcodeObj" d="M 26,275 26,273 30,275 26,277 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<!-- END ### MEM ###-->' +
+                                '</g>' +
+
+
+                                '<!-- START ### WB ###-->' +
+                                '<g id="WB">' +
+                                '<!-- MEMORY MUX -->' +
+                                '<g transform="translate(580,310)">' +
+                                '<path id="memoryMux" class="wbcodeObj" d="M 2.92 17 L 23.08 17 C 31.87 17 39 21.92 39 28 C 39 34.08 31.87 39 23.08 39 L 2.92 39 C -5.87 39 -13 34.08 -13 28 C -13 21.92 -5.87 17 2.92 17 Z" fill="#ffffff" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" transform="rotate(90,13,28)" pointer-events="none" ></path>' +
+                                '<path id="memoryMux2" class="wbcodeObj" d="M 2 28 L 2 28" fill="none" stroke="lightgrey" stroke-miterlimit="10" pointer-events="none" ></path>' +
+                                '</g>' +
+
+                                '<text id="memoryMuxTxt1" class="wbcode" x="590" y="325" font-size="10px" fill="lightgrey" >1</text>' +
+                                '<text id="memoryMuxTxtM" class="wbcode" x="588" y="335" font-size="10px" fill="lightgrey" >M</text>' +
+                                '<text id="memoryMuxTxtU" class="wbcode" x="589" y="343" font-size="10px" fill="lightgrey" >u</text>' +
+                                '<text id="memoryMuxTxtX" class="wbcode" x="589" y="351" font-size="10px" fill="lightgrey" >x</text>' +
+                                '<text id="memoryMuxTxt0" class="wbcode" x="590" y="361" font-size="10px" fill="lightgrey" >0</text>' +
+
+                                '<!-- LINE MEMORY MUX TO REGISTER WRITE DATA  -->' +
+                                '<path id="lineMemMuxToRD" class="wbcodeObj" d="M 265,360 256,360 256,476 614,476 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!--line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line-->' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="MemMuxToRDArrow" class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<!-- END ### WB ###-->' +
+                                '</g>' +
+
+                                '<!-- START TIMING LINES ### TM ### -->' +
+                                '<!--line class="timing" id="iftime" x1="25" y1="490" x2="145" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
+                                '<!--line class="timing" id="idtime" x1="147" y1="490" x2="365" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
+
+                                '<!-- CREDIT AUTHOR FOR DIAGRAM -->' +
+                                '<text class="ifetch" x="15" y="560" font-size="9px" >' +
+                                'Figure 5.17: Patterson, D. and Hennessy, J. Computer Organization and Design. 3rd ed. Morgan Kaufmann, 2005. 307-14. Print. Reprinted with permission.' +
+                                '</text>' +
+
+                                '</g>' +
+
+                                '</svg>' +
+
+                    '</div>' +
+
+                                    '<div id="stages" class="col-md-4" align="right">' +
+
+                                        '<ul class="nav nav-tabs">' +
+
+                                        '<li class="active">' +
+                                        '<a href="#all-stages" data-toggle="tab">ALL</a>' +
+                                        '</li>'+
+
+                                        '<li>'+
+                                        '<a href="#if-stages" data-toggle="tab">IF</a>'+
+                                        '</li>'+
+
+                                        '<li>'+
+                                        '<a href="#ID-stages" data-toggle="tab">ID</a>'+
+                                        '</li>'+
+
+                                        '<li>'+
+                                        '<a href="#EX-stages" data-toggle="tab">EX</a>'+
+                                        '</li>'+
+
+                                        '<li>'+
+                                        '<a href="#MEM-stages" data-toggle="tab">MEM</a>'+
+                                        '</li>'+
+
+                                        '<li>'+
+                                        '<a href="#WB-stages" data-toggle="tab">WB</a>'+
+                                        '</li>'+
+
+                                        '</ul>'+
+                                    '</div>' +
+
+                    '</div>' +
+
+                    '<!-- MODAL FOOTER DEFINITION BEGINS DO NOT CHANGE FOLLOWING LINES -->' +
+                    '<div id="modal-buttons" class="modal-footer" style="text-align:center;background-color: black;"> ' +
+                '</div>' +
+            '</div>' +
         '</div>' +
 
-        '</g>' +
-
-        '</svg>' +
-
-
-        '<!-- MODAL DEFINITION BEGINS DO NOT CHANGE FOLLOWING LINES -->' +
-        '</div class="button-margin"> ' +
-        '<div id="modal-buttons" class="modal-footer" style="text-align:center;"> ' +
-        '<!--button type="button"  data-dismiss="modal">Close</button--> ' +
-        '<!--button id="step" type="button">Step</button--> ' +
-        '</div> ' +
-        '</div> ' +
-        '</div> ' +
-        '</div>' +
         '<!-- MODAL DEFINITION END -->' +
+
         '<!--script>' +
         'var aniData = d3.selectAll(".ifetch");' +
         'console.log(aniData[0][2]);' +
@@ -2077,9 +2123,9 @@ function visualize () {
 
     // Display the current instruction text,  instruction format and instruction in binary
     // TODO: Need to update this info when current line changes. This needs to be a function.
-    d3.select("#myModalLabel").append("text")
+    d3.select("#instruction").append("text")
         .text(instructionIn)
-        .style("font-size", "16px")
+        .style("font-size", "17px")
         .attr("id", "displayInstructionText");
         //.attr("x", 20)
         //.attr("y", 11);
