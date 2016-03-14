@@ -8,40 +8,38 @@ function visualize () {
     if (debug) {
         console.log("Well now we are in visualize");
     }
+
     $("#vis").append(
-        //' <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Launch demo modal </button>' +
-
-
 
         '<!-- MODAL DEFINITION BEGINS  DO NOT CHANGE FOLLOWING LINES -->' +
 
         '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> ' +
-        '<div class="modal-dialog" role="document" > ' +
-            '<div class="modal-content"> ' +
-                '<div class="modal-header" style="background-color: black;"> ' +
-                '<div class="row">' +
-                    '<div id="title" class="col-md-4" align="left">' +
-                        '<h3 class="modal-title" id="myModalLabel" style="margin-left: 40px;color: white;">Visualization of MIPS Instruction: </h3> ' +
+            '<div class="modal-dialog" role="document" > ' +
+                '<div class="modal-content"> ' +
+                    '<div class="modal-header" style="background-color: black;"> ' +
+                        '<div class="row">' +
+                            '<div id="title" class="col-md-4" align="left">' +
+                                '<h3 class="modal-title" id="myModalLabel" style="margin-left: 40px;color: white;">Visualization of MIPS Instruction: </h3> ' +
+                            '</div> ' +
+
+                            '<div id="instruction" class="col-sm-3" style="color:white;" align="left">' +
+                            '</div> ' +
+
+                            '<div class="col-md-3" align="right" style="font-weight:bold;">' +
+                                '<a href="ProjectReadme.html" target="about_blank" >User Guide</a> | ' +
+                                '<a href="unit_tests/index.html" target="about_blank">Unit Tests</a> | ' +
+                                '<a href="docs/index.html" target="about_blank">Docs</a><br> ' +
+                            '</div> ' +
+                            '<div class="col-xs-2" align="right">' +
+                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" align="right"><span aria-hidden="true">&times;</span></button> ' +
+                            '</div> ' +
+
+                        '</div>'+
+
+
                     '</div> ' +
-
-                    '<div id="instruction" class="col-sm-2" style="color:white;" align="left">' +
-                    '</div> ' +
-
-                    '<div class="col-md-4" align="right" style="font-weight:bold;">' +
-                        '<a href="ProjectReadme.html" target="about_blank" >User Guide</a> | ' +
-                        '<a href="unit_tests/index.html" target="about_blank">Unit Tests</a> | ' +
-                        '<a href="docs/index.html" target="about_blank">Docs</a><br> ' +
-                    '</div> ' +
-                    '<div class="col-xs-1 col-md-offset-1" align="right">' +
-                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close" align="right"><span aria-hidden="true">&times;</span></button> ' +
-                    '</div> ' +
-
-                '</div>'+
-
-
-                '</div> ' +
-                    '<div class="modal-body" >' +
-                                '<!-- MODAL DEFINITION END -->' +
+                '<div class="modal-body" >' +
+        '<!-- MODAL DEFINITION END -->' +
 
                                 //'<svg id="processor" style="width:640px;height:560px;">' +
                                 '<svg class="col-md-8" id="processor" height="70%" width="60%" viewBox="0 0 750 560" preserveAspectRatio="none">' +
@@ -473,13 +471,18 @@ function visualize () {
 
                                 '</svg>' +
 
-                    '</div>' +
+            '</div>' +
 
                                     '<div id="stages" class="col-md-4" align="right">' +
+        '<select class="form-control" id="stackDisplayType">' +
+        '<option>Integer</option>' +
+        '<option>Ascii</option>' +
+        '<option>Binary</option>' +
+        '</select>' +
 
                                         '<ul class="nav nav-tabs">' +
 
-                                        '<li class="active">' +
+                                        '<li>' +
                                             '<a href="#IF-stages" data-toggle="tab">IF</a>'+
                                         '</li>'+
 
@@ -499,7 +502,7 @@ function visualize () {
                                             '<a href="#WB-stages" data-toggle="tab">WB</a>'+
                                         '</li>'+
 
-                                        '<li>'+
+                                        '<li class="active">'+
                                              '<a href="#all-stages" data-toggle="tab">ALL</a>' +
                                         '</li>'+
 
@@ -508,8 +511,96 @@ function visualize () {
                                         '</li>'+
 
                                         '</ul>'+
-                                    '</div>' +
 
+                                                <!-- Tab panes -->
+                                            '<div id="dataTabs" class="tab-content">' +
+                                            '<div class="tab-pane" id="all-stages">' +
+                                            '<ul class="stage-container" id="stages-all">' +
+                                            '<div class="left">' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li id="s0"></li>' +
+                                            '<li id="s1"></li>' +
+                                            '<li id="s2"></li>' +
+                                            '<li id="s3"></li>' +
+                                            '<li id="s4"></li>' +
+                                            '<li id="s5"></li>' +
+                                            '<li id="s6"></li>' +
+                                            '<li id="s7"></li>' +
+                                            '<div class="bigRow">' +'</div>' +
+                                            '<div class="lineRow">' +'</div>' +
+                                            '<li id="t0"></li>' +
+                                            '<li id="t1"></li>' +
+                                            '<li id="t2"></li>' +
+                                            '<li id="t3"></li>' +
+                                            '<li id="t4"></li>' +
+                                            '<li id="t5"></li>' +
+                                            '<li id="t6"></li>' +
+                                            '<li id="t7"></li>' +
+                                            '<li id="t8"></li>' +
+                                            '<li id="t9"></li>' +
+                                            '</div>' +
+                                            '<div class="right">' +
+                                            '<div class="lineRow">' +'</div>' +
+                                            '<li id="a0"></li>' +
+                                            '<li id="a1"></li>' +
+                                            '<li id="a2"></li>' +
+                                            '<li id="a3"></li>' +
+                                            '<div class="bigRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li id="v0"></li>' +
+                                            '<li id="v1"></li>' +
+                                            '</div>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '<div class="tab-pane" id="IF-stages">' +
+                                            '<ul class="registers-container" id="stages-IF">' +
+                                            '<li id="s0">' +'</li>' +
+                                            '<li id="s1">' +'</li>' +
+                                            '<li id="s2">' +'</li>' +
+                                            '<li id="s3">' +'</li>' +
+                                            '<li id="s4">' +'</li>' +
+                                            '<li id="s5">' +'</li>' +
+                                            '<li id="s6">' +'</li>' +
+                                            '<li id="s7">' +'</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '<div class="tab-pane" id="ID-stages">' +
+                                            '<ul class="registers-container" id="stages-ID">' +
+                                            '<li id="t0">' +'</li>' +
+                                            '<li id="t1">' +'</li>' +
+                                            '<li id="t2">' +'</li>' +
+                                            '<li id="t3">' +'</li>' +
+                                            '<li id="t4">' +'</li>' +
+                                            '<li id="t5">' +'</li>' +
+                                            '<li id="t6">' +'</li>' +
+                                            '<li id="t7">' +'</li>' +
+                                            '<li id="t8">' +'</li>' +
+                                            '<li id="t9">' +'</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '<div class="tab-pane" id="EX-stages">' +
+                                            '<ul class="registers-container" id="stages-EX">' +
+                                            '<li id="a0">' +'</li>' +
+                                            '<li id="a1">' +'</li>' +
+                                            '<li id="a2">' +'</li>' +
+                                            '<li id="a3">' +'</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '<div class="tab-pane" id="MEM-stages">' +
+                                            '<ul class="registers-container" id="stages-MEM">' +
+                                            '<li id="v0">' +'</li>' +
+                                            '<li id="v1">' +'</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '<div class="tab-pane" id="WB-stages">' +
+                                            '<ul class="registers-container" id="stages-WB">' +
+                                            '<li id="v0">' +'</li>' +
+                                            '<li id="v1">' +'</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+
+                                            '</div>' +
+                                    '</div>' +
                     '</div>' +
 
                     '<!-- MODAL FOOTER DEFINITION BEGINS DO NOT CHANGE FOLLOWING LINES -->' +
@@ -524,17 +615,18 @@ function visualize () {
         'var aniData = d3.selectAll(".ifetch");' +
         'console.log(aniData[0][2]);' +
         '</script-->'
+
+
     );
 
-    // TODO: use hex for values other than the instruction thus RD etc.
 
-    //TODO: grey out visualize button if instruction does not work.
+    // TODO: use hex for values other than the instruction thus RD etc.
 
     // TODO: All created items need a specific class tag, remove all items in the class tag to clear the visualization.
 
     //TODO: See page 98 chap 2 figure 2.5 for instruction coding and what is relevant in SW LW ADDI
 
-    // How would setting lines based on controll signals work with this code?
+    // TODO: Future: How would setting lines based on controll signals work with this code?
 
 
     var iftoggle = 0;
@@ -546,9 +638,10 @@ function visualize () {
     //var dataKeys = ["PLAY", "IF", "ID", "EX", "MEM", "WB", "RESTART", "Close"];
     var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Close"];
     var pc = 32768;
-    var previousLine = 0;
     var debug = false;
 
+    console.log("START CurrentLine['lineNo'] ", CurrentLine['lineNo']);
+    console.log("START previousLine ", previousLine);
 
     // BEQ instructions do not have an assocated binary address this is used to create one.
     // TODO: make a function for this code.
@@ -675,9 +768,10 @@ function visualize () {
     // use a done global toggle to determine it done once?
     // create initialization function and include.
 
-    if (MIPS.numberToBinaryString((CurrentLine["lineNo"]), 8) != previousLine) {
+    if (CurrentLine["lineNo"] != previousLine) {
         for (var i = 0; i < elements.length; i++) {
             mipsValues[elements[i]] = setElementValues(elements[i], i);
+            //setupStageValues(elements[i]);
             if (debug) {
                 console.log("lineValues: ", mipsValues[elements[i]]);
             }
@@ -1294,8 +1388,9 @@ function visualize () {
         // TODO: build a logic table as a 2D array to replace this mess
         // what is in common with each? fall through cases for differences.
 
-        if (debug) {
-            console.log("HELLO setElementVisibility LineName is: ", element);
+        if (true) {
+            console.log("setElementVisibility LineName is: ", element);
+            console.log("setElementVisibility currentLine is", CurrentLine["lineNo"]);
         }
 
         if (instructionFormat === "R") {
@@ -1555,6 +1650,7 @@ function visualize () {
                         case 'MemMuxToRDArrow':
                         case 'aluResult':
                         case 'memoryReadDataResult':
+                        case "WD":
                             return false;
                             break;
 
@@ -1815,6 +1911,7 @@ function visualize () {
                     return "00000000000000000000000000000000";
                 }
                 break;
+            default : return null;
 
         }
     }
@@ -2118,11 +2215,12 @@ function visualize () {
         var temp = CurrentLine["args"];
         console.log("is registers global? ", allRegisterValues[temp[0]]);
         console.log("mipsValues array is :", mipsValues);
-        console.log("the value of CurrentLine in visual_mips.html is :", CurrentLine);
-        console.log("CurrentLine['assembledInstruction'] in visual_mips.html is :", CurrentLine["assembledInstruction"]);
+        console.log("the value of CurrentLine in visual_mips_original.html is :", CurrentLine);
+        console.log("CurrentLine['assembledInstruction'] in visual_mips_original.html is :", CurrentLine["assembledInstruction"]);
         opCode = CurrentLine["assembledInstruction"].slice(0, 6);
         console.log("This is the opCode: ", opCode);
         console.log("this is CurrentLine['args']: ", temp[0]);
+
     }
 
 
@@ -2230,17 +2328,17 @@ function visualize () {
 
 
     // Create the pipeline stage buttons & uses data from dataKeys to name the buttons
-    if (!initialized) {
+    if (CurrentLine["lineNo"] != previousLine) {
 
         d3.select("#modal-buttons").selectAll("button.teams").data(dataKeys).enter()
             .append("button")
-            /*.attr("class", "btn btn-primary btn-xs")*/
+            .attr("class", "stage-buttons")
             .attr("text-align", "center")
             .on("click", buttonClick)
             .html(function (d) {
                 return d
             });
-        initialized = true;
+        //initialized = true;
     }
 
     function setBlack (someClass){
@@ -2448,16 +2546,56 @@ function visualize () {
 
         if(datapoint == "Close") {
 
-            d3.select("#displayInstructionText").remove();
-            d3.select("#myModalLabel").remove();
+            previousLine = CurrentLine["lineNo"];
+            iftoggle = 0;
+            idtoggle = 0;
+            extoggle = 0;
+            memtoggle = 0;
+            wbtoggle = 0;
+            console.log("Close CurrentlLine['lineNo:'] ",CurrentLine["lineNo"]);
+            d3.selectAll("#myModalLabel").remove();
             d3.selectAll(".lineValues").remove();
-            d3.select("#displayInstructionFormat").remove();
-            d3.select("#displayInstructionBinary").remove();
+            d3.selectAll("#displayInstructionFormat").remove();
+            d3.selectAll("#displayInstructionBinary").remove();
+            d3.selectAll("#displayInstructionText").remove();
+            d3.selectAll(".stage-buttons").remove();
+
+            // Disable the visualize button to prevent re-entering the visualization.
+            document.getElementById('visualize').disabled = true;
+
+
+            done =  (d3.selectAll(".ifetch,.idecode, .excode, .wbcode, .memcode")
+                    .transition()
+                    .style('opacity', 1)
+                    .duration(1500)
+                    .style("fill", "lightgrey")
+                    //.style("stroke", "lightgrey")
+                +
+                d3.selectAll(".ifetchObj, .idecodeObj, .excodeObj, .wbcodeObj, .memcodeObj")
+                    .transition()
+                    .style('opacity', 1)
+                    .duration(1500)
+                    .style("stroke", "lightgrey")
+                +
+                d3.selectAll(".idtorq, .wbtorq, .extorq, .memtorq")
+                    .transition()
+                    .style('opacity', 1)
+                    .duration(1500)
+                    .style("fill", "lightgrey")
+                +
+                d3.selectAll(".idtorqObj, .wbtorqObj, .extorqObj, .memtorqObj")
+                    .transition()
+                    .style('opacity', 1)
+                    .duration(1500)
+                    .style("stroke", "lightgrey")
+
+            );
             $("#myModal").modal("hide");
+            return done;
         }
     }
 
-
+    /*
     function setElementToGrey(anElement){
         var temp = ("#" + anElement);
         console.log ("HELLO setElementToGrey ", temp);
@@ -2469,8 +2607,21 @@ function visualize () {
         return done
 
     }
-
-
+*/
+/*  // look again at origninal code   this code gets the element name then the value.
+    function setupStageValues(index){
+        console.log ("setupStageValues element is: ", index);
+        var element = $(this);
+        var elementName = reg.attr('id');
+        console.log("")
+        reg.html(
+            "<b>"+regName +":</b> "
+            + "<span class='regSpacer' reg='"+regName+"' id='"+regName+"-val' contenteditable='true'>"
+            + me.getRegisterVal('$' + regName)
+            + "</span>"
+        );
+    }
+*/
     //console.log("testing value of elements: ", mipsValues[elements[15]].val);
     console.log("This is the mipsValues: ", mipsValues);
 }
