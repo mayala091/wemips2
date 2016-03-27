@@ -145,15 +145,15 @@ function visualize () {
                                 '<!-- Instruction [15-0] INSTRUCTION DISTRIBUTION LINE-->' +
                                 '<text id="inst15To0Txt" class="idecode" x="162" y="407" font-size="9px" fill="lightgrey" >Instruction [15-0]</text>' +
                                 '<line id="inst15ToSignExt" class="idecodeObj" x1="158" y1=412 x2="268" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
-                                '<line " id="intoSignExt16" class="idecodeObj notRObj" x1="268" y1=412 x2="285" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<line " id="intoSignExt16" class="idecodeObj" x1="268" y1=412 x2="285" y2="412" stroke="lightgrey" stroke-width="2px" ></line>' +
                                 '<!-- Arrow point end of line-->' +
-                                '<path id="intoSignExtArrow16" class="idecodeObj notRObj" d="M 285,412 285,410 289,412 285,414 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<path id="intoSignExtArrow16" class="idecodeObj" d="M 285,412 285,410 289,412 285,414 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
                                 '<!-- 16 DIAG LINE 32 DIAG LINE AT SIGN EXTEND-->' +
-                                '<text id="signExt16Txt" class="idecode notR" x="273" y="402" font-size="11px" fill="lightgrey" >16</text>' +
-                                '<line id="signExt16DiagLine" class="idecodeObj notRObj" x1="273" y1=405 x2="283" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
-                                '<text id="signExt32Txt" class="idecode notR" x="343" y="402" font-size="11px" fill="lightgrey" >32</text>' +
-                                '<line id="signExt32DiagLine" class="idecodeObj notRObj" x1="343" y1=405 x2="353" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+                                '<text id="signExt16Txt" class="idecode" x="273" y="402" font-size="11px" fill="lightgrey" >16</text>' +
+                                '<line id="signExt16DiagLine" class="idecodeObj" x1="273" y1=405 x2="283" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
+                                '<text id="signExt32Txt" class="idecode" x="343" y="402" font-size="11px" fill="lightgrey" >32</text>' +
+                                '<line id="signExt32DiagLine" class="idecodeObj" x1="343" y1=405 x2="353" y2="418" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
 
                                 '<!-- Instruction [5-0] INSTRUCTION DISTRIBUTION LINE TO ALU CONTROL-->' +
                                 '<text id="inst5ToAluCtrlTxt" class="idecode" x="275" y="460" font-size="9px" fill="lightgrey" >Instruction [5-0]</text>' +
@@ -461,12 +461,6 @@ function visualize () {
                                 '<!-- START TIMING LINES ### TM ### -->' +
                                 '<!--line class="timing" id="iftime" x1="25" y1="490" x2="145" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
                                 '<!--line class="timing" id="idtime" x1="147" y1="490" x2="365" y2="490" stroke="lightgrey" stroke-width="10px"></line-->' +
-
-                                '<!-- CREDIT AUTHOR FOR DIAGRAM -->' +
-                                '<text class="ifetch" x="15" y="560" font-size="9px" >' +
-                                'Figure 5.17: Patterson, D. and Hennessy, J. Computer Organization and Design. 3rd ed. Morgan Kaufmann, 2005. 307-14. Print. Reprinted with permission.' +
-                                '</text>' +
-
                                 '</g>' +
 
                                 '</svg>' +
@@ -474,10 +468,10 @@ function visualize () {
             '</div>' +
 
                                     '<div id="stages" class="col-md-4" align="right">' +
-        '<select class="form-control" id="stackDisplayType">' +
-        '<option>Integer</option>' +
-        '<option>Ascii</option>' +
+        '<select class="form-control" id="stageDisplayType">' +
         '<option>Binary</option>' +
+        '<option>Integer</option>' +
+        '<option>Hex</option>' +
         '</select>' +
 
                                         '<ul class="nav nav-tabs">' +
@@ -604,8 +598,8 @@ function visualize () {
                     '</div>' +
 
                     '<!-- MODAL FOOTER DEFINITION BEGINS DO NOT CHANGE FOLLOWING LINES -->' +
-                    '<div id="modal-buttons" class="modal-footer" style="text-align:center; background-color: black;"> ' +
-                '</div>' +
+                        '<div id="modal-buttons" role="group" aria-label="First group" class="modal-footer" style="text-align:center; background-color: black;"> ' +
+                        '</div>' +
             '</div>' +
         '</div>' +
 
@@ -635,52 +629,21 @@ function visualize () {
     var memtoggle = 0;
     var wbtoggle = 0;
     var done;
-    //var dataKeys = ["PLAY", "IF", "ID", "EX", "MEM", "WB", "RESTART", "Close"];
-    var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Close"];
+    var instructionIn = " ";
+    var instructionFormat = " ";
     var pc = 32768;
+    var displayMode = "binary";
     var debug = false;
 
-    console.log("START CurrentLine['lineNo'] ", CurrentLine['lineNo']);
-    console.log("START previousLine ", previousLine);
 
-    // BEQ instructions do not have an assocated binary address this is used to create one.
-    // TODO: make a function for this code.
-    if (LabelLineNo !== null){
-        var labelAddress = LabelLineNo;
-        var partialInst = CurrentLine["assembledInstruction"].slice(0, 19);
-        var addressBinary =  partialInst + MIPS.numberToBinaryString(labelAddress, 16) + " I";
+    var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Play", "Restart", "Close"];
 
-        CurrentLine["assembledInstruction"] = addressBinary;
-        instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
-
-        var instructionIn = CurrentLine["text"];
-        var tempFields = instructionIn.split(/#/);
-        instructionIn = tempFields[0];
-
-        if (debug){
-        console.log ("partialInst is: ", partialInst);
-        console.log ("the label  is: ", labelAddress);
-        console.log ("the label is binary16 bit: ", MIPS.numberToBinaryString(labelAddress, 16));
-        console.log("CurrentLine with label as binary is: ", addressBinary);
-        console.log("CurrentLine[text] no comment is: ", instructionIn);
-        console.log("instruction format is: ", instructionFormat);
-        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);}
-
-
-
-    } else {
-        var partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
-        var instructionIn = CurrentLine["text"];
-        var tempFields = instructionIn.split(/#/);
-        instructionIn = tempFields[0];
-        instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
-
-        if (debug) {
-        console.log("partialInst is: ", partialInst);
-        console.log("CurrentLine[text] no comment is: ", instructionIn);
-        console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
-        console.log("instruction format is: ", instructionFormat);}
+    if (debug) {
+        console.log("START CurrentLine['lineNo'] ", CurrentLine['lineNo']);
+        console.log("START previousLine ", previousLine);
     }
+
+
 
     var allRegs = [
         '$zero', '$at', '$v0', '$v1', '$a0', '$a1', '$a2', '$a3',
@@ -691,14 +654,15 @@ function visualize () {
 
 
     /**
-     * Hash table of registers : lineValues
-     * @property registers: lineValues
+     * Hash table of elements : elementValues
+     * @property elements: elementValues
      * @type {Object}
      */
     var mipsValues = {};
+
     /**
-     * Array of all registers
-     * @property allRegs
+     * Array of all elements
+     * @property mipsValues
      * @type {Array}
      */
     // change svg elements id tags to match the items in elements
@@ -764,22 +728,121 @@ function visualize () {
     ];
 
 
-    //This should be a one time initialize function
-    // use a done global toggle to determine it done once?
-    // create initialization function and include.
 
-    if (CurrentLine["lineNo"] != previousLine) {
-        for (var i = 0; i < elements.length; i++) {
-            mipsValues[elements[i]] = setElementValues(elements[i], i);
-            //setupStageValues(elements[i]);
+
+    function getInstruction () {
+        var partialInst = " ";
+        var tempFields;
+
+        // BEQ instructions do not have an associated binary address this is used to create one.
+        // TODO: make a function for this code.
+        if (LabelLineNo !== null) {
+            var labelAddress = LabelLineNo;
+            partialInst = CurrentLine["assembledInstruction"].slice(0, 19);
+            var addressBinary = partialInst + MIPS.numberToBinaryString(labelAddress, 16) + " I";
+
+            CurrentLine["assembledInstruction"] = addressBinary;
+            instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+
+            instructionIn = CurrentLine["text"];
+            tempFields = instructionIn.split(/#/);
+            instructionIn = tempFields[0];
+
             if (debug) {
-                console.log("lineValues: ", mipsValues[elements[i]]);
+                console.log("partialInst is: ", partialInst);
+                console.log("the label  is: ", labelAddress);
+                console.log("the label is binary16 bit: ", MIPS.numberToBinaryString(labelAddress, 16));
+                console.log("CurrentLine with label as binary is: ", addressBinary);
+                console.log("CurrentLine[text] no comment is: ", instructionIn);
+                console.log("instruction format is: ", instructionFormat);
+                console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+            }
+
+
+        } else {
+            partialInst = CurrentLine["assembledInstruction"].slice(0, 18);
+            instructionIn = CurrentLine["text"];
+            tempFields = instructionIn.split(/#/);
+            instructionIn = tempFields[0];
+            instructionFormat = CurrentLine["assembledInstruction"].slice(-1);
+
+            if (debug) {
+                console.log("partialInst is: ", partialInst);
+                console.log("CurrentLine[text] no comment is: ", instructionIn);
+                console.log("CurrentLine[assembledInstruction] is: ", CurrentLine["assembledInstruction"]);
+                console.log("instruction format is: ", instructionFormat);
+            }
+        }
+
+    }
+    getInstruction();
+
+
+
+    function displayInstruction () {
+        // Display the current instruction text,  instruction format and instruction in binary
+        d3.select("#instruction").append("text")
+            .text(instructionIn)
+            .style("font-size", "17px")
+            .attr("id", "displayInstructionText")
+            .attr("class", "initialize");
+        //.attr("x", 20)
+        //.attr("y", 11);
+
+        d3.select("#start").append("text")
+            .text("Format: " + instructionFormat)
+            .style("font-size", "12px")
+            .attr("id", "displayInstructionFormat")
+            .attr("class", "initialize")
+            .attr("x", 400)
+            .attr("y", 11);
+
+        d3.select("#start").append("text")
+            .text("Instruction in Binary: " + CurrentLine["assembledInstruction"].slice(0, -1))
+            .style("font-size", "12px")
+            .attr("id", "displayInstructionBinary")
+            .attr("class", "initialize")
+            .attr("x", 10)
+            .attr("y", 11);
+
+    }
+    displayInstruction();
+
+
+
+    function creditAuthor () {
+        if (CurrentLine["lineNo"] != previousLine) {
+            return d3.select("svg").append("text")
+                .text("Patterson, D. and Hennessy, J. Computer Organization and Design. 3rd ed. Morgan Kaufmann, 2005. 307-14. Print. Reprinted with permission.")
+                .style("font-size", "9px")
+                .attr("id", "author")
+                .attr("class", "initialize")
+                .attr("x", 15)
+                .attr("y", 560);
+        }
+
+    }
+    creditAuthor();
+
+
+
+    // This function sets all elements in the mipsValues object. All line values displayed and line visibility are set.
+    function initializeElements() {
+        if (CurrentLine["lineNo"] != previousLine) {
+            for (var i = 0; i < elements.length; i++) {
+                mipsValues[elements[i]] = setElementValues(elements[i], i);
+                //setupStageValues(elements[i]);
+                if (debug) {
+                    console.log("lineValues: ", mipsValues[elements[i]]);
+                }
             }
         }
     }
+    initializeElements();
 
 
-    // sets the element values
+
+    // returns a object containing the value, coordinates, stage and visibility of an element.
     function setElementValues(lineName, lineNumber) {
         /**
          * @class element
@@ -808,11 +871,41 @@ function visualize () {
              * Determine the element visibility.
              * @type boolean
              */
-            vis: setElementVisibility(lineName)
+            vis: setElementVisibility(lineName),
+            /**
+             * Indicates if element can be changed from: int, hex, binary.
+             * @type boolean
+             */
+            mutable: setMutable(lineName)
 
 
         };
     } // end function setElementValues(lineName, lineNumber)
+
+
+
+    // Set mutable.  If user changes type: Bin, Hex, Int then some elements should not be chganged.
+    //This provides a way to filter which elements will be changed.
+    function setMutable(lineName){
+        switch (lineName) {
+            case "RR1":
+            case "RR2":
+            case "WR":
+            case "signExt32DiagLine":
+            case "signExt16DiagLine":
+            case "signExt16Txt":
+            case "signExt32Txt":
+
+                return false;
+                break;
+
+
+            default:
+                return true;
+        }
+    }
+
+
 
 
     // gets the x and y coordinates for the element values
@@ -876,6 +969,7 @@ function visualize () {
 
         return coordinates[lineName] || defaultFormat;
     } // end function getXYcoordinates(lineName)
+
 
 
     // gets the stage identification
@@ -1133,15 +1227,6 @@ function visualize () {
     } // end function getStage(lineName)
 
 
-    // TODO Attempt to destroy the modal not working FIX ME!
-    $("#myModal").on("hide", function (e) {
-        if (yourConditionNotToCloseMet) {
-            e.preventDefault();
-        }
-    });
-
-
-
 
     // display the element values by stage
     function displayElementValues(datapoint, stageClass) {
@@ -1186,7 +1271,7 @@ function visualize () {
                 d3.select("#IF").append("text")
                     .text("PC: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch  lineValues")
+                    .attr("class", "ifetch  lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 365);
 
@@ -1226,19 +1311,19 @@ function visualize () {
                 d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode lineValues")
+                    .attr("class", "idecode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 469);
                 d3.select("#ID").append("text")
                     .text("RD2: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode lineValues")
+                    .attr("class", "idecode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 482);
                 d3.select("#ID").append("text")
                     .text("Sign Extended 32 bit value: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode lineValues")
+                    .attr("class", "idecode lineValuesLabels")
                     .attr("x", 350)
                     .attr("y", 495);
 
@@ -1277,25 +1362,25 @@ function visualize () {
                 d3.select("#EX").append("text")
                     .text("ALUSrc Mux to ALU in: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValues")
+                    .attr("class", "excode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 495);
                 d3.select("#EX").append("text")
                     .text("ALU Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValues")
+                    .attr("class", "excode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 508);
                 d3.select("#EX").append("text")
                     .text("Shift Left 2 Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValues")
+                    .attr("class", "excode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 521);
                 d3.select("#EX").append("text")
                     .text("Branch ALU Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValues")
+                    .attr("class", "excode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 534);
 
@@ -1362,13 +1447,13 @@ function visualize () {
                 d3.select("#WB").append("text")
                     .text("Memory Read Data Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "wbcode lineValues")
+                    .attr("class", "wbcode lineValuesLabels")
                     .attr("x", 10)
                     .attr("y", 547);
                 d3.select("#WB").append("text")
                     .text("Write Data Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "wbcode lineValues")
+                    .attr("class", "wbcode lineValuesLabels")
                     .attr("x", 350)
                     .attr("y", 508);
 
@@ -1918,6 +2003,7 @@ function visualize () {
 
 
 
+
     function getAluControl (AluOp0, AluOp1, Inst5ToALUCtr) {
         if (true) {
         console.log ("getAluControl AluOp0 is: ", AluOp0);
@@ -1968,7 +2054,6 @@ function visualize () {
                     }
             }
     }
-
 
 
 
@@ -2057,7 +2142,6 @@ function visualize () {
 
 
     }
-
 
 
 
@@ -2224,28 +2308,7 @@ function visualize () {
     }
 
 
-    // Display the current instruction text,  instruction format and instruction in binary
-    // TODO: Need to update this info when current line changes. This needs to be a function.
-    d3.select("#instruction").append("text")
-        .text(instructionIn)
-        .style("font-size", "17px")
-        .attr("id", "displayInstructionText");
-        //.attr("x", 20)
-        //.attr("y", 11);
 
-    d3.select("#start").append("text")
-        .text("Format: " + instructionFormat)
-        .style("font-size", "12px")
-        .attr("id", "displayInstructionFormat")
-        .attr("x", 400)
-        .attr("y", 11);
-
-    d3.select("#start").append("text")
-        .text("Instruction in Binary: " + CurrentLine["assembledInstruction"].slice(0, -1))
-        .style("font-size", "12px")
-        .attr("id", "displayInstructionBinary")
-        .attr("x", 10)
-        .attr("y", 11);
 
 
     // previously used to select the body element and append a div for the buttons
@@ -2338,8 +2401,45 @@ function visualize () {
             .html(function (d) {
                 return d
             });
-        //initialized = true;
+
     }
+
+    // Listens for the form-box change and runs the function to make the changes.
+    $("#stageDisplayType").change(changeType);
+
+    function changeType () {
+        displayMode = $("#stageDisplayType option:selected").html().toLowerCase();
+       var testing = d3.selectAll(".lineValues")
+                console.log ("Testing is ", testing);
+        var anElement = testing[0][2]["innerHTML"];
+                console.log ("anElement is ", anElement);
+        for (var i = 0; i < testing[[0]].length; i++ ) {
+                    console.log ("testing[0][i][innerHTML] before is ", testing[0][i]["innerHTML"]);
+            testing[0][i]["innerHTML"] = changeRep(testing[0][i]["innerHTML"]);
+                    console.log ("testing[0][i][innerHTML] after is ", testing[0][i]["innerHTML"]);
+        }
+
+    }
+
+
+
+    function changeRep(v){
+        //console.log(stackDisplayMode);
+        switch(displayMode) {
+            case "integer":
+                if (typeof v == "string"){
+                    return MIPS.binaryStringToUnsignedNumber(v, 32);
+                }break;
+            case "ascii":
+                return asChar(v);
+                break;
+            case "binary":
+                return asBin(v);
+                break;
+        }
+    }
+
+
 
     function setBlack (someClass){
         // need to not set black the elements that are vis false.
@@ -2375,7 +2475,7 @@ function visualize () {
         return done
     }
 
-    //TODO: Need to break setTorq out into text and object classes.
+
     function setTorq (someClass){
         done =  (d3.selectAll(someClass)
             .transition()
@@ -2411,13 +2511,11 @@ function visualize () {
     // or view all as light grey when "RESET" is clicked.  "PLAY" advances each section then resets to grey.
     function buttonClick(datapoint) {
         var stageClass = " ";
-        // this function needs to draw each section
         if(datapoint === "IF" && iftoggle === 0) {
             stageClass = ".ifetch";
             iftoggle = iftoggle + 1;
             drawVisableLines (stageClass, datapoint);
             drawVisableLines (stageClass + "Obj", datapoint);
-            //setBlack(".ifetch");
             return displayElementValues(datapoint, stageClass);
         }
         if(datapoint === "IF" && iftoggle === 1){
@@ -2432,8 +2530,6 @@ function visualize () {
             drawVisableLines (stageClass + "Obj", datapoint);
             drawVisableLines (".idtorq", datapoint);
             drawVisableLines ((".idtorq" + "Obj"), datapoint);
-            //setBlack(".idecode");
-            //setTorq(".idtorq");
             return displayElementValues(datapoint, stageClass);
         }
         if(datapoint == "ID" && idtoggle == 1){
@@ -2448,8 +2544,6 @@ function visualize () {
             drawVisableLines (stageClass + "Obj", datapoint);
             drawVisableLines (".extorq", datapoint);
             drawVisableLines ((".extorq" + "Obj"), datapoint);
-            //setBlack(".excode");
-            //setTorq(".extorq");
             return displayElementValues(datapoint, stageClass);
         }
         if(datapoint == "EX" && extoggle == 1){
@@ -2486,38 +2580,23 @@ function visualize () {
             return (setGrey(".wbcode") + setTorqGrey(".wbtorq"));
         }
 
-        if(datapoint === "RESTART"){
-            // TODO: Need to add torqObj to this logic.
-            // change this to function calls as in play.
-            done =  (d3.selectAll(".ifetch,.idecode, .excode, .wbcode, .memcode")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("fill", "lightgrey")
-                    //.style("stroke", "lightgrey")
-                +
-                d3.selectAll(".ifetchObj, .idecodeObj, .excodeObj, .wbcodeObj, .memcodeObj")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("stroke", "lightgrey")
-                +
-                d3.selectAll(".idtorq, .wbtorq, .extorq, .memtorq")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("stroke", "lightgrey")
+        if(datapoint === "Restart"){
+            var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
+            var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
 
-            );
+            blackSection.forEach(setGrey);
+            turqSection.forEach(setTorqGrey);
+
             iftoggle = 0;
             idtoggle = 0;
             extoggle = 0;
             memtoggle = 0;
             wbtoggle = 0;
-            return done;
         }
-        if(datapoint === "PLAY"){
-            // TODO: match logic of RESET.  This logic is incorrect
+
+        if(datapoint === "Play"){
+
+            var stage = ["IF", "ID", "EX", "MEM", "WB"];
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
             var i = 0;
@@ -2527,8 +2606,11 @@ function visualize () {
 
             function myLoop () {
                 setTimeout(function () {
-                    setBlack(blackSection[i]);
-                    setTorq(turqSection[i]);
+                    drawVisableLines (blackSection[i], stage[i]);
+                    drawVisableLines (blackSection[i] + "Obj", stage[i]);
+                    drawVisableLines (turqSection[i], stage[i]);
+                    drawVisableLines ((turqSection[i] + "Obj"), stage[i]);
+                    displayElementValues(stage[i], blackSection[i]);
                     i++;
                     if (i < 5) {
                         myLoop();
@@ -2536,12 +2618,12 @@ function visualize () {
                 }, 1500)
             }
             myLoop();
+
             iftoggle = 1;
             idtoggle = 1;
             extoggle = 1;
             memtoggle = 1;
             wbtoggle = 1;
-            return done;
         }
 
         if(datapoint == "Close") {
@@ -2553,75 +2635,24 @@ function visualize () {
             memtoggle = 0;
             wbtoggle = 0;
             console.log("Close CurrentlLine['lineNo:'] ",CurrentLine["lineNo"]);
-            d3.selectAll("#myModalLabel").remove();
             d3.selectAll(".lineValues").remove();
-            d3.selectAll("#displayInstructionFormat").remove();
-            d3.selectAll("#displayInstructionBinary").remove();
-            d3.selectAll("#displayInstructionText").remove();
+            d3.selectAll(".lineValuesLabels").remove();
+            d3.selectAll(".initialize").remove();
             d3.selectAll(".stage-buttons").remove();
 
-            // Disable the visualize button to prevent re-entering the visualization.
+            // Disable the visualize button to prevent re-entering the visualization for a given MIPS instruction.
             document.getElementById('visualize').disabled = true;
 
+            var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
+            var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
 
-            done =  (d3.selectAll(".ifetch,.idecode, .excode, .wbcode, .memcode")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("fill", "lightgrey")
-                    //.style("stroke", "lightgrey")
-                +
-                d3.selectAll(".ifetchObj, .idecodeObj, .excodeObj, .wbcodeObj, .memcodeObj")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("stroke", "lightgrey")
-                +
-                d3.selectAll(".idtorq, .wbtorq, .extorq, .memtorq")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("fill", "lightgrey")
-                +
-                d3.selectAll(".idtorqObj, .wbtorqObj, .extorqObj, .memtorqObj")
-                    .transition()
-                    .style('opacity', 1)
-                    .duration(1500)
-                    .style("stroke", "lightgrey")
+            blackSection.forEach(setGrey);
+            turqSection.forEach(setTorqGrey);
 
-            );
             $("#myModal").modal("hide");
-            return done;
         }
     }
 
-    /*
-    function setElementToGrey(anElement){
-        var temp = ("#" + anElement);
-        console.log ("HELLO setElementToGrey ", temp);
-
-        done =  d3.select(temp)
-            .style("fill", "lightgrey")
-            .style("stroke", "lightgrey");
-
-        return done
-
-    }
-*/
-/*  // look again at origninal code   this code gets the element name then the value.
-    function setupStageValues(index){
-        console.log ("setupStageValues element is: ", index);
-        var element = $(this);
-        var elementName = reg.attr('id');
-        console.log("")
-        reg.html(
-            "<b>"+regName +":</b> "
-            + "<span class='regSpacer' reg='"+regName+"' id='"+regName+"-val' contenteditable='true'>"
-            + me.getRegisterVal('$' + regName)
-            + "</span>"
-        );
-    }
-*/
     //console.log("testing value of elements: ", mipsValues[elements[15]].val);
     console.log("This is the mipsValues: ", mipsValues);
 }
