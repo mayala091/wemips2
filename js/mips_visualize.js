@@ -632,7 +632,8 @@ function visualize () {
     var instructionIn = " ";
     var instructionFormat = " ";
     var pc = 32768;
-    var displayMode = "binary";
+    var newFormat = "binary";
+    var currentFormat = "binary";
     var debug = false;
 
 
@@ -873,7 +874,7 @@ function visualize () {
              */
             vis: setElementVisibility(lineName),
             /**
-             * Indicates if element can be changed from: int, hex, binary.
+             * Indicates if element can be mutated into; int, hex, binary.
              * @type boolean
              */
             mutable: setMutable(lineName)
@@ -888,20 +889,30 @@ function visualize () {
     //This provides a way to filter which elements will be changed.
     function setMutable(lineName){
         switch (lineName) {
-            case "RR1":
-            case "RR2":
-            case "WR":
-            case "signExt32DiagLine":
-            case "signExt16DiagLine":
-            case "signExt16Txt":
-            case "signExt32Txt":
-
-                return false;
+            case "pc":
+            case "pcAluIn":
+            case "pcAdderResult":
+            case "inst31ToCtrl":
+            case "inst20ToRR2":
+            case "inst15ToMux":
+            case "inst15ToSignExt":
+            case "inst5ToAluCtrl":
+            case "newPc":
+            case "aluCtrlOut":
+            case "RD1":
+            case "RD2":
+            case "aluInBot":
+            case "aluResult":
+            case "shiftLeft2":
+            case "pcSl2AddResult":
+            case "memoryReadDataResult":
+            case "signExt32":
+            case "WD":
+                return true;
                 break;
 
-
             default:
-                return true;
+                return false;
         }
     }
 
@@ -1227,10 +1238,13 @@ function visualize () {
     } // end function getStage(lineName)
 
 
-
+    // TODO: Mar 27th add mutable logic to this function.
     // display the element values by stage
     function displayElementValues(datapoint, stageClass) {
         // update only lines relevant to this instruction type and specific inst
+
+        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
+
         if (debug) {
             console.log("displayLineValues datapoint is :", datapoint);
             console.log("displayLineValues stageClass is :", stageClass);
@@ -1249,6 +1263,7 @@ function visualize () {
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
                         d3.select("#IF").append("text")
+                        // TODO: Mar 28th replaced by .text(changeRep(anElement.val))
                             .text(anElement.val)
                             .style("font-size", "9px")
                             .attr("id", elements[i])
@@ -1271,7 +1286,7 @@ function visualize () {
                 d3.select("#IF").append("text")
                     .text("PC: ")
                     .style("font-size", "9px")
-                    .attr("class", "ifetch  lineValuesLabels")
+                    .attr("class", "ifetch immutable")
                     .attr("x", 10)
                     .attr("y", 365);
 
@@ -1311,19 +1326,19 @@ function visualize () {
                 d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode lineValuesLabels")
+                    .attr("class", "idecode immutable")
                     .attr("x", 10)
                     .attr("y", 469);
                 d3.select("#ID").append("text")
                     .text("RD2: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode lineValuesLabels")
+                    .attr("class", "idecode immutable")
                     .attr("x", 10)
                     .attr("y", 482);
                 d3.select("#ID").append("text")
                     .text("Sign Extended 32 bit value: ")
                     .style("font-size", "9px")
-                    .attr("class", "idecode lineValuesLabels")
+                    .attr("class", "idecode immutable")
                     .attr("x", 350)
                     .attr("y", 495);
 
@@ -1362,25 +1377,25 @@ function visualize () {
                 d3.select("#EX").append("text")
                     .text("ALUSrc Mux to ALU in: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValuesLabels")
+                    .attr("class", "excode immutable")
                     .attr("x", 10)
                     .attr("y", 495);
                 d3.select("#EX").append("text")
                     .text("ALU Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValuesLabels")
+                    .attr("class", "excode immutable")
                     .attr("x", 10)
                     .attr("y", 508);
                 d3.select("#EX").append("text")
                     .text("Shift Left 2 Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValuesLabels")
+                    .attr("class", "excode immutable")
                     .attr("x", 10)
                     .attr("y", 521);
                 d3.select("#EX").append("text")
                     .text("Branch ALU Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "excode lineValuesLabels")
+                    .attr("class", "excode immutable")
                     .attr("x", 10)
                     .attr("y", 534);
 
@@ -1447,13 +1462,13 @@ function visualize () {
                 d3.select("#WB").append("text")
                     .text("Memory Read Data Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "wbcode lineValuesLabels")
+                    .attr("class", "wbcode immutable")
                     .attr("x", 10)
                     .attr("y", 547);
                 d3.select("#WB").append("text")
                     .text("Write Data Result: ")
                     .style("font-size", "9px")
-                    .attr("class", "wbcode lineValuesLabels")
+                    .attr("class", "wbcode immutable")
                     .attr("x", 350)
                     .attr("y", 508);
 
@@ -2408,36 +2423,65 @@ function visualize () {
     $("#stageDisplayType").change(changeType);
 
     function changeType () {
-        displayMode = $("#stageDisplayType option:selected").html().toLowerCase();
-       var testing = d3.selectAll(".lineValues")
+        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
+
+       var testing = [[]];
+            testing.length = 0;
+
+        testing = d3.selectAll(".lineValues");
                 console.log ("Testing is ", testing);
-        var anElement = testing[0][2]["innerHTML"];
-                console.log ("anElement is ", anElement);
+                        //var anElement = testing[0][2]["innerHTML"];
+                        //console.log ("anElement is ", anElement);
         for (var i = 0; i < testing[[0]].length; i++ ) {
                     console.log ("testing[0][i][innerHTML] before is ", testing[0][i]["innerHTML"]);
             testing[0][i]["innerHTML"] = changeRep(testing[0][i]["innerHTML"]);
-                    console.log ("testing[0][i][innerHTML] after is ", testing[0][i]["innerHTML"]);
+                    console.log ("testing[0][" + i + " ][innerHTML] after is ", testing[0][i]["innerHTML"]);
         }
 
     }
 
 
 
-    function changeRep(v){
-        //console.log(stackDisplayMode);
-        switch(displayMode) {
-            case "integer":
-                if (typeof v == "string"){
-                    return MIPS.binaryStringToUnsignedNumber(v, 32);
-                }break;
-            case "ascii":
-                return asChar(v);
-                break;
+    // convert an existing value format into a new format.  The formats are binary, hex or integer.
+    function changeRep(v) {
+        switch (currentFormat){
             case "binary":
-                return asBin(v);
+                switch (newFormat){
+                    case "integer":
+                        return MIPS.binaryStringToUnsignedNumber(v);
+                        break;
+                    case "hex":
+                        return asHex(v, currentFormat);
+                        break;
+                    default: return v;
+                }
                 break;
+            case "integer":
+                switch (newFormat) {
+                    case "binary":
+                        return MIPS.numberToBinaryString(v);
+                        break;
+                    case "hex":
+                        return asHex(v, currentFormat);
+                        break;
+                    default: return v;
+                }
+                break;
+            case "hex":
+                switch (newFormat) {
+                    case "binary":
+                        return asBinary(v, currentFormat);
+                        break;
+                    case "integer":
+                        return asInt(v, currentFormat);
+                        break;
+                    default: return v;
+                }
+                break;
+            default: console.log ("Somthing went horribly wrong in changeRep");
+            }
         }
-    }
+
 
 
 
@@ -2586,6 +2630,8 @@ function visualize () {
 
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
+            d3.selectAll(".lineValues").remove();
+            d3.selectAll(".immutable").remove();
 
             iftoggle = 0;
             idtoggle = 0;
@@ -2603,6 +2649,8 @@ function visualize () {
 
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
+            d3.selectAll(".lineValues").remove();
+            d3.selectAll(".immutable").remove();
 
             function myLoop () {
                 setTimeout(function () {
@@ -2636,7 +2684,7 @@ function visualize () {
             wbtoggle = 0;
             console.log("Close CurrentlLine['lineNo:'] ",CurrentLine["lineNo"]);
             d3.selectAll(".lineValues").remove();
-            d3.selectAll(".lineValuesLabels").remove();
+            d3.selectAll(".immutable").remove();
             d3.selectAll(".initialize").remove();
             d3.selectAll(".stage-buttons").remove();
 
@@ -2649,9 +2697,13 @@ function visualize () {
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
 
+            // restore options box to binary
+            $("#stageDisplayType").prop('selectedIndex',0);
+
             $("#myModal").modal("hide");
         }
     }
+
 
     //console.log("testing value of elements: ", mipsValues[elements[15]].val);
     console.log("This is the mipsValues: ", mipsValues);
