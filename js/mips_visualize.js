@@ -94,6 +94,24 @@ function visualize () {
                                 '<path id="pcAluObj7" class="ifetchObj" d="M 5.64 51 L 2 38.83" fill="none" stroke="lightgrey" stroke-width="2" stroke-miterlimit="10" pointer-events="none"></path>' +
                                 '</g>' +
                                 '<text id="addTxt" class="ifetch" x="120" y="95" fill="lightgrey" font-size="11px" >Add</text>' +
+
+                                '<!-- INST MEM RECT TO  DIST LINE-->' +
+                                '<line id="instMemLine" class="ifetchObj" x1="145" y1=300 x2="158" y2="300"  stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<circle id="instMemCircle" class="ifetchObj" cx="158" cy=300  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+
+                                '<!-- LINE +4 ADD ALU TO SHIFT LEFT 2 ALU RESULT -->' +
+                                '<path id="addAluToMux" class="ifetchObj" d="M 145,90, 345,90 345,57 505,57" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="addAluToMuxArrow" class="ifetchObj" d="M 505,57 505,55 509,57 505,59 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- +4 ADD ALU TO SHIFT LEFT 2 ALU TOP IN -->' +
+                                '<!-- CIRCLE -->' +
+                                '<circle id="fourAluToAluTopCircle" class="ifetchObj" cx="345" cy="78"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
+                                '<!-- LINE +4 ADD TO SHIFT LEFT 2 ALU TOP IN-->' +
+                                '<line id="fourAluToAluTopLine" class="ifetchObj" x1="345" y1="78" x2="417" y2="78" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="fourAluToAluTopArrow" class="ifetchObj" d="M 417,78 417,76 421,78 417,80 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
                                 '<!-- END ### IF ###-->' +
                                 '</g>' +
 
@@ -135,9 +153,6 @@ function visualize () {
                                 '<path id="inst15Arrow" class="idecodeObj" d="M 228,345 228,343 232,345 228,347 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
                                 '<circle id= "inst15Circle" class="idecodeObj" cx="158" cy="345"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
 
-                                '<!-- INST MEM RECT TO  DIST LINE-->' +
-                                '<line id="instMemLine" class="idecodeObj" x1="145" y1=300 x2="158" y2="300"  stroke="lightgrey" stroke-width="2px" ></line>' +
-                                '<circle id="instMemCircle" class="idecodeObj" cx="158" cy=300  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
 
                                 '<!-- VERTICAL INSTRUCTION DISTRIBUTION LINE-->' +
                                 '<line id="instDistLine" class="idecodeObj" x1="158" y1=412 x2="158" y2="190" style="stroke:lightgrey;stroke-width:2px;" ></line>' +
@@ -189,7 +204,7 @@ function visualize () {
 
                                 '<!-- CONTROL ELLIPSE TO OR GATE -->' +
                                 '<path id="ctrlEllipseToOR" class="idecodeObj, idtorqObj" d="M 482,153 455,153 455,165 283,165" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-                                '<text id= "ctrlEllipseToORText" class="idtorq" x="290" y="160" font-size="9px" fill="lightgrey" >Brach</text>' +
+                                '<text id= "ctrlEllipseToORText" class="idtorq" x="290" y="160" font-size="9px" fill="lightgrey" >Branch</text>' +
 
                                 '<!-- CONTROL ELLIPSE TO DATA MEMORY -->' +
                                 '<text id="ctrlEllipseToDataMemTxt" class="idecode, idtorq" x="290" y="177" font-size="9px" fill="lightgrey" >MemRead</text>' +
@@ -228,12 +243,6 @@ function visualize () {
 
                                 '<!--Read data 2-->' +
                                 '<text id="readData2Txt" class="idecode" x="322" y="324" font-size="10px" fill="lightgrey" >RD2</text>' +
-
-                                '<!--Write register-->' +
-                                '<text id="writeRegTxt"class="idecode" x="276" y="326" font-size="10px" fill="lightgrey" >WR</text>' +
-
-                                '<!--Write data-->' +
-                                '<text id="writeData" class="idecode" x="276" y="354" font-size="10px" fill="lightgrey" >WD</text>' +
 
                                 '<!--Register File Label-->' +
                                 '<text id="registerFileLabelTxt" class="idecode" x="306" y="366" font-size="11px" fill="lightgrey" >Registers</text>' +
@@ -275,18 +284,6 @@ function visualize () {
                                 '<!-- Arrow point end of line-->' +
                                 '<path id="signExt32ToMux1Arrow" class="idecodeObj" d="M 377,350 377,348 381,350 377,352 z" style="fill:lighgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
-                                '<!-- LINE +4 ADD ALU TO SHIFT LEFT 2 ALU RESULT -->' +
-                                '<path id="addAluToMux" class="idecodeObj" d="M 145,90, 345,90 345,57 505,57" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-                                '<!-- Arrow point end of line-->' +
-                                '<path id="addAluToMuxArrow" class="idecodeObj" d="M 505,57 505,55 509,57 505,59 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-                                '<!-- +4 ADD ALU TO SHIFT LEFT 2 ALU TOP IN -->' +
-                                '<!-- CIRCLE -->' +
-                                '<circle id="fourAluToAluTopCircle" class="idecodeObj" cx="345" cy="78"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
-                                '<!-- LINE +4 ADD TO SHIFT LEFT 2 ALU TOP IN-->' +
-                                '<line id="fourAluToAluTopLine" class="idecodeObj" x1="345" y1="78" x2="417" y2="78" stroke="lightgrey" stroke-width="2px" ></line>' +
-                                '<!-- Arrow point end of line-->' +
-                                '<path id="fourAluToAluTopArrow" class="idecodeObj" d="M 417,78 417,76 421,78 417,80 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
                                 '<!-- END ### ID ###-->' +
                                 '</g>' +
 
@@ -370,6 +367,12 @@ function visualize () {
                                 '<line id="lineAluResult2Mux" class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
                                 '<!-- Arrow point end of line-->' +
                                 '<path id="AluResult2MuxArrow" class="excodeObj" d="M 505,110 505,108 509,110 505,112 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
+                                '<!-- ALU RESULT TO ADDRESS -->' +
+                                '<line id="aluResultToAddr" class="excodeObj" x1="475" y1=320 x2="484" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
+
+                                '<!-- JUNCTION BETWEEN DATA MEMORY AND WB MUX-->' +
+                                '<circle id="aluResultToAddrCircle"class="excodeObj" cx="484" cy="320"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
                                 '<!-- END ### EX ###-->' +
                                 '</g>' +
 
@@ -392,13 +395,9 @@ function visualize () {
                                 '<path id="DataMemToMuxArrow" class="memcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
 
                                 '<!-- ALU RESULT TO ADDRESS -->' +
-                                '<line id="aluResultToAddr" class="memcodeObj" x1="475" y1=320 x2="484" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
                                 '<line id="aluResultToAddr1" class="memcodeObj" x1="484" y1=320 x2="491" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
                                 '<!-- Arrow point end of line-->' +
                                 '<path id="aluResultToAddrArrow" class="memcodeObj" d="M 491,320 491,318 495,320, 491,322 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
-                                '<!-- JUNCTION BETWEEN DATA MEMORY AND WB MUX-->' +
-                                '<circle id="aluResultToAddrCircle"class="memcodeObj" cx="484" cy="320"  r="2" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;" ></circle>' +
 
 
                                 '<!-- LINE ALU RESULT TO WB MUX-->' +
@@ -455,7 +454,16 @@ function visualize () {
                                 '<!--line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line-->' +
                                 '<!-- Arrow point end of line-->' +
                                 '<path id="MemMuxToRDArrow" class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-                                '<!-- END ### WB ###-->' +
+
+        '<!--Write register-->' +
+        '<text id="writeRegTxt"class="wbcode" x="276" y="326" font-size="10px" fill="lightgrey" >WR</text>' +
+
+        '<!--Write data-->' +
+        '<text id="writeData" class="wbcode" x="276" y="354" font-size="10px" fill="lightgrey" >WD</text>' +
+
+
+
+        '<!-- END ### WB ###-->' +
                                 '</g>' +
 
                                 '<!-- START TIMING LINES ### TM ### -->' +
@@ -634,6 +642,7 @@ function visualize () {
     var pc = 32768;
     var newFormat = "binary";
     var currentFormat = "binary";
+    var testing = [[]];
     var debug = false;
 
 
@@ -682,6 +691,9 @@ function visualize () {
         'signExt32', 'shiftLeft2', 'PcSl2AddResult', 'newPc', 'memoryReadDataResult', 'memToReg',
     /*   23               24            25             26            27                   28                         */
 
+        'pcAluResultMuxTxt0', 'pcAluResultMuxTxt1',
+    /*   29                      30                     31          32            33                 34              */
+
 
         'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
         'instMemTxtAddress', 'instMemTxtInst', 'instMemTxt31', 'instMemTxtIns31', 'instMemTxtMem',
@@ -696,8 +708,7 @@ function visualize () {
         'ctrlEllipseToDataMem', 'ctrlEllipseToDataMemTxt', 'ctrlEllToDataMemMux','ctrlEllToDataMemMuxTxt', 'ctrlEllToAluOpTxt',
         'ctrlEllToAluOp', 'ctrlEllToMemWriteTxt', 'ctrlEllToMemWrite', 'ctrlEllToAluSrcTxt', 'ctrlEllToAluSrc',
         'ctrlEllToRegWriteTxt', 'ctrlEllToRegWrite', 'regFileRect', 'regFileRectTxt', 'readData1Txt',
-        'readReg2Txt', 'readData2Txt', 'writeRegTxt', 'writeData', 'registerFilelabelTxt',
-        'RD2ToAluResultCircle',
+        'readReg2Txt', 'readData2Txt', 'writeRegTxt', 'writeData', 'registerFileLabelTxt', 'RD2ToAluResultCircle',
         'RD1ToAluResult', 'RD1ToAluResultArrow', 'RD2ToAluResult','signExtEllip', 'signExtEllipTxtSign',
         'Mux1ToShiftLeft2Line',  'Mux1ToShiftLeftArrow', 'signExt32ToMux1Circle', 'signExt32ToMux1Ln', 'signExt32ToMux1Arrow',
         'aluControlEll', 'aluControlEllTxtALU', 'aluControlEllTxtCtrl', 'aluControlEllToAlu', 'muxIntoAlu1',
@@ -712,8 +723,8 @@ function visualize () {
         'lineRD2toMemWD', 'lineRD2toMemWDArrow', 'lineAluResult2Mux', 'AluResult2MuxArrow', 'dataMemRect',
         'dataMemRectTxtAdd', 'dataMemRectTxtRead', 'dataMemRectTxtData', 'dataMemRectTxtWrite', 'dataMemRectTxt2Data',
         'dataMemRectTxt3Data', 'dataMemRectTxtMem', 'lineDataMemToMux', 'DataMemToMuxArrow', 'lineAluResultToMux0',
-        'AluResultToMux0Arrow', 'pcAluResultMux', 'pcAluResultMuxTxt0', 'pcAluResultMuxTxtM', 'pcAluResultMuxTxtU',
-        'pcAluResultMuxTxtX', 'pcAluResultMuxTxt1', 'oRGate', 'lineANDToAluMux', 'lineANDToAluMuxTxtPCSrc',
+        'AluResultToMux0Arrow', 'pcAluResultMux',  'pcAluResultMuxTxtM', 'pcAluResultMuxTxtU',
+        'pcAluResultMuxTxtX',  'oRGate', 'lineANDToAluMux', 'lineANDToAluMuxTxtPCSrc',
         'aluMuxToPC', 'aluMuxToPCArrow', 'memoryMux', 'memoryMux2', 'memoryMuxTxt1',
         'memoryMuxTxtM', 'memoryMuxTxtU', 'memoryMuxTxtX', 'memoryMuxTxt0', 'lineMemMuxToRD',
         'MemMuxToRDArrow',
@@ -1016,6 +1027,13 @@ function visualize () {
             case "pcAluObj6":
             case "pcAluObj7":
             case "addTxt":
+            case "instMemLine":
+            case "instMemCircle":
+            case "addAluToMux":
+            case "addAluToMuxArrow":
+            case "fourAluToAluTopCircle":
+            case "fourAluToAluTopLine":
+            case "fourAluToAluTopArrow":
                 return "IF";
                 break;
 
@@ -1039,8 +1057,6 @@ function visualize () {
             case "inst15ToMux":
             case "inst15Arrow":
             case "inst15Circle":
-            case "instMemLine":
-            case "instMemCircle":
             case "instDistLine":
             case "inst15To0Txt":
             case "inst15ToSignExt":
@@ -1077,9 +1093,6 @@ function visualize () {
             case "readData1Txt":
             case "readReg2Txt":
             case "readData2Txt":
-            case "writeRegTxt":
-            case "writeData":
-            case "registerFileLabelTxt":
             case "RD1ToAluResult":
             case "RD1ToAluResultArrow":
             case "RD2ToAluResultCircle":
@@ -1096,18 +1109,11 @@ function visualize () {
             case "signExt32ToMux1Circle":
             case "signExt32ToMux1Ln":
             case "signExt32ToMux1Arrow":
-            case "addAluToMux":
-            case "addAluToMuxArrow":
-            case "fourAluToAluTopCircle":
-            case "fourAluToAluTopLine":
-            case "fourAluToAluTopArrow":
             case "RR1":
             case "RR2":
-            case "WR" :
             case "RD1":
             case "RD2":
             case "regDst":
-            //case "jump":  // future implementation
             case "branch":
             case "memRead":
             case "memToReg":
@@ -1124,6 +1130,7 @@ function visualize () {
             case "signExt32Txt":
             case "signExt32DiagLine":
             case "inst5ToAluCtrlTxt":
+            case "registerFileLabelTxt":
                 return "ID";
                 break;
 
@@ -1178,6 +1185,8 @@ function visualize () {
             case 'aluResult':
             case "shiftLeft2":
             case "PcSl2AddResult":
+            case 'aluResultToAddr':
+            case 'aluResultToAddrCircle':
 
                 return "EX";
                 break;
@@ -1193,10 +1202,8 @@ function visualize () {
             case 'dataMemRectTxtMem':
             case 'lineDataMemToMux':
             case 'DataMemToMuxArrow':
-            case 'aluResultToAddr':
             case 'aluResultToAddr1':
             case 'aluResultToAddrArrow':
-            case 'aluResultToAddrCircle':
             case 'lineAluResultToMux0':
             case 'AluResultToMux0Arrow':
             case 'pcAluResultMux':
@@ -1226,7 +1233,10 @@ function visualize () {
             case 'lineMemMuxToRD':
             case 'MemMuxToRDArrow':
             case "WD":
+            case "writeRegTxt":
+            case "writeData":
             case 'memoryReadDataResult':
+            case "WR" :
                 return "WB";
                 break;
 
@@ -1488,7 +1498,7 @@ function visualize () {
         // TODO: build a logic table as a 2D array to replace this mess
         // what is in common with each? fall through cases for differences.
 
-        if (true) {
+        if (debug) {
             console.log("setElementVisibility LineName is: ", element);
             console.log("setElementVisibility currentLine is", CurrentLine["lineNo"]);
         }
@@ -1504,6 +1514,7 @@ function visualize () {
                         case "intoSignExtArrow16":
                         case "signExt16Txt":
                         case "signExt16DiagLine":
+                        case "signExt32":
                         case "signExt32Txt":
                         case "signExt32DiagLine":
                         case "signExtEllip":
@@ -1537,8 +1548,6 @@ function visualize () {
                         case 'lineRD2toMemWDArrow':
                         case 'lineAluResult2Mux':
                         case 'AluResult2MuxArrow':
-                        case "fourAluToAluTopLine":
-                        case "fourAluToAluTopArrow":
                         case 'dataMemRect':
                         case 'dataMemRectTxtAdd':
                         case 'dataMemRectTxtRead':
@@ -1606,8 +1615,6 @@ function visualize () {
                         case 'aluShiftTxtAdd':
                         case 'aluShiftTxtAlu':
                         case 'aluShiftTxtResult':
-                        case "fourAluToAluTopLine":
-                        case "fourAluToAluTopArrow":
                         case 'lineAluResult2Mux':
                         case 'AluResult2MuxArrow':
                         case 'lineAluResultToMux0':
@@ -1652,8 +1659,6 @@ function visualize () {
                         case 'aluShiftTxtAdd':
                         case 'aluShiftTxtAlu':
                         case 'aluShiftTxtResult':
-                        case "fourAluToAluTopLine":
-                        case "fourAluToAluTopArrow":
                         case 'lineAluResult2Mux':
                         case 'AluResult2MuxArrow':
                         case 'lineAluResultToMux0':
@@ -1726,10 +1731,8 @@ function visualize () {
                         case 'lineAluResultToMux0':
                         case 'AluResultToMux0Arrow':
                         case 'memoryMuxTxt0':
-                        case 'aluResultToAddr':
                         case 'aluResultToAddr1':
                         case 'aluResultToAddrArrow':
-                        case 'aluResultToAddrCircle':
                         case 'dataMemRect':
                         case 'dataMemRectTxtAdd':
                         case 'dataMemRectTxtRead':
@@ -1752,6 +1755,13 @@ function visualize () {
                         case 'memoryReadDataResult':
                         case "WD":
                             return false;
+                            break;
+                        case 'pcAluResultMuxTxt0':
+                            if ((mipsValues[elements[20]].val) == "0"){
+                                return true;
+                            }else {
+                                return false;
+                            }
                             break;
 
                         default:
@@ -1979,7 +1989,7 @@ function visualize () {
             case "PcSl2AddResult":
                 var AluInTop = mipsValues[elements[21]].val;
                 var AluInBott = mipsValues[elements[24]].val;
-                if (true) {
+                if (debug) {
                     console.log("PcSl2AddResult AluInTop is: ", AluInTop);
                     console.log("PcSl2AddResult AluInBott is ", AluInBott);}
                 return getAluAddResult(AluInTop, AluInBott);
@@ -2325,18 +2335,6 @@ function visualize () {
 
 
 
-
-    // previously used to select the body element and append a div for the buttons
-    // now using the modal footer for the buttons.
-    /*d3.select("body").append("div")
-     .style("text-align", "center")
-     .attr("id", "forButton");*/
-
-
-// This function will replace the d3 selection code in current setBlack, setTourq
-// Put this code into a function pass it the class and stage.
-    //var inData = d3.selectAll(".idecode");
-
     // Makes visable the lines and values in the stage based on the mips instruction.
     function drawVisableLines (someClass, someStage) {
         var inData = d3.selectAll(someClass);               // collect all memebers of the class
@@ -2404,7 +2402,6 @@ function visualize () {
 
 
 
-
     // Create the pipeline stage buttons & uses data from dataKeys to name the buttons
     if (CurrentLine["lineNo"] != previousLine) {
 
@@ -2419,13 +2416,15 @@ function visualize () {
 
     }
 
+
+
+
     // Listens for the form-box change and runs the function to make the changes.
     $("#stageDisplayType").change(changeType);
 
-    function changeType () {
+    /*function changeType (e) {
         newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
 
-       var testing = [[]];
             testing.length = 0;
 
         testing = d3.selectAll(".lineValues");
@@ -2438,12 +2437,49 @@ function visualize () {
                     console.log ("testing[0][" + i + " ][innerHTML] after is ", testing[0][i]["innerHTML"]);
         }
 
+
     }
+    */
+
+
+
+    function changeType () {
+        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
+
+        //testing.length = 0;
+
+        $(".lineValues").each(function(){
+            console.log("CHANGE_TYPE this.html ", $(this).html($(this).innerHTML));
+            var tempStr  = $(this).html($(this).innerHTML);
+            tempStr [0]["innerHTML"] = changeRep(tempStr[0]["innerHTML"]);
+        });
+
+    }
+
+
+
+
+
+    function asHex (v, currentFormat) {
+        if (currentFormat == "binary"){
+            console.log("ASHEX input value ", v);
+            var intNum = MIPS.binaryStringToUnsignedNumber(v);
+        }else intNum = v;
+        console.log ("asHex intNum is ", intNum);
+        return "0x" + intNum.toString(16);
+    }
+
+    var tempStr = "0x800";
+
+    //var tempNum = parseInt(tempStr.slice(2));
+    console.log("HEX to binary ", (parseInt(tempStr.slice(2))).toString(2));
 
 
 
     // convert an existing value format into a new format.  The formats are binary, hex or integer.
     function changeRep(v) {
+        //console.log("CHANGE_REP v ", v[0]["innerHTML"]);
+        console.log("CHANGE_REP v ", v);
         switch (currentFormat){
             case "binary":
                 switch (newFormat){
@@ -2470,7 +2506,8 @@ function visualize () {
             case "hex":
                 switch (newFormat) {
                     case "binary":
-                        return asBinary(v, currentFormat);
+                        return (parseInt(v.slice(2))).toString(2);
+                        //return asBinary(v, currentFormat)
                         break;
                     case "integer":
                         return asInt(v, currentFormat);
@@ -2478,10 +2515,9 @@ function visualize () {
                     default: return v;
                 }
                 break;
-            default: console.log ("Somthing went horribly wrong in changeRep");
+            default: console.log ("Something went horribly wrong in changeRep");
             }
         }
-
 
 
 
@@ -2696,11 +2732,19 @@ function visualize () {
 
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
+            d3.select(tempStr).remove();
+
 
             // restore options box to binary
             $("#stageDisplayType").prop('selectedIndex',0);
 
-            $("#myModal").modal("hide");
+            // TODO: which of these methods of distruction work better?
+            $("#myModal").modal("hide").data( 'bs.modal', null );
+            $()
+
+            //$("#myModal").on('hidden.bs.modal', function () {
+            //    $(this).data('bs.modal', null);
+           // });
         }
     }
 
