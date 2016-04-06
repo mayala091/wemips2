@@ -27,11 +27,9 @@ function visualize () {
 
                             '<div class="col-md-3" align="right" style="font-weight:bold;">' +
                                 '<a href="ProjectReadme.html" target="about_blank" >User Guide</a> | ' +
-                                '<a href="unit_tests/index.html" target="about_blank">Unit Tests</a> | ' +
-                                '<a href="docs/index.html" target="about_blank">Docs</a><br> ' +
                             '</div> ' +
                             '<div class="col-xs-2" align="right">' +
-                            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" align="right"><span aria-hidden="true">&times;</span></button> ' +
+                            '<!--button type="button" class="close" data-dismiss="modal" aria-label="Close" align="right"><span aria-hidden="true">&times;</span></button--> ' +
                             '</div> ' +
 
                         '</div>'+
@@ -504,11 +502,11 @@ function visualize () {
                                             '<a href="#WB-stages" data-toggle="tab">WB</a>'+
                                         '</li>'+
 
-                                        '<li class="active">'+
-                                             '<a href="#all-stages" data-toggle="tab">ALL</a>' +
+                                        '<li>'+
+                                             '<a href="#all-stages" data-toggle="tab">All</a>' +
                                         '</li>'+
 
-                                        '<li>'+
+                                        '<li class="active">'+
                                             '<a href="#resetl-stages" data-toggle="tab">Reset</a>' +
                                         '</li>'+
 
@@ -556,7 +554,7 @@ function visualize () {
                                             '</div>' +
                                             '<div class="tab-pane" id="IF-stages">' +
                                             '<ul class="registers-container" id="stages-IF">' +
-                                            '<li id="s0">' +'</li>' +
+                                            '<li id="if-pc" align="left" >' +'</li>' +
                                             '<li id="s1">' +'</li>' +
                                             '<li id="s2">' +'</li>' +
                                             '<li id="s3">' +'</li>' +
@@ -606,7 +604,7 @@ function visualize () {
                     '</div>' +
 
                     '<!-- MODAL FOOTER DEFINITION BEGINS DO NOT CHANGE FOLLOWING LINES -->' +
-                        '<div id="modal-buttons" role="group" aria-label="First group" class="modal-footer" style="text-align:center; background-color: black;"> ' +
+                        '<div id="modal-buttons" role="group" aria-label="First group" class="modal-footer" style="text-align:right; background-color: black;"> ' +
                         '</div>' +
             '</div>' +
         '</div>' +
@@ -645,8 +643,9 @@ function visualize () {
     var testing = [[]];
     var debug = false;
 
-
-    var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Play", "Restart", "Close"];
+    // used by the makeButtons function to create buttons in the modal footer
+    //var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Play", "Restart", "Close"];
+    var dataKeys = ["Close"];
 
     if (debug) {
         console.log("START CurrentLine['lineNo'] ", CurrentLine['lineNo']);
@@ -1293,12 +1292,14 @@ function visualize () {
                     }
                 }
                 // label the PC value below the PC rectangle element
-                d3.select("#IF").append("text")
+                //d3.select("#IF").append("text")
+                d3.select("#if-pc").append("text")
                     .text("PC: ")
-                    .style("font-size", "9px")
+                    //.style("font-size", "9px")
                     .attr("class", "ifetch immutable")
-                    .attr("x", 10)
-                    .attr("y", 365);
+                    .attr("align", "left");
+                    //.attr("x", 10)
+                    //.attr("y", 365);
 
                 break;
 
@@ -2353,7 +2354,7 @@ function visualize () {
                                                 //console.log("YEA Found match elements[i] == theElementId[j]");
                                                 //console.log("YEA Found match stage: ", someStage);
 
-                        //var Btemp = mipsValues[elements[i]];
+                                                //var Btemp = mipsValues[elements[i]];
                                                 //console.log("elements[i].vis is: ", Btemp.vis);
 
                         if (someClass === ".ifetch" || someClass === ".idecode" || someClass === ".excode"
@@ -2403,6 +2404,7 @@ function visualize () {
 
 
     // Create the pipeline stage buttons & uses data from dataKeys to name the buttons
+    // Old method with buttons in
     if (CurrentLine["lineNo"] != previousLine) {
 
         d3.select("#modal-buttons").selectAll("button.teams").data(dataKeys).enter()
@@ -2415,6 +2417,15 @@ function visualize () {
             });
 
     }
+
+
+    // Detect a tab change and call function to display
+    $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+        var x = $(event.target).text();         // active tab
+        console.log("SELECTING TABS is ", x);
+        buttonClick(x);
+    });
 
 
 
@@ -2660,7 +2671,7 @@ function visualize () {
             return (setGrey(".wbcode") + setTorqGrey(".wbtorq"));
         }
 
-        if(datapoint === "Restart"){
+        if(datapoint === "Reset"){
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
 
@@ -2676,7 +2687,7 @@ function visualize () {
             wbtoggle = 0;
         }
 
-        if(datapoint === "Play"){
+        if(datapoint === "All"){
 
             var stage = ["IF", "ID", "EX", "MEM", "WB"];
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
@@ -2732,7 +2743,6 @@ function visualize () {
 
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
-            d3.select(tempStr).remove();
 
 
             // restore options box to binary
