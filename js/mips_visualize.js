@@ -480,126 +480,22 @@ function visualize () {
         '<option>Hex</option>' +
         '</select>' +
 
-                                        '<ul class="nav nav-tabs">' +
-
-                                        '<li>' +
-                                            '<a href="#IF-stages" data-toggle="tab">IF</a>'+
-                                        '</li>'+
-
-                                        '<li>'+
-                                            '<a href="#ID-stages" data-toggle="tab">ID</a>'+
-                                        '</li>'+
-
-                                        '<li>'+
-                                            '<a href="#EX-stages" data-toggle="tab">EX</a>'+
-                                        '</li>'+
-
-                                        '<li>'+
-                                            '<a href="#MEM-stages" data-toggle="tab">MEM</a>'+
-                                        '</li>'+
-
-                                        '<li>'+
-                                            '<a href="#WB-stages" data-toggle="tab">WB</a>'+
-                                        '</li>'+
-
-                                        '<li>'+
-                                             '<a href="#all-stages" data-toggle="tab">All</a>' +
-                                        '</li>'+
-
-                                        '<li class="active">'+
-                                            '<a href="#resetl-stages" data-toggle="tab">Reset</a>' +
-                                        '</li>'+
-
-                                        '</ul>'+
-
-                                                <!-- Tab panes -->
-                                            '<div id="dataTabs" class="tab-content">' +
-                                            '<div class="tab-pane" id="all-stages">' +
-                                            '<ul class="stage-container" id="stages-all">' +
-                                            '<div class="left">' +
-                                            '<div class="lineRow"></div>' +
-                                            '<li id="s0"></li>' +
-                                            '<li id="s1"></li>' +
-                                            '<li id="s2"></li>' +
-                                            '<li id="s3"></li>' +
-                                            '<li id="s4"></li>' +
-                                            '<li id="s5"></li>' +
-                                            '<li id="s6"></li>' +
-                                            '<li id="s7"></li>' +
-                                            '<div class="bigRow">' +'</div>' +
-                                            '<div class="lineRow">' +'</div>' +
-                                            '<li id="t0"></li>' +
-                                            '<li id="t1"></li>' +
-                                            '<li id="t2"></li>' +
-                                            '<li id="t3"></li>' +
-                                            '<li id="t4"></li>' +
-                                            '<li id="t5"></li>' +
-                                            '<li id="t6"></li>' +
-                                            '<li id="t7"></li>' +
-                                            '<li id="t8"></li>' +
-                                            '<li id="t9"></li>' +
+            '<!--div id="stageButtons" align="left"--><!--/div-->' +  // previous
+            '<ul id="stageTabs" class="nav nav-tabs"></ul>' +  // previous
+                                        '<div id="dataTabs" class="tab-content">' +
+                                            '<div class="tab-pane" id="IF">' +
+                                                '<li id="PC"></li>' +
                                             '</div>' +
-                                            '<div class="right">' +
-                                            '<div class="lineRow">' +'</div>' +
-                                            '<li id="a0"></li>' +
-                                            '<li id="a1"></li>' +
-                                            '<li id="a2"></li>' +
-                                            '<li id="a3"></li>' +
-                                            '<div class="bigRow"></div>' +
-                                            '<div class="lineRow"></div>' +
-                                            '<li id="v0"></li>' +
-                                            '<li id="v1"></li>' +
-                                            '</div>' +
-                                            '</ul>' +
-                                            '</div>' +
-                                            '<div class="tab-pane" id="IF-stages">' +
-                                            '<ul class="registers-container" id="stages-IF">' +
-                                            '<li id="if-pc" align="left" >' +'</li>' +
-                                            '<li id="s1">' +'</li>' +
-                                            '<li id="s2">' +'</li>' +
-                                            '<li id="s3">' +'</li>' +
-                                            '<li id="s4">' +'</li>' +
-                                            '<li id="s5">' +'</li>' +
-                                            '<li id="s6">' +'</li>' +
-                                            '<li id="s7">' +'</li>' +
-                                            '</ul>' +
-                                            '</div>' +
-                                            '<div class="tab-pane" id="ID-stages">' +
-                                            '<ul class="registers-container" id="stages-ID">' +
-                                            '<li id="t0">' +'</li>' +
-                                            '<li id="t1">' +'</li>' +
-                                            '<li id="t2">' +'</li>' +
-                                            '<li id="t3">' +'</li>' +
-                                            '<li id="t4">' +'</li>' +
-                                            '<li id="t5">' +'</li>' +
-                                            '<li id="t6">' +'</li>' +
-                                            '<li id="t7">' +'</li>' +
-                                            '<li id="t8">' +'</li>' +
-                                            '<li id="t9">' +'</li>' +
-                                            '</ul>' +
-                                            '</div>' +
-                                            '<div class="tab-pane" id="EX-stages">' +
-                                            '<ul class="registers-container" id="stages-EX">' +
-                                            '<li id="a0">' +'</li>' +
-                                            '<li id="a1">' +'</li>' +
-                                            '<li id="a2">' +'</li>' +
-                                            '<li id="a3">' +'</li>' +
-                                            '</ul>' +
-                                            '</div>' +
-                                            '<div class="tab-pane" id="MEM-stages">' +
-                                            '<ul class="registers-container" id="stages-MEM">' +
-                                            '<li id="v0">' +'</li>' +
-                                            '<li id="v1">' +'</li>' +
-                                            '</ul>' +
-                                            '</div>' +
-                                            '<div class="tab-pane" id="WB-stages">' +
-                                            '<ul class="registers-container" id="stages-WB">' +
-                                            '<li id="v0">' +'</li>' +
-                                            '<li id="v1">' +'</li>' +
-                                            '</ul>' +
-                                            '</div>' +
+                                        '</div>' +
 
+                                        '<div id="dataTabs" class="tab-content">' +
+                                            '<div class="tab-pane" id="ID">' +
+                                                '<li id="rd1">RD1</li>' +
+                                                '<li id="rd2">RD2</li>' +
                                             '</div>' +
+                                        '</div>' +
+
+
                                     '</div>' +
                     '</div>' +
 
@@ -644,7 +540,7 @@ function visualize () {
     var debug = false;
 
     // used by the makeButtons function to create buttons in the modal footer
-    //var dataKeys = ["IF", "ID", "EX", "MEM", "WB", "Play", "Restart", "Close"];
+    var stageKeys = ["IF", "ID", "EX", "MEM", "WB", "All", "Reset"];
     var dataKeys = ["Close"];
 
     if (debug) {
@@ -967,11 +863,11 @@ function visualize () {
             "signExt32": [470, 495],
             "aluInBot": [110, 495],
             "intoSignExt16": [268, 412],
-            "intoSignExtArrow16": [285, 412],
-            "signExt16Txt": [273, 402],
-            "signExt16DiagLine": [273, 405],
-            "signExt32Txt": [343, 402],
-            "signExt32DiagLine": [343, 405],
+            //"intoSignExtArrow16": [285, 412],
+            //"signExt16Txt": [273, 402],
+            //"signExt16DiagLine": [273, 405],
+            //"signExt32Txt": [343, 402],
+            //"signExt32DiagLine": [343, 405],
             "zero": [485, 170],
             "aluResult": [65, 508],
             "PCSrc": [528, 130],
@@ -1293,7 +1189,7 @@ function visualize () {
                 }
                 // label the PC value below the PC rectangle element
                 //d3.select("#IF").append("text")
-                d3.select("#if-pc").append("text")
+                d3.select("#PC").append("text")
                     .text("PC: ")
                     //.style("font-size", "9px")
                     .attr("class", "ifetch immutable")
@@ -2416,22 +2312,37 @@ function visualize () {
                 return d
             });
 
+        d3.select("#stageTabs").selectAll("button.teams").data(stageKeys).enter()
+            .append("li")
+            .append("a")
+            .attr("class", "stage-tabs")
+            //.attr("type" , "button")
+            //.attr("text-align", "center")
+            .attr("href", (function (d) {
+                return ("#" + d)
+            }))
+            .attr("data-toggle", "tab")
+            .on("click", buttonClick)
+            .html(function (d) {
+                return d
+            });
+
     }
 
 
-    // Detect a tab change and call function to display
-    $(".nav-tabs a").click(function(){
+    // Detect a tab change and call function to display: problem modal duplicating selection when run.
+    /*$(".nav-tabs a").click(function(){
         $(this).tab('show');
         var x = $(event.target).text();         // active tab
         console.log("SELECTING TABS is ", x);
         buttonClick(x);
     });
+*/
 
 
 
 
-    // Listens for the form-box change and runs the function to make the changes.
-    $("#stageDisplayType").change(changeType);
+
 
     /*function changeType (e) {
         newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
@@ -2453,6 +2364,8 @@ function visualize () {
     */
 
 
+    // Listens for the form-box change and runs the function to make the changes.
+    $("#stageDisplayType").change(changeType);
 
     function changeType () {
         newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
@@ -2734,6 +2647,9 @@ function visualize () {
             d3.selectAll(".immutable").remove();
             d3.selectAll(".initialize").remove();
             d3.selectAll(".stage-buttons").remove();
+            d3.selectAll(".stage-tabs").remove();
+
+
 
             // Disable the visualize button to prevent re-entering the visualization for a given MIPS instruction.
             document.getElementById('visualize').disabled = true;
@@ -2750,7 +2666,6 @@ function visualize () {
 
             // TODO: which of these methods of distruction work better?
             $("#myModal").modal("hide").data( 'bs.modal', null );
-            $()
 
             //$("#myModal").on('hidden.bs.modal', function () {
             //    $(this).data('bs.modal', null);
