@@ -483,15 +483,50 @@ function visualize () {
             '<!--div id="stageButtons" align="left"--><!--/div-->' +  // previous
             '<ul id="stageTabs" class="nav nav-tabs"></ul>' +  // previous
                                         '<div id="dataTabs" class="tab-content">' +
-                                            '<div class="tab-pane" id="IF">' +
+                                            '<div class="tab-pane" id="if">' +
                                                 '<li id="PC"></li>' +
                                             '</div>' +
-                                        '</div>' +
 
-                                        '<div id="dataTabs" class="tab-content">' +
-                                            '<div class="tab-pane" id="ID">' +
+
+
+                                            '<div class="tab-pane" id="id">' +
                                                 '<li id="rd1">RD1</li>' +
                                                 '<li id="rd2">RD2</li>' +
+                                            '</div>' +
+
+
+
+                                            '<div class="tab-pane" id="ex">' +
+                                                '<li >ex</li>' +
+                                                '<li ></li>' +
+                                            '</div>' +
+
+
+
+                                            '<div class="tab-pane" id="mem">' +
+                                                '<li >MEM</li>' +
+                                                '<li ></li>' +
+                                            '</div>' +
+
+
+
+                                            '<div class="tab-pane" id="wb">' +
+                                                '<li >WB</li>' +
+                                                '<li ></li>' +
+                                            '</div>' +
+
+
+
+                                            '<div class="tab-pane" id="all">' +
+                                                '<li >all</li>' +
+                                                '<li ></li>' +
+                                            '</div>' +
+
+
+
+                                            '<div class="tab-pane" id="reset">' +
+                                                '<li ></li>' +
+                                                '<li ></li>' +
                                             '</div>' +
                                         '</div>' +
 
@@ -1150,7 +1185,7 @@ function visualize () {
 
         newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
 
-        if (debug) {
+        if (true) {
             console.log("displayLineValues datapoint is :", datapoint);
             console.log("displayLineValues stageClass is :", stageClass);
         }
@@ -1188,12 +1223,12 @@ function visualize () {
                     }
                 }
                 // label the PC value below the PC rectangle element
-                //d3.select("#IF").append("text")
+                //d3.select("#IF").attr("class", "active");
                 d3.select("#PC").append("text")
                     .text("PC: ")
-                    //.style("font-size", "9px")
                     .attr("class", "ifetch immutable")
                     .attr("align", "left");
+                    //.style("font-size", "9px")
                     //.attr("x", 10)
                     //.attr("y", 365);
 
@@ -1229,7 +1264,7 @@ function visualize () {
                     }
                 }
                 // Display values that will not fit on processor graphic
-
+                //d3.select("#ID").attr("class", "active");
                 d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
@@ -2315,11 +2350,11 @@ function visualize () {
         d3.select("#stageTabs").selectAll("button.teams").data(stageKeys).enter()
             .append("li")
             .append("a")
-            .attr("class", "stage-tabs")
+            //.attr("class", "stage-tabs")
             //.attr("type" , "button")
             //.attr("text-align", "center")
             .attr("href", (function (d) {
-                return ("#" + d)
+                return ("#" + d.toLowerCase())
             }))
             .attr("data-toggle", "tab")
             .on("click", buttonClick)
@@ -2590,6 +2625,7 @@ function visualize () {
 
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
+            d3.select("#reset").attr("class", "active");
             d3.selectAll(".lineValues").remove();
             d3.selectAll(".immutable").remove();
 
