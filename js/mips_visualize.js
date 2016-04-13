@@ -46,7 +46,7 @@ function visualize () {
                                 '<g id="IF">' +
                                 '<!-- START ### IF ###--> ' +
                                 '<!-- PC RECT --> ' +
-                                '<rect id="pc" class="ifetchObj" x="35" y="240" width="25" height="70" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
+                                '<rect id="PC" class="ifetchObj" x="35" y="240" width="25" height="70" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></rect>' +
                                 '<text id="pcTxt" class="ifetch" x="38" y="280" fill="lightgrey" font-size="12px"  >PC</text>' +
 
                                 '<!-- LINE PC TO INSTRUCTION MEMORY -->' +
@@ -484,49 +484,61 @@ function visualize () {
             '<ul id="stageTabs" class="nav nav-tabs"></ul>' +  // previous
                                         '<div id="dataTabs" class="tab-content">' +
                                             '<div class="tab-pane" id="if">' +
-                                                '<li id="PC"></li>' +
+                                                '<li id="pc" class="tabData" align="left" fill="lightgrey">PC: </li>' +
                                             '</div>' +
-
-
 
                                             '<div class="tab-pane" id="id">' +
-                                                '<li id="rd1">RD1</li>' +
-                                                '<li id="rd2">RD2</li>' +
+                                                '<li id="rd1" class="tabData" align="left" fill="lightgrey">RD1: </li>' +
+                                                '<li id="rd2" class="tabData" align="left" fill="lightgrey">RD2: </li>' +
+                                                '<li id="signext32" align="left" fill="lightgrey">Sign Extended 32 bit Result: </li>' +
+
                                             '</div>' +
-
-
 
                                             '<div class="tab-pane" id="ex">' +
-                                                '<li >ex</li>' +
-                                                '<li ></li>' +
+                                                '<li id="aluinbot" class="tabData" align="left" fill="lightgrey">ALU in from Mux: </li>' +
+                                                '<li id="aluresult" class="tabData" align="left" fill="lightgrey">ALU Result: </li>' +
+                                                '<li id="shiftleft2" class="tabData" align="left" fill="lightgrey">Shift left 2 Result: </li>' +
+                                                '<li id="pcsl2addresult" class="tabData" align="left" fill="lightgrey">Branch ALU Result: </li>' +
+                                                '<li align="left"></li>' +
                                             '</div>' +
-
-
 
                                             '<div class="tab-pane" id="mem">' +
-                                                '<li >MEM</li>' +
-                                                '<li ></li>' +
+                                                '<li id="newpc" class="tabData" align="left">New PC: </li>' +
+                                                '<li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li>' +
+                                                '<li align="left"></li>' +
                                             '</div>' +
-
-
 
                                             '<div class="tab-pane" id="wb">' +
-                                                '<li >WB</li>' +
-                                                '<li ></li>' +
+                                                '<li id="memoryreaddataresult" class="tabData" align="left">Memory Read Data Result: </li>' +
+                                                '<li id="wd" class="tabData" align="left">Write Data Result: </li>' +
+                                                '<li align="left"></li>' +
                                             '</div>' +
-
-
 
                                             '<div class="tab-pane" id="all">' +
-                                                '<li >all</li>' +
+                                                '<li class="tabData" align="left">PC: </li>' +
+                                                '<li class="tabData" align="left">RD1: </li>' +
+                                                '<li class="tabData" align="left">RD2: </li>' +
+                                                '<li class="tabData" align="left">ALU in from Mux: </li>' +
+                                                '<li class="tabData" align="left">Shift left 2 Result: </li>' +
+                                                '<li class="tabData" align="left">Branch ALU Result: </li>' +
+                                                '<li class="tabData" align="left">Memory Read Data Result: </li>' +
+                                                '<li class="tabData" align="left">Sign Extended 32 bit Result: </li>' +
+                                                '<li class="tabData" align="left">Write Data Result: </li>' +
+                                                '<li ></li>' +
+                                                '<li ></li>' +
+                                                '<li ></li>' +
+                                                '<li ></li>' +
+                                                '<li ></li>' +
                                                 '<li ></li>' +
                                             '</div>' +
 
 
 
-                                            '<div class="tab-pane" id="reset">' +
+                                            '<div class="tab-pane active" id="reset">' +
+
                                                 '<li ></li>' +
                                                 '<li ></li>' +
+
                                             '</div>' +
                                         '</div>' +
 
@@ -607,7 +619,7 @@ function visualize () {
      */
     // change svg elements id tags to match the items in elements
     var elements = [
-        'pc', 'pcTxt', 'pcToInstMem', 'pcArrow', 'pcCircle',
+        'PC', 'pcTxt', 'pcToInstMem', 'pcArrow', 'pcCircle',
     /*   0       1         2             3          4                                                                */
         'pcAluIn', 'pcAddArrow', 'fourAluIn', 'inst31ToCtrl', 'regDst', 'aluSrc',
     /*   5                6             7          8             9          10                                       */
@@ -664,7 +676,7 @@ function visualize () {
         'inst5ToAluCtrlArrow', 'instToAluCtrlCircle', 'registerMux1','registerMux2',
         'jump', 'memRead',
         'memWrite', 'regWrite', 'RR1', 'RR2', 'WR',
-        'WD', 'RD1', 'RD2',
+        'WD', 'RD2',
         "intoSignExt16", "intoSignExtArrow16", "signExt16Txt", "signExt16DiagLine", "signExt32Txt",
         "signExt32DiagLine"
     ];
@@ -867,7 +879,7 @@ function visualize () {
         var coordinates = {
 
             //IF elements
-            "pc": [30, 365],
+            "PC": [30, 365],
             "pcAluIn": [25, 50],
             "PcAdderResult": [168, 101],
 
@@ -931,7 +943,7 @@ function visualize () {
         switch (lineName) {
 
             // IF elements
-            case "pc":
+            case "PC":
             case "pcTxt":
             case "pcAluIn":
             case "pcToInstMem":
@@ -1202,35 +1214,48 @@ function visualize () {
                         console.log("displayElementValues case IF is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                        d3.select("#IF").append("text")
-                        // TODO: Mar 28th replaced by .text(changeRep(anElement.val))
-                            .text(anElement.val)
-                            .style("font-size", "9px")
-                            .attr("id", elements[i])
-                            .attr("class", "ifetch lineValues")
-                            .attr("x", anElement.coordinates[0])
-                            .attr("y", anElement.coordinates[1]);
-                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            //var temp = "#" + elements[i].toLowerCase();
+                            //console.log("THIS is temp ", temp);
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .text(anElement.val)
+                                .attr("class", "ifetch mutable");
                             d3.select("#IF").append("text")
+                            // TODO: Mar 28th replaced by .text(changeRep(anElement.val))
                                 .text(anElement.val)
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
                                 .attr("class", "ifetch lineValues")
-                                .style("fill", "lightgrey")
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
-                        }
+                            } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                                d3.select("#" + elements[i].toLowerCase())
+                                    .append("text")
+                                    .style("color", "lightgrey")
+                                    .text(anElement.val)
+                                    .attr("class", "idecode mutable");
+                                d3.select("#IF").append("text")
+                                    .text(anElement.val)
+                                    .style("font-size", "9px")
+                                    .attr("id", elements[i])
+                                    .attr("class", "ifetch lineValues")
+                                    .style("fill", "lightgrey")
+                                    .attr("x", anElement.coordinates[0])
+                                    .attr("y", anElement.coordinates[1]);
+                            }
                     }
                 }
                 // label the PC value below the PC rectangle element
                 //d3.select("#IF").attr("class", "active");
-                d3.select("#PC").append("text")
+                d3.select("#IF").append("text")
                     .text("PC: ")
                     .attr("class", "ifetch immutable")
-                    .attr("align", "left");
-                    //.style("font-size", "9px")
-                    //.attr("x", 10)
-                    //.attr("y", 365);
+                    //.attr("align", "left");
+                    .style("font-size", "9px")
+                    .attr("x", 10)
+                    .attr("y", 365);
+
+
 
                 break;
 
@@ -1244,6 +1269,12 @@ function visualize () {
                         //console.log("displayElementValues ID element is ", elements[i]);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            //var temp = "#" + elements[i].toLowerCase();
+                            //console.log("THIS is temp ", temp);
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .text(anElement.val)
+                                .attr("class", "idecode mutable");
                             d3.select("#ID").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1252,6 +1283,11 @@ function visualize () {
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .text(anElement.val)
+                                .attr("class", "idecode mutable")
+                                .style("color", "lightgrey");
                             d3.select("#ID").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1295,7 +1331,12 @@ function visualize () {
                     if (anElement.stage == "EX") {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
-                        if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                        if (anElement.vis && (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0)) {
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .style("fill", "lightgrey")
+                                .text(anElement.val)
+                                .attr("class", "excode mutable");
                             d3.select("#EX").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1304,6 +1345,11 @@ function visualize () {
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .style("color", "lightgrey")
+                                .text(anElement.val)
+                                .attr("class", "excode mutable");
                             d3.select("#EX").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1352,6 +1398,10 @@ function visualize () {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .text(anElement.val)
+                                .attr("class", "memcode mutable");
                             d3.select("#MEM").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1360,6 +1410,11 @@ function visualize () {
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .style("color", "lightgrey")
+                                .text(anElement.val)
+                                .attr("class", "memcode mutable");
                             d3.select("#MEM").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1382,6 +1437,10 @@ function visualize () {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .text(anElement.val)
+                                .attr("class", "wbcode mutable");
                             d3.select("#WB").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1390,6 +1449,11 @@ function visualize () {
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
+                            d3.select("#" + elements[i].toLowerCase())
+                                .append("text")
+                                .style("color", "lightgrey")
+                                .text(anElement.val)
+                                .attr("class", "wbcode mutable");
                             d3.select("#WB").append("text")
                                 .text(anElement.val)
                                 .style("font-size", "9px")
@@ -1713,7 +1777,7 @@ function visualize () {
         var tempArgs = CurrentLine["args"];
 
         switch (lineName) {
-            case "pc":
+            case "PC":
                 if (debug) {
                     console.log("pc is: ", pcStart);
                 }
@@ -2349,11 +2413,18 @@ function visualize () {
 
         d3.select("#stageTabs").selectAll("button.teams").data(stageKeys).enter()
             .append("li")
+            .attr("class", (function (d) {
+                if (d == "Reset"){
+                    return "active";
+                }
+                console.log ("this is d ", d);
+            }))
             .append("a")
-            //.attr("class", "stage-tabs")
+            .attr("class", "stage-tabs")
             //.attr("type" , "button")
             //.attr("text-align", "center")
             .attr("href", (function (d) {
+                console.log ("this is d ", d);
                 return ("#" + d.toLowerCase())
             }))
             .attr("data-toggle", "tab")
@@ -2559,6 +2630,7 @@ function visualize () {
         }
         if(datapoint === "IF" && iftoggle === 1){
             iftoggle = iftoggle - 1;
+            d3.selectAll(".mutable").remove();
             return setGrey(".ifetch")
         }
 
@@ -2573,6 +2645,7 @@ function visualize () {
         }
         if(datapoint == "ID" && idtoggle == 1){
             idtoggle = idtoggle - 1;
+            d3.selectAll(".mutable").remove();
             return (setGrey(".idecode") + setTorqGrey(".idtorq"));
         }
 
@@ -2587,6 +2660,7 @@ function visualize () {
         }
         if(datapoint == "EX" && extoggle == 1){
             extoggle = extoggle - 1;
+            d3.selectAll(".mutable").remove();
             return (setGrey(".excode") + setTorqGrey(".extorq"));
         }
 
@@ -2601,6 +2675,7 @@ function visualize () {
         }
         if(datapoint === "MEM" && memtoggle === 1){
             memtoggle = memtoggle - 1;
+            d3.selectAll(".mutable").remove();
             return (setGrey(".memcode") + setTorqGrey(".memtorq"));
         }
 
@@ -2616,10 +2691,13 @@ function visualize () {
 
         if(datapoint === "WB" && wbtoggle === 1){
             wbtoggle = wbtoggle - 1;
+            d3.selectAll(".mutable").remove();
             return (setGrey(".wbcode") + setTorqGrey(".wbtorq"));
         }
 
         if(datapoint === "Reset"){
+            d3.selectAll(".mutable").remove();
+            console.log("Reset called:");
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
 
@@ -2672,6 +2750,15 @@ function visualize () {
 
         if(datapoint == "Close") {
 
+            buttonClick("Reset");
+
+            d3.select("#if").attr("class", "tab-pane");
+            d3.select("#id").attr("class", "tab-pane");
+            d3.select("#ex").attr("class", "tab-pane");
+            d3.select("#mem").attr("class", "tab-pane");
+            d3.select("#wb").attr("class", "tab-pane");
+            d3.select("#all").attr("class", "tab-pane");
+
             previousLine = CurrentLine["lineNo"];
             iftoggle = 0;
             idtoggle = 0;
@@ -2684,6 +2771,8 @@ function visualize () {
             d3.selectAll(".initialize").remove();
             d3.selectAll(".stage-buttons").remove();
             d3.selectAll(".stage-tabs").remove();
+            d3.selectAll(".mutable").remove();
+
 
 
 
