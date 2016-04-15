@@ -13,7 +13,7 @@ function visualize () {
 
         '<!-- MODAL DEFINITION BEGINS  DO NOT CHANGE FOLLOWING LINES -->' +
 
-        '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> ' +
+        '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-keyboard="false" aria-labelledby="myModalLabel"> ' +
             '<div class="modal-dialog" role="document" > ' +
                 '<div class="modal-content"> ' +
                     '<div class="modal-header" style="background-color: black;"> ' +
@@ -40,7 +40,7 @@ function visualize () {
         '<!-- MODAL DEFINITION END -->' +
 
                                 //'<svg id="processor" style="width:640px;height:560px;">' +
-                                '<svg class="col-md-8" id="processor" height="70%" width="60%" viewBox="0 0 750 560" preserveAspectRatio="none">' +
+                                '<svg class="col-md-8" id="processor" height="70%" width="60%" viewBox="0 0 700 560" preserveAspectRatio="none">' +
 
                                 '<g id="start"> ' +
                                 '<g id="IF">' +
@@ -448,7 +448,7 @@ function visualize () {
                                 '<text id="memoryMuxTxt0" class="wbcode" x="590" y="361" font-size="10px" fill="lightgrey" >0</text>' +
 
                                 '<!-- LINE MEMORY MUX TO REGISTER WRITE DATA  -->' +
-                                '<path id="lineMemMuxToRD" class="wbcodeObj" d="M 265,360 256,360 256,476 614,476 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
+                                '<path id="lineMemMuxToRD" class="wbcodeObj" d="M 265,360 256,360 256,486 614,486 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
                                 '<!--line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line-->' +
                                 '<!-- Arrow point end of line-->' +
                                 '<path id="MemMuxToRDArrow" class="wbcodeObj" d="M 262,360 262,358 266,360 262,362 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
@@ -491,7 +491,6 @@ function visualize () {
                                                 '<li id="rd1" class="tabData" align="left" fill="lightgrey">RD1: </li>' +
                                                 '<li id="rd2" class="tabData" align="left" fill="lightgrey">RD2: </li>' +
                                                 '<li id="signext32" align="left" fill="lightgrey">Sign Extended 32 bit Result: </li>' +
-
                                             '</div>' +
 
                                             '<div class="tab-pane" id="ex">' +
@@ -515,21 +514,37 @@ function visualize () {
                                             '</div>' +
 
                                             '<div class="tab-pane" id="all">' +
-                                                '<li class="tabData" align="left">PC: </li>' +
-                                                '<li class="tabData" align="left">RD1: </li>' +
-                                                '<li class="tabData" align="left">RD2: </li>' +
-                                                '<li class="tabData" align="left">ALU in from Mux: </li>' +
-                                                '<li class="tabData" align="left">Shift left 2 Result: </li>' +
-                                                '<li class="tabData" align="left">Branch ALU Result: </li>' +
-                                                '<li class="tabData" align="left">Memory Read Data Result: </li>' +
-                                                '<li class="tabData" align="left">Sign Extended 32 bit Result: </li>' +
-                                                '<li class="tabData" align="left">Write Data Result: </li>' +
-                                                '<li ></li>' +
-                                                '<li ></li>' +
-                                                '<li ></li>' +
-                                                '<li ></li>' +
-                                                '<li ></li>' +
-                                                '<li ></li>' +
+                                                '<div class="lineRow"></div>'+
+                                                '<li class="tabData" align="left" style="color: #428bca;">IF</li>' +
+                                                    '<li id="pc" class="tabData" align="left">PC: </li>' +
+
+                                                '<div class="bigRow"></div>' +
+                                                '<div class="lineRow"></div>' +
+                                                '<li class="tabData" align="left" style="color: #428bca;">ID</li>' +
+                                                    '<li id="rd1" class="tabData" align="left">RD1: </li>' +
+                                                    '<li id="rd2" class="tabData" align="left">RD2: </li>' +
+                                                    '<li id="signext32" class="tabData" align="left">Sign Extended 32 bit Result: </li>' +
+
+                                                '<div class="bigRow"></div>' +
+                                                '<div class="lineRow"></div>'+
+                                                '<li class="tabData" align="left" style="color: #428bca;">EX</li>' +
+                                                    '<li id="aluinbot" class="tabData" align="left">ALU in from Mux: </li>' +
+                                                    '<li id="aluresult" class="tabData" align="left">ALU Result: </li>' +
+                                                    '<li id="shiftleft2" class="tabData" align="left">Shift left 2 Result: </li>' +
+                                                    '<li id="pcsl2addresult" class="tabData" align="left">Branch ALU Result: </li>' +
+
+                                                '<div class="bigRow"></div>' +
+                                                '<div class="lineRow"></div>'+
+                                                '<li class="tabData" align="left" style="color: #428bca;">MEM</li>' +
+                                                    '<li id="newpc" class="tabData" align="left">New PC: </li>' +
+                                                    '<li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li>' +
+
+                                                '<div class="bigRow"></div>' +
+                                                '<div class="lineRow"></div>'+
+                                                '<li class="tabData" align="left" style="color: #428bca;">WB</li>' +
+                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Memory Read Data Result: </li>' +
+                                                    '<li id="wd" class="tabData" align="left">Write Data Result: </li>' +
+                                                    '<li ></li>' +
                                             '</div>' +
 
 
@@ -552,14 +567,7 @@ function visualize () {
             '</div>' +
         '</div>' +
 
-        '<!-- MODAL DEFINITION END -->' +
-
-        '<!--script>' +
-        'var aniData = d3.selectAll(".ifetch");' +
-        'console.log(aniData[0][2]);' +
-        '</script-->'
-
-
+        '<!-- MODAL DEFINITION END -->'
     );
 
 
@@ -772,7 +780,7 @@ function visualize () {
                 .attr("id", "author")
                 .attr("class", "initialize")
                 .attr("x", 15)
-                .attr("y", 560);
+                .attr("y", 520);
         }
 
     }
@@ -842,10 +850,11 @@ function visualize () {
     //This provides a way to filter which elements will be changed.
     function setMutable(lineName){
         switch (lineName) {
-            case "pc":
+            case "PC":
             case "pcAluIn":
-            case "pcAdderResult":
+            case "PcAdderResult":
             case "inst31ToCtrl":
+            case "instToRR1":
             case "inst20ToRR2":
             case "inst15ToMux":
             case "inst15ToSignExt":
@@ -857,7 +866,7 @@ function visualize () {
             case "aluInBot":
             case "aluResult":
             case "shiftLeft2":
-            case "pcSl2AddResult":
+            case "PcSl2AddResult":
             case "memoryReadDataResult":
             case "signExt32":
             case "WD":
@@ -873,13 +882,15 @@ function visualize () {
 
 
     // gets the x and y coordinates for the element values
+    // values with negative coordinates are not visible - nav tab implementation.
     function getXYcoordinates(lineName) {
         var defaultFormat = [0, 0];
 
         var coordinates = {
 
             //IF elements
-            "PC": [30, 365],
+            //"PC": [30, 365],
+            "PC": [-30, -365],
             "pcAluIn": [25, 50],
             "PcAdderResult": [168, 101],
 
@@ -893,9 +904,12 @@ function visualize () {
             "RR1": [276, 270],
             "RR2": [276, 306],
             "WR": [276, 336],
-            "WD": [440, 508],
-            "RD1": [35, 469],
-            "RD2": [35, 482],
+            //"WD": [440, 508],
+            "WD": [440, 497],
+            //"RD1": [35, 469],
+            "RD1": [-35, -469],
+            //"RD2": [35, 482],
+            "RD2": [-35, -482],
             "regDst": [239, 364],
             "jump": [210, 50],
             "branch": [485, 156],
@@ -907,8 +921,10 @@ function visualize () {
             "aluSrc": [389, 309],
             "aluCtrlOut" :[437, 425],
             "regWrite": [307, 245],
-            "signExt32": [470, 495],
-            "aluInBot": [110, 495],
+            //"signExt32": [470, 495],
+            "signExt32": [-470, -495],
+            //"aluInBot": [110, 495],
+            "aluInBot": [-110, -495],
             "intoSignExt16": [268, 412],
             //"intoSignExtArrow16": [285, 412],
             //"signExt16Txt": [273, 402],
@@ -916,17 +932,21 @@ function visualize () {
             //"signExt32Txt": [343, 402],
             //"signExt32DiagLine": [343, 405],
             "zero": [485, 170],
-            "aluResult": [65, 508],
+            //"aluResult": [65, 508],
+            "aluResult": [-65, -508],
             "PCSrc": [528, 130],
 
 
             // EX elements
-            "shiftLeft2":[95, 521],
-            "PcSl2AddResult": [95, 534],
+            //"shiftLeft2":[95, 521],
+            "shiftLeft2":[-95, -521],
+            //"PcSl2AddResult": [95, 534],
+            "PcSl2AddResult": [-95, -534],
             "newPc": [370, 35],
 
             // MEM elements
-            "memoryReadDataResult":[120, 547]
+            //"memoryReadDataResult":[120, 547]
+            "memoryReadDataResult":[-120, -547]
 
 
         };
@@ -1209,36 +1229,61 @@ function visualize () {
                 // The code below is repeated and should be replaced with a function.
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
-                    // perhpas another way similar to append in main?
                     if (anElement.stage === "IF") {
                         console.log("displayElementValues case IF is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            //var temp = "#" + elements[i].toLowerCase();
-                            //console.log("THIS is temp ", temp);
-                            d3.select("#" + elements[i].toLowerCase())
+                            console.log("displayElementValues 1st if element i is ", elements[i]);
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
-                                .text(anElement.val)
+                                .text(function () {
+                                    if (anElement.mutable){
+                                        console.log("Disp_Elem_Val IF lower case : ", elements[i].toLowerCase());
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                })
                                 .attr("class", "ifetch mutable");
                             d3.select("#IF").append("text")
                             // TODO: Mar 28th replaced by .text(changeRep(anElement.val))
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "ifetch lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                             } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                                d3.select("#" + elements[i].toLowerCase())
+                            console.log("displayElementValues 2nd if element i is ", elements[i]);
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                     .append("text")
                                     .style("color", "lightgrey")
-                                    .text(anElement.val)
+                                    .text((function () {
+                                        if (anElement.mutable){
+                                            return changeRep(anElement.val) ;
+                                        }else return anElement.val;
+                                    }))
                                     .attr("class", "idecode mutable");
                                 d3.select("#IF").append("text")
-                                    .text(anElement.val)
+                                    .text((function () {
+                                        if (anElement.mutable){
+                                            return changeRep(anElement.val) ;
+                                        }else return anElement.val;
+                                    }))
                                     .style("font-size", "9px")
                                     .attr("id", elements[i])
-                                    .attr("class", "ifetch lineValues")
+                                    //.attr("class", "ifetch lineValues")
+                                    .attr("class",  (function () {
+                                        if (anElement.mutable){
+                                            return "ifetch mutable";
+                                        }else return "ifetch lineValues";
+                                    }))
                                     .style("fill", "lightgrey")
                                     .attr("x", anElement.coordinates[0])
                                     .attr("y", anElement.coordinates[1]);
@@ -1247,14 +1292,13 @@ function visualize () {
                 }
                 // label the PC value below the PC rectangle element
                 //d3.select("#IF").attr("class", "active");
-                d3.select("#IF").append("text")
+                /*d3.select("#IF").append("text")
                     .text("PC: ")
                     .attr("class", "ifetch immutable")
-                    //.attr("align", "left");
                     .style("font-size", "9px")
                     .attr("x", 10)
                     .attr("y", 365);
-
+                */
 
 
                 break;
@@ -1263,36 +1307,56 @@ function visualize () {
 
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
-                    // perhpas another way similar to append in main?
+                    // perhaps another way similar to append in main?
                     if (anElement.stage === "ID") {
                         console.log("displayElementValues case ID is: ", anElement.stage);
-                        //console.log("displayElementValues ID element is ", elements[i]);
-                        //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            //var temp = "#" + elements[i].toLowerCase();
-                            //console.log("THIS is temp ", temp);
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "idecode mutable");
                             d3.select("#ID").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "idecode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "idecode mutable")
                                 .style("color", "lightgrey");
                             d3.select("#ID").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "idecode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .style("fill", "lightgrey")
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
@@ -1301,7 +1365,7 @@ function visualize () {
                 }
                 // Display values that will not fit on processor graphic
                 //d3.select("#ID").attr("class", "active");
-                d3.select("#ID").append("text")
+                /*d3.select("#ID").append("text")
                     .text("RD1: ")
                     .style("font-size", "9px")
                     .attr("class", "idecode immutable")
@@ -1319,6 +1383,7 @@ function visualize () {
                     .attr("class", "idecode immutable")
                     .attr("x", 350)
                     .attr("y", 495);
+                    */
 
 
                 break;
@@ -1332,29 +1397,53 @@ function visualize () {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0)) {
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
                                 .style("fill", "lightgrey")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "excode mutable");
                             d3.select("#EX").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "excode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
                                 .style("color", "lightgrey")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "excode mutable");
                             d3.select("#EX").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "excode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .style("fill", "lightgrey")
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
@@ -1362,7 +1451,7 @@ function visualize () {
                     }
                 }
                 // Display values that will not fit on processor graphic
-                d3.select("#EX").append("text")
+                /*d3.select("#EX").append("text")
                     .text("ALUSrc Mux to ALU in: ")
                     .style("font-size", "9px")
                     .attr("class", "excode immutable")
@@ -1386,6 +1475,7 @@ function visualize () {
                     .attr("class", "excode immutable")
                     .attr("x", 10)
                     .attr("y", 534);
+                    */
 
                 break;
 
@@ -1398,28 +1488,53 @@ function visualize () {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "memcode mutable");
                             d3.select("#MEM").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "memcode lineValues")
+                                //.attr("class", "memcode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
                                 .style("color", "lightgrey")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "memcode mutable");
                             d3.select("#MEM").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "memcode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .style("fill", "lightgrey")
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
@@ -1437,35 +1552,59 @@ function visualize () {
                         console.log("displayElementValues case ID is: ", anElement.stage);
                         //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "wbcode mutable");
                             d3.select("#WB").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "wbcode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.select("#" + elements[i].toLowerCase())
+                            d3.selectAll("#" + elements[i].toLowerCase())
                                 .append("text")
                                 .style("color", "lightgrey")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .attr("class", "wbcode mutable");
                             d3.select("#WB").append("text")
-                                .text(anElement.val)
+                                .text((function () {
+                                    if (anElement.mutable){
+                                        return changeRep(anElement.val) ;
+                                    }else return anElement.val;
+                                }))
                                 .style("font-size", "9px")
                                 .attr("id", elements[i])
-                                .attr("class", "wbcode lineValues")
+                                .attr("class",  (function () {
+                                    if (anElement.mutable){
+                                        return "ifetch mutable";
+                                    }else return "ifetch lineValues";
+                                }))
                                 .style("fill", "lightgrey")
                                 .attr("x", anElement.coordinates[0])
                                 .attr("y", anElement.coordinates[1]);
                         }
                     }
                 }
-                d3.select("#WB").append("text")
+                /*d3.select("#WB").append("text")
                     .text("Memory Read Data Result: ")
                     .style("font-size", "9px")
                     .attr("class", "wbcode immutable")
@@ -1477,6 +1616,7 @@ function visualize () {
                     .attr("class", "wbcode immutable")
                     .attr("x", 350)
                     .attr("y", 508);
+                    */
 
                 break;
 
@@ -2436,58 +2576,19 @@ function visualize () {
     }
 
 
-    // Detect a tab change and call function to display: problem modal duplicating selection when run.
-    /*$(".nav-tabs a").click(function(){
-        $(this).tab('show');
-        var x = $(event.target).text();         // active tab
-        console.log("SELECTING TABS is ", x);
-        buttonClick(x);
+d3.select("#stageDisplayType").on("change", (function () {
+
+    console.log ("NEWFORMAT is: ", newFormat = $("#stageDisplayType option:selected").html().toLowerCase());
+    console.log ("CURRENTFORMAT is: ", currentFormat);
+
+    d3.selectAll(".mutable").text(function (d) {
+        //console.log("WHAT is this innerHTML: ", this.innerHTML);
+        //console.log("WHAT is d : ", d);
+
+        return changeRep(this.innerHTML);
     });
-*/
 
-
-
-
-
-
-    /*function changeType (e) {
-        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
-
-            testing.length = 0;
-
-        testing = d3.selectAll(".lineValues");
-                console.log ("Testing is ", testing);
-                        //var anElement = testing[0][2]["innerHTML"];
-                        //console.log ("anElement is ", anElement);
-        for (var i = 0; i < testing[[0]].length; i++ ) {
-                    console.log ("testing[0][i][innerHTML] before is ", testing[0][i]["innerHTML"]);
-            testing[0][i]["innerHTML"] = changeRep(testing[0][i]["innerHTML"]);
-                    console.log ("testing[0][" + i + " ][innerHTML] after is ", testing[0][i]["innerHTML"]);
-        }
-
-
-    }
-    */
-
-
-    // Listens for the form-box change and runs the function to make the changes.
-    $("#stageDisplayType").change(changeType);
-
-    function changeType () {
-        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
-
-        //testing.length = 0;
-
-        $(".lineValues").each(function(){
-            console.log("CHANGE_TYPE this.html ", $(this).html($(this).innerHTML));
-            var tempStr  = $(this).html($(this).innerHTML);
-            tempStr [0]["innerHTML"] = changeRep(tempStr[0]["innerHTML"]);
-        });
-
-    }
-
-
-
+}));
 
 
     function asHex (v, currentFormat) {
@@ -2496,13 +2597,10 @@ function visualize () {
             var intNum = MIPS.binaryStringToUnsignedNumber(v);
         }else intNum = v;
         console.log ("asHex intNum is ", intNum);
+        console.log ("asHex HEX is ", "0x" + intNum.toString(16));
+
         return "0x" + intNum.toString(16);
     }
-
-    var tempStr = "0x800";
-
-    //var tempNum = parseInt(tempStr.slice(2));
-    console.log("HEX to binary ", (parseInt(tempStr.slice(2))).toString(2));
 
 
 
@@ -2510,45 +2608,53 @@ function visualize () {
     function changeRep(v) {
         //console.log("CHANGE_REP v ", v[0]["innerHTML"]);
         console.log("CHANGE_REP v ", v);
-        switch (currentFormat){
-            case "binary":
-                switch (newFormat){
-                    case "integer":
-                        return MIPS.binaryStringToUnsignedNumber(v);
-                        break;
-                    case "hex":
-                        return asHex(v, currentFormat);
-                        break;
-                    default: return v;
-                }
-                break;
-            case "integer":
-                switch (newFormat) {
-                    case "binary":
-                        return MIPS.numberToBinaryString(v);
-                        break;
-                    case "hex":
-                        return asHex(v, currentFormat);
-                        break;
-                    default: return v;
-                }
-                break;
-            case "hex":
-                switch (newFormat) {
-                    case "binary":
-                        return (parseInt(v.slice(2))).toString(2);
-                        //return asBinary(v, currentFormat)
-                        break;
-                    case "integer":
-                        return asInt(v, currentFormat);
-                        break;
-                    default: return v;
-                }
-                break;
-            default: console.log ("Something went horribly wrong in changeRep");
+        /*if (newFormat == currentFormat) {
+            return v;
+        } else {
+*/
+            switch (currentFormat) {
+                case "binary":
+                    switch (newFormat) {
+                        case "integer":
+                            return MIPS.binaryStringToUnsignedNumber(v);
+                            break;
+                        case "hex":
+                            return asHex(v, currentFormat);
+                            break;
+                        default:
+                            return v;
+                    }
+                    break;
+                case "integer":
+                    switch (newFormat) {
+                        case "binary":
+                            return MIPS.numberToBinaryString(v);
+                            break;
+                        case "hex":
+                            return asHex(v, currentFormat);
+                            break;
+                        default:
+                            return v;
+                    }
+                    break;
+                case "hex":
+                    switch (newFormat) {
+                        case "binary":
+                            return (parseInt(v.slice(2))).toString(2);
+                            //return asBinary(v, currentFormat)
+                            break;
+                        case "integer":
+                            return asInt(v, currentFormat);
+                            break;
+                        default:
+                            return v;
+                    }
+                    break;
+                default:
+                    console.log("Something went horribly wrong in changeRep");
             }
-        }
-
+        //}
+    }
 
 
     function setBlack (someClass){
@@ -2712,10 +2818,16 @@ function visualize () {
             extoggle = 0;
             memtoggle = 0;
             wbtoggle = 0;
+            console.log("RESET currentFormat is ", currentFormat);
+            console.log("RESET newFormat is ", newFormat);
+            //currentFormat = newFormat;
+            //console.log("RESET = newFormat is ", newFormat);
+            //console.log("RESET = currentFormat is ", currentFormat);
+
+
         }
 
         if(datapoint === "All"){
-
             var stage = ["IF", "ID", "EX", "MEM", "WB"];
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
@@ -2725,6 +2837,8 @@ function visualize () {
             turqSection.forEach(setTorqGrey);
             d3.selectAll(".lineValues").remove();
             d3.selectAll(".immutable").remove();
+            d3.selectAll(".mutable").remove();
+
 
             function myLoop () {
                 setTimeout(function () {
@@ -2732,7 +2846,9 @@ function visualize () {
                     drawVisableLines (blackSection[i] + "Obj", stage[i]);
                     drawVisableLines (turqSection[i], stage[i]);
                     drawVisableLines ((turqSection[i] + "Obj"), stage[i]);
+                    console.log("ALL before dispalyElementValues: ", stage[i], blackSection[i] );
                     displayElementValues(stage[i], blackSection[i]);
+
                     i++;
                     if (i < 5) {
                         myLoop();
@@ -2772,8 +2888,6 @@ function visualize () {
             d3.selectAll(".stage-buttons").remove();
             d3.selectAll(".stage-tabs").remove();
             d3.selectAll(".mutable").remove();
-
-
 
 
             // Disable the visualize button to prevent re-entering the visualization for a given MIPS instruction.
