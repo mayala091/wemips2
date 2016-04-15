@@ -881,6 +881,289 @@ function visualize () {
 
 
 
+
+    function setElementVisibility(element) {
+        // TODO: build a logic table as a 2D array to replace this mess
+        // what is in common with each? fall through cases for differences.
+
+        if (debug) {
+            console.log("setElementVisibility LineName is: ", element);
+            console.log("setElementVisibility currentLine is", CurrentLine["lineNo"]);
+        }
+
+        if (instructionFormat === "R") {
+            switch (CurrentLine["instruction"]) {
+                case "ADD":
+                    switch (element) {
+
+                        case "inst20ToMux":
+                        case "inst20MuxArrow":
+                        case "intoSignExt16":
+                        case "intoSignExtArrow16":
+                        case "signExt16Txt":
+                        case "signExt16DiagLine":
+                        case "signExt32":
+                        case "signExt32Txt":
+                        case "signExt32DiagLine":
+                        case "signExtEllip":
+                        case "signExtEllipTxtSign":
+                        case "signExtEllipTxtExt":
+                        case "signExtEllToMux1":
+                        case "Mux1ToShiftLeft2":
+                        case "Mux1ToShiftLeft2Line":
+                        case "Mux1ToShiftLeftArrow":
+                        case "signExt32ToMux1Ln":
+                        case "signExt32ToMux1Arrow":
+                        case "signExt32ToMux1Circle":
+                        case "aluResultToAddr1":
+                        case "aluResultToAddrArrow":
+                        case "shiftLeft2Ell":
+                        case "shiftLeft2EllTxtShift":
+                        case "shiftLeft2EllTxtLeft2":
+                        case "shiftLeft2ToAluIn":
+                        case "shiftLeft2ToAluInArrow":
+                        case "aluShiftLeft1":
+                        case "aluShiftLeft2":
+                        case "aluShiftLeft3":
+                        case "aluShiftLeft4":
+                        case "aluShiftLeft5":
+                        case "aluShiftLeft6":
+                        case "aluShiftLeft7":
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'dataMemRect':
+                        case 'dataMemRectTxtAdd':
+                        case 'dataMemRectTxtRead':
+                        case 'dataMemRectTxtData':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'dataMemRectTxt3Data':
+                        case 'dataMemRectTxtMem':
+                        case 'lineDataMemToMux':
+                        case 'DataMemToMuxArrow':
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt1':
+                        case "regMuxTxt0":
+                        case 'memoryMuxTxt1':
+                        case "shiftLeft2":
+                        case "PcSl2AddResult":
+                        case "memoryReadDataResult":
+                            return false;
+                            break;
+
+                        default:
+                            return true;
+                    }
+            }
+
+        }
+        if (instructionFormat === "I") {
+            switch (CurrentLine["instruction"]) {
+                case "LW":
+                    switch (element) {
+                        case "inst15Txt":
+                        case "inst15ToMux":
+                        case "inst15Arrow":
+                        case "RR2":
+                        case "RD2":
+                        case "readReg2Txt":
+                        case "inst5ToAluCtrl":
+                        case "inst5ToAluCtrlArrow":
+                        case "regMuxTxt1":
+                        case "inst20ToRR2":
+                        case "inst20MUX0Arrow":
+                        case "readData2Txt":
+                        case "RD2ToAluResultCircle":
+                        case "RD2ToAluResult":
+                        case "RD2ToAluResultArrow":
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt0':
+                        case "RegFileRD2Circle":
+                        case "Mux1ToShiftLeft2":
+                        case "Mux1ToShiftLeftArrow":
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'shiftLeft2Ell':
+                        case 'shiftLeft2EllTxtShift':
+                        case 'shiftLeft2EllTxtLeft2':
+                        case 'shiftLeft2ToAluIn':
+                        case 'shiftLeft2ToAluInArrow':
+                        case 'aluShiftLeft1':
+                        case 'aluShiftLeft2':
+                        case 'aluShiftLeft3':
+                        case 'aluShiftLeft4':
+                        case 'aluShiftLeft5':
+                        case 'aluShiftLeft6':
+                        case 'aluShiftLeft7':
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'lineAluResultToMux0':
+                        case 'AluResultToMux0Arrow':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'memoryMuxTxt0':
+                            return false;
+                            break;
+
+                        default:
+                            return true;
+                    }
+
+
+                case "SW":
+                    switch (element) {
+                        case "inst15Txt":
+                        case "inst15ToMux":
+                        case "inst15Arrow":
+                        case "shiftLeft2":
+                        case "inst5ToAluCtrl":
+                        case "inst5ToAluCtrlArrow":
+                        case "RD2ToAluResult":
+                        case "RD2ToAluResultArrow":
+                        case 'pcAluResultMuxTxt1':
+                        case 'muxIntoAluTxt0':
+                        case "Mux1ToShiftLeft2":
+                        case "Mux1ToShiftLeftArrow":
+                        case 'shiftLeft2Ell':
+                        case 'shiftLeft2EllTxtShift':
+                        case 'shiftLeft2EllTxtLeft2':
+                        case 'shiftLeft2ToAluIn':
+                        case 'shiftLeft2ToAluInArrow':
+                        case 'aluShiftLeft1':
+                        case 'aluShiftLeft2':
+                        case 'aluShiftLeft3':
+                        case 'aluShiftLeft4':
+                        case 'aluShiftLeft5':
+                        case 'aluShiftLeft6':
+                        case 'aluShiftLeft7':
+                        case 'aluShiftTxtAdd':
+                        case 'aluShiftTxtAlu':
+                        case 'aluShiftTxtResult':
+                        case 'lineAluResult2Mux':
+                        case 'AluResult2MuxArrow':
+                        case 'lineAluResultToMux0':
+                        case 'AluResultToMux0Arrow':
+                        case 'memoryMuxTxt0':
+                        case "PcSl2AddResult":
+                        case 'lineDataMemToMux':
+                        case 'DataMemToMuxArrow':
+                        case 'memoryMux':
+                        case 'memoryMux2':
+                        case 'memoryMuxTxt1':
+                        case 'memoryMuxTxtM':
+                        case 'memoryMuxTxtU':
+                        case 'memoryMuxTxtX':
+                        case 'lineMemMuxToRD':
+                        case 'dataMemRectTxtRead':
+                        case 'dataMemRectTxtData':
+                        case "inst20MUXArrow":
+                        case "inst20MuxArrow":
+                        case "inst20ToMux":
+                        case "registerMux1":
+                        case "registerMux2":
+                        case "regMuxTxt0":
+                        case "regMuxTxtM":
+                        case "regMuxTxtU":
+                        case "regMuxTxtX":
+                        case "regMuxTxt1":
+                        case "regMuxToRegFileLine":
+                        case "regMuxToRegFileArrow":
+                        case "writeRegTxt":
+                        case "WR":
+                        case "WD":
+                        case "MemMuxToRDArrow":
+                        case "writeData":
+                        case "memoryReadDataResult":
+                            return false;
+                            break;
+
+                        default:
+                            return true;
+
+                    }
+
+                case "BEQ":
+                    switch (element) {
+                        case "WR":
+                        case "writeRegTxt":
+                        case "signExt32ToMux1Ln":
+                        case "signExt32ToMux1Arrow":
+                        case "writeData":
+                        case "registerMux1":
+                        case "registerMux2":
+                        case "regMuxTxt0":
+                        case "regMuxTxtM":
+                        case "regMuxTxtU":
+                        case "regMuxTxtX":
+                        case "regMuxToRegFileLine":
+                        case "regMuxToRegFileArrow":
+                        case "inst20ToMux":
+                        case "inst20MuxArrow":
+                        case "inst15Txt":
+                        case "inst15ToMux":
+                        case "inst15Arrow":
+                        case "inst5ToAluCtrl":
+                        case "inst5ToAluCtrlArrow":
+                        case "regMuxTxt1":
+                        case 'muxIntoAluTxt1':
+                        case 'lineRD2toMemWD':
+                        case 'lineRD2toMemWDArrow':
+                        case 'lineAluResultToMux0':
+                        case 'AluResultToMux0Arrow':
+                        case 'memoryMuxTxt0':
+                        case 'aluResultToAddr1':
+                        case 'aluResultToAddrArrow':
+                        case 'dataMemRect':
+                        case 'dataMemRectTxtAdd':
+                        case 'dataMemRectTxtRead':
+                        case 'dataMemRectTxtData':
+                        case 'dataMemRectTxtWrite':
+                        case 'dataMemRectTxt2Data':
+                        case 'dataMemRectTxt3Data':
+                        case 'dataMemRectTxtMem':
+                        case 'lineDataMemToMux':
+                        case 'DataMemToMuxArrow':
+                        case 'memoryMux':
+                        case 'memoryMux2':
+                        case 'memoryMuxTxt1':
+                        case 'memoryMuxTxtM':
+                        case 'memoryMuxTxtU':
+                        case 'memoryMuxTxtX':
+                        case 'lineMemMuxToRD':
+                        case 'MemMuxToRDArrow':
+                        case 'aluResult':
+                        case 'memoryReadDataResult':
+                        case "WD":
+                            return false;
+                            break;
+                        case 'pcAluResultMuxTxt0':
+                            if ((mipsValues[elements[20]].val) == "0"){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                            break;
+
+                        default:
+                            return true;
+
+                    }
+            }
+        }
+    }
+
+
+
+
+
     // gets the x and y coordinates for the element values
     // values with negative coordinates are not visible - nav tab implementation.
     function getXYcoordinates(lineName) {
@@ -1239,7 +1522,7 @@ function visualize () {
                                 .text(function () {
                                     if (anElement.mutable){
                                         console.log("Disp_Elem_Val IF lower case : ", elements[i].toLowerCase());
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 })
                                 .attr("class", "ifetch mutable");
@@ -1247,7 +1530,7 @@ function visualize () {
                             // TODO: Mar 28th replaced by .text(changeRep(anElement.val))
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1266,14 +1549,14 @@ function visualize () {
                                     .style("color", "lightgrey")
                                     .text((function () {
                                         if (anElement.mutable){
-                                            return changeRep(anElement.val) ;
+                                            return changeType(anElement.val) ;
                                         }else return anElement.val;
                                     }))
                                     .attr("class", "idecode mutable");
                                 d3.select("#IF").append("text")
                                     .text((function () {
                                         if (anElement.mutable){
-                                            return changeRep(anElement.val) ;
+                                            return changeType(anElement.val) ;
                                         }else return anElement.val;
                                     }))
                                     .style("font-size", "9px")
@@ -1315,14 +1598,14 @@ function visualize () {
                                 .append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "idecode mutable");
                             d3.select("#ID").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1339,7 +1622,7 @@ function visualize () {
                                 .append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "idecode mutable")
@@ -1347,7 +1630,7 @@ function visualize () {
                             d3.select("#ID").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1402,14 +1685,14 @@ function visualize () {
                                 .style("fill", "lightgrey")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "excode mutable");
                             d3.select("#EX").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1427,14 +1710,14 @@ function visualize () {
                                 .style("color", "lightgrey")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "excode mutable");
                             d3.select("#EX").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1492,14 +1775,14 @@ function visualize () {
                                 .append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "memcode mutable");
                             d3.select("#MEM").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1518,14 +1801,14 @@ function visualize () {
                                 .style("color", "lightgrey")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "memcode mutable");
                             d3.select("#MEM").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1556,14 +1839,14 @@ function visualize () {
                                 .append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "wbcode mutable");
                             d3.select("#WB").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1581,14 +1864,14 @@ function visualize () {
                                 .style("color", "lightgrey")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .attr("class", "wbcode mutable");
                             d3.select("#WB").append("text")
                                 .text((function () {
                                     if (anElement.mutable){
-                                        return changeRep(anElement.val) ;
+                                        return changeType(anElement.val) ;
                                     }else return anElement.val;
                                 }))
                                 .style("font-size", "9px")
@@ -1625,287 +1908,6 @@ function visualize () {
 
         }
 
-    }
-
-
-
-
-    function setElementVisibility(element) {
-        // TODO: build a logic table as a 2D array to replace this mess
-        // what is in common with each? fall through cases for differences.
-
-        if (debug) {
-            console.log("setElementVisibility LineName is: ", element);
-            console.log("setElementVisibility currentLine is", CurrentLine["lineNo"]);
-        }
-
-        if (instructionFormat === "R") {
-            switch (CurrentLine["instruction"]) {
-                case "ADD":
-                    switch (element) {
-
-                        case "inst20ToMux":
-                        case "inst20MuxArrow":
-                        case "intoSignExt16":
-                        case "intoSignExtArrow16":
-                        case "signExt16Txt":
-                        case "signExt16DiagLine":
-                        case "signExt32":
-                        case "signExt32Txt":
-                        case "signExt32DiagLine":
-                        case "signExtEllip":
-                        case "signExtEllipTxtSign":
-                        case "signExtEllipTxtExt":
-                        case "signExtEllToMux1":
-                        case "Mux1ToShiftLeft2":
-                        case "Mux1ToShiftLeft2Line":
-                        case "Mux1ToShiftLeftArrow":
-                        case "signExt32ToMux1Ln":
-                        case "signExt32ToMux1Arrow":
-                        case "signExt32ToMux1Circle":
-                        case "aluResultToAddr1":
-                        case "aluResultToAddrArrow":
-                        case "shiftLeft2Ell":
-                        case "shiftLeft2EllTxtShift":
-                        case "shiftLeft2EllTxtLeft2":
-                        case "shiftLeft2ToAluIn":
-                        case "shiftLeft2ToAluInArrow":
-                        case "aluShiftLeft1":
-                        case "aluShiftLeft2":
-                        case "aluShiftLeft3":
-                        case "aluShiftLeft4":
-                        case "aluShiftLeft5":
-                        case "aluShiftLeft6":
-                        case "aluShiftLeft7":
-                        case 'aluShiftTxtAdd':
-                        case 'aluShiftTxtAlu':
-                        case 'aluShiftTxtResult':
-                        case 'lineRD2toMemWD':
-                        case 'lineRD2toMemWDArrow':
-                        case 'lineAluResult2Mux':
-                        case 'AluResult2MuxArrow':
-                        case 'dataMemRect':
-                        case 'dataMemRectTxtAdd':
-                        case 'dataMemRectTxtRead':
-                        case 'dataMemRectTxtData':
-                        case 'dataMemRectTxtWrite':
-                        case 'dataMemRectTxt2Data':
-                        case 'dataMemRectTxt3Data':
-                        case 'dataMemRectTxtMem':
-                        case 'lineDataMemToMux':
-                        case 'DataMemToMuxArrow':
-                        case 'pcAluResultMuxTxt1':
-                        case 'muxIntoAluTxt1':
-                        case "regMuxTxt0":
-                        case 'memoryMuxTxt1':
-                        case "shiftLeft2":
-                        case "PcSl2AddResult":
-                        case "memoryReadDataResult":
-                            return false;
-                            break;
-
-                        default:
-                            return true;
-                    }
-            }
-
-        }
-        if (instructionFormat === "I") {
-            switch (CurrentLine["instruction"]) {
-                case "LW":
-                    switch (element) {
-                        case "inst15Txt":
-                        case "inst15ToMux":
-                        case "inst15Arrow":
-                        case "RR2":
-                        case "RD2":
-                        case "readReg2Txt":
-                        case "inst5ToAluCtrl":
-                        case "inst5ToAluCtrlArrow":
-                        case "regMuxTxt1":
-                        case "inst20ToRR2":
-                        case "inst20MUX0Arrow":
-                        case "readData2Txt":
-                        case "RD2ToAluResultCircle":
-                        case "RD2ToAluResult":
-                        case "RD2ToAluResultArrow":
-                        case 'pcAluResultMuxTxt1':
-                        case 'muxIntoAluTxt0':
-                        case "RegFileRD2Circle":
-                        case "Mux1ToShiftLeft2":
-                        case "Mux1ToShiftLeftArrow":
-                        case 'lineRD2toMemWD':
-                        case 'lineRD2toMemWDArrow':
-                        case 'shiftLeft2Ell':
-                        case 'shiftLeft2EllTxtShift':
-                        case 'shiftLeft2EllTxtLeft2':
-                        case 'shiftLeft2ToAluIn':
-                        case 'shiftLeft2ToAluInArrow':
-                        case 'aluShiftLeft1':
-                        case 'aluShiftLeft2':
-                        case 'aluShiftLeft3':
-                        case 'aluShiftLeft4':
-                        case 'aluShiftLeft5':
-                        case 'aluShiftLeft6':
-                        case 'aluShiftLeft7':
-                        case 'aluShiftTxtAdd':
-                        case 'aluShiftTxtAlu':
-                        case 'aluShiftTxtResult':
-                        case 'lineAluResult2Mux':
-                        case 'AluResult2MuxArrow':
-                        case 'lineAluResultToMux0':
-                        case 'AluResultToMux0Arrow':
-                        case 'dataMemRectTxtWrite':
-                        case 'dataMemRectTxt2Data':
-                        case 'memoryMuxTxt0':
-                            return false;
-                            break;
-
-                        default:
-                            return true;
-                    }
-
-
-                case "SW":
-                    switch (element) {
-                        case "inst15Txt":
-                        case "inst15ToMux":
-                        case "inst15Arrow":
-                        case "shiftLeft2":
-                        case "inst5ToAluCtrl":
-                        case "inst5ToAluCtrlArrow":
-                        case "RD2ToAluResult":
-                        case "RD2ToAluResultArrow":
-                        case 'pcAluResultMuxTxt1':
-                        case 'muxIntoAluTxt0':
-                        case "Mux1ToShiftLeft2":
-                        case "Mux1ToShiftLeftArrow":
-                        case 'shiftLeft2Ell':
-                        case 'shiftLeft2EllTxtShift':
-                        case 'shiftLeft2EllTxtLeft2':
-                        case 'shiftLeft2ToAluIn':
-                        case 'shiftLeft2ToAluInArrow':
-                        case 'aluShiftLeft1':
-                        case 'aluShiftLeft2':
-                        case 'aluShiftLeft3':
-                        case 'aluShiftLeft4':
-                        case 'aluShiftLeft5':
-                        case 'aluShiftLeft6':
-                        case 'aluShiftLeft7':
-                        case 'aluShiftTxtAdd':
-                        case 'aluShiftTxtAlu':
-                        case 'aluShiftTxtResult':
-                        case 'lineAluResult2Mux':
-                        case 'AluResult2MuxArrow':
-                        case 'lineAluResultToMux0':
-                        case 'AluResultToMux0Arrow':
-                        case 'memoryMuxTxt0':
-                        case "PcSl2AddResult":
-                        case 'lineDataMemToMux':
-                        case 'DataMemToMuxArrow':
-                        case 'memoryMux':
-                        case 'memoryMux2':
-                        case 'memoryMuxTxt1':
-                        case 'memoryMuxTxtM':
-                        case 'memoryMuxTxtU':
-                        case 'memoryMuxTxtX':
-                        case 'lineMemMuxToRD':
-                        case 'dataMemRectTxtRead':
-                        case 'dataMemRectTxtData':
-                        case "inst20MUXArrow":
-                        case "inst20MuxArrow":
-                        case "inst20ToMux":
-                        case "registerMux1":
-                        case "registerMux2":
-                        case "regMuxTxt0":
-                        case "regMuxTxtM":
-                        case "regMuxTxtU":
-                        case "regMuxTxtX":
-                        case "regMuxTxt1":
-                        case "regMuxToRegFileLine":
-                        case "regMuxToRegFileArrow":
-                        case "writeRegTxt":
-                        case "WR":
-                        case "WD":
-                        case "MemMuxToRDArrow":
-                        case "writeData":
-                        case "memoryReadDataResult":
-                            return false;
-                            break;
-
-                        default:
-                            return true;
-
-                    }
-
-                case "BEQ":
-                    switch (element) {
-                        case "WR":
-                        case "writeRegTxt":
-                        case "signExt32ToMux1Ln":
-                        case "signExt32ToMux1Arrow":
-                        case "writeData":
-                        case "registerMux1":
-                        case "registerMux2":
-                        case "regMuxTxt0":
-                        case "regMuxTxtM":
-                        case "regMuxTxtU":
-                        case "regMuxTxtX":
-                        case "regMuxToRegFileLine":
-                        case "regMuxToRegFileArrow":
-                        case "inst20ToMux":
-                        case "inst20MuxArrow":
-                        case "inst15Txt":
-                        case "inst15ToMux":
-                        case "inst15Arrow":
-                        case "inst5ToAluCtrl":
-                        case "inst5ToAluCtrlArrow":
-                        case "regMuxTxt1":
-                        case 'muxIntoAluTxt1':
-                        case 'lineRD2toMemWD':
-                        case 'lineRD2toMemWDArrow':
-                        case 'lineAluResultToMux0':
-                        case 'AluResultToMux0Arrow':
-                        case 'memoryMuxTxt0':
-                        case 'aluResultToAddr1':
-                        case 'aluResultToAddrArrow':
-                        case 'dataMemRect':
-                        case 'dataMemRectTxtAdd':
-                        case 'dataMemRectTxtRead':
-                        case 'dataMemRectTxtData':
-                        case 'dataMemRectTxtWrite':
-                        case 'dataMemRectTxt2Data':
-                        case 'dataMemRectTxt3Data':
-                        case 'dataMemRectTxtMem':
-                        case 'lineDataMemToMux':
-                        case 'DataMemToMuxArrow':
-                        case 'memoryMux':
-                        case 'memoryMux2':
-                        case 'memoryMuxTxt1':
-                        case 'memoryMuxTxtM':
-                        case 'memoryMuxTxtU':
-                        case 'memoryMuxTxtX':
-                        case 'lineMemMuxToRD':
-                        case 'MemMuxToRDArrow':
-                        case 'aluResult':
-                        case 'memoryReadDataResult':
-                        case "WD":
-                            return false;
-                            break;
-                        case 'pcAluResultMuxTxt0':
-                            if ((mipsValues[elements[20]].val) == "0"){
-                                return true;
-                            }else {
-                                return false;
-                            }
-                            break;
-
-                        default:
-                            return true;
-
-                    }
-            }
-        }
     }
 
 
@@ -2577,41 +2579,47 @@ function visualize () {
 
 
 d3.select("#stageDisplayType").on("change", (function () {
-
-    console.log ("NEWFORMAT is: ", newFormat = $("#stageDisplayType option:selected").html().toLowerCase());
-    console.log ("CURRENTFORMAT is: ", currentFormat);
+    //console.log ("NEWFORMAT is: ", newFormat = $("#stageDisplayType option:selected").html().toLowerCase());
+    //console.log ("CURRENTFORMAT is: ", currentFormat);
 
     d3.selectAll(".mutable").text(function (d) {
-        //console.log("WHAT is this innerHTML: ", this.innerHTML);
-        //console.log("WHAT is d : ", d);
-
         return changeRep(this.innerHTML);
     });
 
+    currentFormat = newFormat;
 }));
+
+
 
 
     function asHex (v, currentFormat) {
         if (currentFormat == "binary"){
             console.log("ASHEX input value ", v);
             var intNum = MIPS.binaryStringToUnsignedNumber(v);
-        }else intNum = v;
-        console.log ("asHex intNum is ", intNum);
-        console.log ("asHex HEX is ", "0x" + intNum.toString(16));
+            console.log ("asHex intNum is ", intNum);
+            console.log ("asHex HEX is ", "0x" + intNum.toString(16));
+            return "0x" + intNum.toString(16);
 
-        return "0x" + intNum.toString(16);
+        }else {
+            console.log ("asHex INTEGER to HEX v is: ", v);
+
+            var asText = "32768";
+            asText = v * 1;
+            console.log ("asHex INTEGER to HEX v.toString(16) is: ", asText);
+
+            return "0x" + asText.toString(16);
+        }
+
     }
 
 
 
-    // convert an existing value format into a new format.  The formats are binary, hex or integer.
+    // Convert an existing value format into a new format.  The formats are binary, hex or integer.
     function changeRep(v) {
-        //console.log("CHANGE_REP v ", v[0]["innerHTML"]);
-        console.log("CHANGE_REP v ", v);
-        /*if (newFormat == currentFormat) {
-            return v;
-        } else {
-*/
+        if (debug) {
+            console.log("change rep NEWFORMAT is: ", newFormat = $("#stageDisplayType option:selected").html().toLowerCase());
+            console.log("change rep CURRENTFORMAT is: ", currentFormat);
+        }
             switch (currentFormat) {
                 case "binary":
                     switch (newFormat) {
@@ -2628,7 +2636,8 @@ d3.select("#stageDisplayType").on("change", (function () {
                 case "integer":
                     switch (newFormat) {
                         case "binary":
-                            return MIPS.numberToBinaryString(v);
+                            //console.log("CHANGE REP Int TO Bin is: ", (parseInt(v).toString(2)));
+                            return (parseInt(v).toString(2));
                             break;
                         case "hex":
                             return asHex(v, currentFormat);
@@ -2640,11 +2649,13 @@ d3.select("#stageDisplayType").on("change", (function () {
                 case "hex":
                     switch (newFormat) {
                         case "binary":
-                            return (parseInt(v.slice(2))).toString(2);
+                            console.log ("CHANGE_REP HEX No 0x is: ", v);
+                            console.log ("CHANGE_REP HEX TO BIN is ", parseInt(v).toString(2));
+                            return (parseInt(v).toString(2));
                             //return asBinary(v, currentFormat)
                             break;
                         case "integer":
-                            return asInt(v, currentFormat);
+                            return parseInt(v);
                             break;
                         default:
                             return v;
@@ -2653,8 +2664,36 @@ d3.select("#stageDisplayType").on("change", (function () {
                 default:
                     console.log("Something went horribly wrong in changeRep");
             }
-        //}
     }
+
+
+
+
+
+    // convert the binary to the selected type: integer or hex.
+    function changeType(v) {
+        var newType = $("#stageDisplayType option:selected").html().toLowerCase();
+
+        console.log("change Type NEWTYPE is: ", newType);
+
+        switch (newType) {
+            case "integer":
+                return MIPS.binaryStringToUnsignedNumber(v);
+                break;
+            case "hex":
+                var intNum = MIPS.binaryStringToUnsignedNumber(v);
+                console.log ("asHex intNum is ", intNum);
+                console.log ("asHex HEX is ", "0x" + intNum.toString(16));
+                return "0x" + intNum.toString(16);
+                break;
+            default:
+                return v;
+        }
+    }
+
+
+
+
 
 
     function setBlack (someClass){
@@ -2802,7 +2841,7 @@ d3.select("#stageDisplayType").on("change", (function () {
         }
 
         if(datapoint === "Reset"){
-            d3.selectAll(".mutable").remove();
+
             console.log("Reset called:");
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
@@ -2812,6 +2851,7 @@ d3.select("#stageDisplayType").on("change", (function () {
             d3.select("#reset").attr("class", "active");
             d3.selectAll(".lineValues").remove();
             d3.selectAll(".immutable").remove();
+            d3.selectAll(".mutable").remove();
 
             iftoggle = 0;
             idtoggle = 0;
@@ -2825,9 +2865,12 @@ d3.select("#stageDisplayType").on("change", (function () {
             //console.log("RESET = currentFormat is ", currentFormat);
 
 
+
         }
 
         if(datapoint === "All"){
+
+
             var stage = ["IF", "ID", "EX", "MEM", "WB"];
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
@@ -2853,7 +2896,7 @@ d3.select("#stageDisplayType").on("change", (function () {
                     if (i < 5) {
                         myLoop();
                     }
-                }, 1500)
+                }, 500)
             }
             myLoop();
 
@@ -2862,6 +2905,7 @@ d3.select("#stageDisplayType").on("change", (function () {
             extoggle = 1;
             memtoggle = 1;
             wbtoggle = 1;
+
         }
 
         if(datapoint == "Close") {
@@ -2899,11 +2943,11 @@ d3.select("#stageDisplayType").on("change", (function () {
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
 
-
             // restore options box to binary
             $("#stageDisplayType").prop('selectedIndex',0);
 
-            // TODO: which of these methods of distruction work better?
+            buttonClick("Reset");
+            // TODO: which of these methods of destruction work better?
             $("#myModal").modal("hide").data( 'bs.modal', null );
 
             //$("#myModal").on('hidden.bs.modal', function () {
