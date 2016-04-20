@@ -193,9 +193,6 @@ $(document).ready(function () {
             addToLog('error', e);
         }
     }
-
-
-
     function manualRegistryValidate(e){
         var newVal = $(e.target).html();
         var target =  $(e.target);
@@ -239,8 +236,11 @@ $(document).ready(function () {
 
     }
     function setupRegisters(index){
+        //console.log ("setupRegisters index is: ", index);
         var reg = $(this);
+        //console.log ("setupRegisters reg is: ", reg);
         var regName = reg.attr('id');
+        //console.log ("setupRegisters regNane is: ", regName);
         reg.html(
             "<b>"+regName +":</b> "
             + "<span class='regSpacer' reg='"+regName+"' id='"+regName+"-val' contenteditable='true'>"
