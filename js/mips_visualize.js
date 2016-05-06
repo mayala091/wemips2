@@ -1,7 +1,6 @@
 /*
- * Mips visualizer constructor
+ * Mips visualize constructor
  */
-
 
 
 function visualize () {
@@ -13,7 +12,7 @@ function visualize () {
 
         '<!-- MODAL DEFINITION BEGINS  DO NOT CHANGE FOLLOWING LINES -->' +
 
-        '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-keyboard="false" aria-labelledby="myModalLabel"> ' +
+        '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel"> ' +
             '<div class="modal-dialog" role="document" > ' +
                 '<div class="modal-content"> ' +
                     '<div class="modal-header" style="background-color: black;"> ' +
@@ -26,7 +25,7 @@ function visualize () {
                             '</div> ' +
 
                             '<div class="col-md-3" align="right" style="font-weight:bold;">' +
-                                '<a href="ProjectReadme.html" target="about_blank" >User Guide</a> | ' +
+                                '<a href="ProjectReadmeV2.html" target="about_blank" >User Guide</a> | ' +
                             '</div> ' +
                             '<div class="col-xs-2" align="right">' +
                             '<!--button type="button" class="close" data-dismiss="modal" aria-label="Close" align="right"><span aria-hidden="true">&times;</span></button--> ' +
@@ -476,7 +475,7 @@ function visualize () {
                                     '<div id="stages" class="col-md-4" align="right">' +
         '<select class="form-control" id="stageDisplayType">' +
         '<option>Binary</option>' +
-        '<option>Integer</option>' +
+        '<option>Decimal</option>' +
         '<option>Hex</option>' +
         '</select>' +
 
@@ -538,11 +537,11 @@ function visualize () {
                                                 '<li class="tabData" align="left" style="color: #428bca;">MEM</li>' +
                                                     '<li id="newpc" class="tabData" align="left">New PC: </li>' +
                                                     '<li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li>' +
+                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Memory Read Data Result: </li>' +
 
                                                 '<div class="bigRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">WB</li>' +
-                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Memory Read Data Result: </li>' +
                                                     '<li id="wd" class="tabData" align="left">Write Data Result: </li>' +
                                                     '<li ></li>' +
                                             '</div>' +
@@ -571,15 +570,6 @@ function visualize () {
     );
 
 
-    // TODO: use hex for values other than the instruction thus RD etc.
-
-    // TODO: All created items need a specific class tag, remove all items in the class tag to clear the visualization.
-
-    //TODO: See page 98 chap 2 figure 2.5 for instruction coding and what is relevant in SW LW ADDI
-
-    // TODO: Future: How would setting lines based on controll signals work with this code?
-
-
     var iftoggle = 0;
     var idtoggle = 0;
     var extoggle = 0;
@@ -591,7 +581,6 @@ function visualize () {
     var pc = 32768;
     var newFormat = "binary";
     var currentFormat = "binary";
-    var testing = [[]];
     var debug = false;
 
     // used by the makeButtons function to create buttons in the modal footer
@@ -602,7 +591,6 @@ function visualize () {
         console.log("START CurrentLine['lineNo'] ", CurrentLine['lineNo']);
         console.log("START previousLine ", previousLine);
     }
-
 
 
     var allRegs = [
@@ -643,7 +631,6 @@ function visualize () {
 
         'pcAluResultMuxTxt0', 'pcAluResultMuxTxt1',
     /*   29                      30                     31          32            33                 34              */
-
 
         'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
         'instMemTxtAddress', 'instMemTxtInst', 'instMemTxt31', 'instMemTxtIns31', 'instMemTxtMem',
@@ -690,14 +677,11 @@ function visualize () {
     ];
 
 
-
-
     function getInstruction () {
         var partialInst = " ";
         var tempFields;
 
         // BEQ instructions do not have an associated binary address this is used to create one.
-        // TODO: make a function for this code.
         if (LabelLineNo !== null) {
             var labelAddress = LabelLineNo;
             partialInst = CurrentLine["assembledInstruction"].slice(0, 19);
@@ -740,7 +724,6 @@ function visualize () {
     getInstruction();
 
 
-
     function displayInstruction () {
         // Display the current instruction text,  instruction format and instruction in binary
         d3.select("#instruction").append("text")
@@ -771,7 +754,6 @@ function visualize () {
     displayInstruction();
 
 
-
     function creditAuthor () {
         if (CurrentLine["lineNo"] != previousLine) {
             return d3.select("svg").append("text")
@@ -785,7 +767,6 @@ function visualize () {
 
     }
     creditAuthor();
-
 
 
     // This function sets all elements in the mipsValues object. All line values displayed and line visibility are set.
@@ -803,8 +784,7 @@ function visualize () {
     initializeElements();
 
 
-
-    // returns a object containing the value, coordinates, stage and visibility of an element.
+    // returns a object containing the value, coordinates, stage, visibility and mutability of an element.
     function setElementValues(lineName, lineNumber) {
         /**
          * @class element
@@ -845,8 +825,7 @@ function visualize () {
     } // end function setElementValues(lineName, lineNumber)
 
 
-
-    // Set mutable.  If user changes type: Bin, Hex, Int then some elements should not be chganged.
+    // Set mutable.  If user changes type: Binary, Hex, Decimal then some elements should not be changed.
     //This provides a way to filter which elements will be changed.
     function setMutable(lineName){
         switch (lineName) {
@@ -879,12 +858,8 @@ function visualize () {
     }
 
 
-
-
-
     function setElementVisibility(element) {
         // TODO: build a logic table as a 2D array to replace this mess
-        // what is in common with each? fall through cases for differences.
 
         if (debug) {
             console.log("setElementVisibility LineName is: ", element);
@@ -1161,18 +1136,15 @@ function visualize () {
     }
 
 
-
-
-
     // gets the x and y coordinates for the element values
     // values with negative coordinates are not visible - nav tab implementation.
+    // greyed out coordinates are values displayed under the data path and may be more intuitive.
     function getXYcoordinates(lineName) {
         var defaultFormat = [0, 0];
 
         var coordinates = {
 
             //IF elements
-            //"PC": [30, 365],
             "PC": [-30, -365],
             "pcAluIn": [25, 50],
             "PcAdderResult": [168, 101],
@@ -1187,11 +1159,8 @@ function visualize () {
             "RR1": [276, 270],
             "RR2": [276, 306],
             "WR": [276, 336],
-            //"WD": [440, 508],
             "WD": [440, 497],
-            //"RD1": [35, 469],
             "RD1": [-35, -469],
-            //"RD2": [35, 482],
             "RD2": [-35, -482],
             "regDst": [239, 364],
             "jump": [210, 50],
@@ -1204,31 +1173,19 @@ function visualize () {
             "aluSrc": [389, 309],
             "aluCtrlOut" :[437, 425],
             "regWrite": [307, 245],
-            //"signExt32": [470, 495],
             "signExt32": [-470, -495],
-            //"aluInBot": [110, 495],
             "aluInBot": [-110, -495],
             "intoSignExt16": [268, 412],
-            //"intoSignExtArrow16": [285, 412],
-            //"signExt16Txt": [273, 402],
-            //"signExt16DiagLine": [273, 405],
-            //"signExt32Txt": [343, 402],
-            //"signExt32DiagLine": [343, 405],
             "zero": [485, 170],
-            //"aluResult": [65, 508],
             "aluResult": [-65, -508],
             "PCSrc": [528, 130],
 
-
             // EX elements
-            //"shiftLeft2":[95, 521],
             "shiftLeft2":[-95, -521],
-            //"PcSl2AddResult": [95, 534],
             "PcSl2AddResult": [-95, -534],
             "newPc": [370, 35],
 
             // MEM elements
-            //"memoryReadDataResult":[120, 547]
             "memoryReadDataResult":[-120, -547]
 
 
@@ -1238,8 +1195,8 @@ function visualize () {
     } // end function getXYcoordinates(lineName)
 
 
-
-    // gets the stage identification
+    // gets the stage identification.
+    // TODO: Replace this mess with a 2D logic table.
     function getStage(lineName) {
         var defaultFormat = "NA";
 
@@ -1493,428 +1450,157 @@ function visualize () {
     } // end function getStage(lineName)
 
 
-    // TODO: Mar 27th add mutable logic to this function.
+    function displayValue(element, anElement, stageClass, datapoint){
+        if (debug) {
+            console.log("displayElementValues 1st if element i is ", element);
+            console.log("displayValue stageClass with the dot is :", stageClass);
+            console.log("anElement.mutable is: ", anElement.mutable);
+
+        }
+        d3.selectAll("#" + element.toLowerCase())
+            .append("text")
+            .text(function () {
+                if (anElement.mutable){
+                    if (debug) {
+                        console.log("Disp_Elem_Val IF lower case : ", element.toLowerCase());
+                    }
+                    return changeType(anElement.val) ;
+                }else return anElement.val;
+            })
+            .attr("class", stageClass +  " mutable");
+        d3.select("#" + datapoint).append("text")
+            .text((function () {
+                if (anElement.mutable){
+                    return changeType(anElement.val) ;
+                }else return anElement.val;
+            }))
+            .style("font-size", "9px")
+            .attr("id", element)
+            .attr("class",  (function () {
+                if (anElement.mutable){
+                    return (stageClass + " mutable");
+                }else return (stageClass + " lineValues");
+            }))
+            .attr("x", anElement.coordinates[0])
+            .attr("y", anElement.coordinates[1]);
+
+    }
+
+
+    function displayValueGrey (element, anElement, stageClass, datapoint) {
+        if (debug) {
+            console.log("displayElementValues 2nd if element i is ", element);
+        }
+        d3.selectAll("#" + element.toLowerCase())
+            .append("text")
+            .style("color", "lightgrey")
+            .text((function () {
+                if (anElement.mutable){
+                    return changeType(anElement.val) ;
+                }else return anElement.val;
+            }))
+            .attr("class", stageClass + " mutable");
+        d3.select("#" + datapoint).append("text")
+            .text((function () {
+                if (anElement.mutable){
+                    return changeType(anElement.val) ;
+                }else return anElement.val;
+            }))
+            .style("font-size", "9px")
+            .attr("id", element)
+            .attr("class",  (function () {
+                if (anElement.mutable){
+                    return (stageClass + " mutable");
+                }else return (stageClass + " lineValues");
+            }))
+            .style("fill", "lightgrey")
+            .attr("x", anElement.coordinates[0])
+            .attr("y", anElement.coordinates[1]);
+    }
+
+
     // display the element values by stage
     function displayElementValues(datapoint, stageClass) {
-        // update only lines relevant to this instruction type and specific inst
-
-        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
-
-        if (true) {
+        if (debug) {
             console.log("displayLineValues datapoint is :", datapoint);
             console.log("displayLineValues stageClass is :", stageClass);
         }
 
-        //ID inst type first
         switch (datapoint) {
-
             case "IF":
-                // The code below is repeated and should be replaced with a function.
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
                     if (anElement.stage === "IF") {
-                        console.log("displayElementValues case IF is: ", anElement.stage);
-                        //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            console.log("displayElementValues 1st if element i is ", elements[i]);
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .text(function () {
-                                    if (anElement.mutable){
-                                        console.log("Disp_Elem_Val IF lower case : ", elements[i].toLowerCase());
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                })
-                                .attr("class", "ifetch mutable");
-                            d3.select("#IF").append("text")
-                            // TODO: Mar 28th replaced by .text(changeRep(anElement.val))
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
-                            } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            console.log("displayElementValues 2nd if element i is ", elements[i]);
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                    .append("text")
-                                    .style("color", "lightgrey")
-                                    .text((function () {
-                                        if (anElement.mutable){
-                                            return changeType(anElement.val) ;
-                                        }else return anElement.val;
-                                    }))
-                                    .attr("class", "idecode mutable");
-                                d3.select("#IF").append("text")
-                                    .text((function () {
-                                        if (anElement.mutable){
-                                            return changeType(anElement.val) ;
-                                        }else return anElement.val;
-                                    }))
-                                    .style("font-size", "9px")
-                                    .attr("id", elements[i])
-                                    //.attr("class", "ifetch lineValues")
-                                    .attr("class",  (function () {
-                                        if (anElement.mutable){
-                                            return "ifetch mutable";
-                                        }else return "ifetch lineValues";
-                                    }))
-                                    .style("fill", "lightgrey")
-                                    .attr("x", anElement.coordinates[0])
-                                    .attr("y", anElement.coordinates[1]);
-                            }
+                           displayValue(elements[i], anElement, stageClass.slice(1), datapoint);
+                        } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
+                            displayValueGrey(elements[i], anElement, stageClass.slice(1), datapoint);
+                        }
                     }
                 }
-                // label the PC value below the PC rectangle element
-                //d3.select("#IF").attr("class", "active");
-                /*d3.select("#IF").append("text")
-                    .text("PC: ")
-                    .attr("class", "ifetch immutable")
-                    .style("font-size", "9px")
-                    .attr("x", 10)
-                    .attr("y", 365);
-                */
-
-
                 break;
 
             case "ID":
-
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
-                    // perhaps another way similar to append in main?
                     if (anElement.stage === "ID") {
-                        console.log("displayElementValues case ID is: ", anElement.stage);
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "idecode mutable");
-                            d3.select("#ID").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValue(elements[i], anElement, stageClass.slice(1), datapoint);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "idecode mutable")
-                                .style("color", "lightgrey");
-                            d3.select("#ID").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .style("fill", "lightgrey")
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValueGrey(elements[i], anElement, stageClass.slice(1), datapoint);
                         }
                     }
                 }
-                // Display values that will not fit on processor graphic
-                //d3.select("#ID").attr("class", "active");
-                /*d3.select("#ID").append("text")
-                    .text("RD1: ")
-                    .style("font-size", "9px")
-                    .attr("class", "idecode immutable")
-                    .attr("x", 10)
-                    .attr("y", 469);
-                d3.select("#ID").append("text")
-                    .text("RD2: ")
-                    .style("font-size", "9px")
-                    .attr("class", "idecode immutable")
-                    .attr("x", 10)
-                    .attr("y", 482);
-                d3.select("#ID").append("text")
-                    .text("Sign Extended 32 bit value: ")
-                    .style("font-size", "9px")
-                    .attr("class", "idecode immutable")
-                    .attr("x", 350)
-                    .attr("y", 495);
-                    */
-
-
                 break;
 
             case "EX":
-
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
-                    // perhpas another way similar to append in main?
                     if (anElement.stage == "EX") {
-                        console.log("displayElementValues case ID is: ", anElement.stage);
-                        //create the html element and append to the IF tag.
                         if (anElement.vis && (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0)) {
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .style("fill", "lightgrey")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "excode mutable");
-                            d3.select("#EX").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValue(elements[i], anElement, stageClass.slice(1), datapoint);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0){
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .style("color", "lightgrey")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "excode mutable");
-                            d3.select("#EX").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .style("fill", "lightgrey")
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValueGrey(elements[i], anElement, stageClass.slice(1), datapoint);
                         }
                     }
                 }
-                // Display values that will not fit on processor graphic
-                /*d3.select("#EX").append("text")
-                    .text("ALUSrc Mux to ALU in: ")
-                    .style("font-size", "9px")
-                    .attr("class", "excode immutable")
-                    .attr("x", 10)
-                    .attr("y", 495);
-                d3.select("#EX").append("text")
-                    .text("ALU Result: ")
-                    .style("font-size", "9px")
-                    .attr("class", "excode immutable")
-                    .attr("x", 10)
-                    .attr("y", 508);
-                d3.select("#EX").append("text")
-                    .text("Shift Left 2 Result: ")
-                    .style("font-size", "9px")
-                    .attr("class", "excode immutable")
-                    .attr("x", 10)
-                    .attr("y", 521);
-                d3.select("#EX").append("text")
-                    .text("Branch ALU Result: ")
-                    .style("font-size", "9px")
-                    .attr("class", "excode immutable")
-                    .attr("x", 10)
-                    .attr("y", 534);
-                    */
-
                 break;
 
             case "MEM":
 
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
-                    // perhpas another way similar to append in main?
                     if (anElement.stage == "MEM") {
-                        console.log("displayElementValues case ID is: ", anElement.stage);
-                        //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "memcode mutable");
-                            d3.select("#MEM").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                //.attr("class", "memcode lineValues")
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValue(elements[i], anElement, stageClass.slice(1), datapoint);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .style("color", "lightgrey")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "memcode mutable");
-                            d3.select("#MEM").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .style("fill", "lightgrey")
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValueGrey(elements[i], anElement, stageClass.slice(1), datapoint);
                         }
                     }
                 }
                 break;
 
             case "WB":
-
                 for (var i = 0; i < elements.length; i++) {
                     var anElement = mipsValues[elements[i]];
-                    // perhpas another way similar to append in main?
                     if (anElement.stage == "WB") {
-                        console.log("displayElementValues case ID is: ", anElement.stage);
-                        //create the html element and append to the IF tag.
                         if (anElement.vis && anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "wbcode mutable");
-                            d3.select("#WB").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValue(elements[i], anElement, stageClass.slice(1), datapoint);
                         } else if (anElement.coordinates[0] !== 0 && anElement.coordinates[1] !== 0) {
-                            d3.selectAll("#" + elements[i].toLowerCase())
-                                .append("text")
-                                .style("color", "lightgrey")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .attr("class", "wbcode mutable");
-                            d3.select("#WB").append("text")
-                                .text((function () {
-                                    if (anElement.mutable){
-                                        return changeType(anElement.val) ;
-                                    }else return anElement.val;
-                                }))
-                                .style("font-size", "9px")
-                                .attr("id", elements[i])
-                                .attr("class",  (function () {
-                                    if (anElement.mutable){
-                                        return "ifetch mutable";
-                                    }else return "ifetch lineValues";
-                                }))
-                                .style("fill", "lightgrey")
-                                .attr("x", anElement.coordinates[0])
-                                .attr("y", anElement.coordinates[1]);
+                            displayValueGrey(elements[i], anElement, stageClass.slice(1), datapoint);
                         }
                     }
                 }
-                /*d3.select("#WB").append("text")
-                    .text("Memory Read Data Result: ")
-                    .style("font-size", "9px")
-                    .attr("class", "wbcode immutable")
-                    .attr("x", 10)
-                    .attr("y", 547);
-                d3.select("#WB").append("text")
-                    .text("Write Data Result: ")
-                    .style("font-size", "9px")
-                    .attr("class", "wbcode immutable")
-                    .attr("x", 350)
-                    .attr("y", 508);
-                    */
-
                 break;
 
             default:
                 console.log("displayElementValues: something went horribly wrong");
 
         }
-
     }
 
 
-
-
     // gets the data (values) for element
-    // TODO: Lines without values set to null
     function getElementData(lineName, LineNumber) {
         var tempArgs = CurrentLine["args"];
 
@@ -1979,7 +1665,7 @@ function visualize () {
                 break;
 
             case "inst5ToAluCtrl":
-                if (true) {
+                if (debug) {
                     console.log("inst5ToAluCtrl: ", CurrentLine["assembledInstruction"].slice(-8, -1));
                 }
                 return CurrentLine["assembledInstruction"].slice(-8, -1);
@@ -2031,7 +1717,6 @@ function visualize () {
 
             case"RD1":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(7, 12))]];
-                console.log("RD1 is: ", regValue.val);
                 return MIPS.numberToBinaryString(regValue.val, 32);
                 break;
 
@@ -2056,7 +1741,6 @@ function visualize () {
             case "aluInBot":
                 if ((mipsValues[elements[10]].val) == "0") {
                     var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
-                    console.log("aluInBot in regValue is: ", regValue.val);
                     return MIPS.numberToBinaryString(regValue.val);
                 } else {
                     try {
@@ -2072,7 +1756,7 @@ function visualize () {
                 var AluOp0 = mipsValues[elements[11]].val;
                 var AluOp1 = mipsValues[elements[12]].val;
                 var Inst5ToALUCtr = mipsValues[elements[13]].val;
-                    if (true){
+                    if (debug){
                     console.log("Validate values AluOp0: ", AluOp0);
                     console.log("Validate values AluOp1: ", AluOp1);
                     console.log("Validate values Inst5ToALUCtr: ", Inst5ToALUCtr.slice(-5));
@@ -2086,7 +1770,7 @@ function visualize () {
                 var Rd1 = mipsValues[elements[14]].val;
                 var AluInBott = mipsValues[elements[15]].val;
                 var AluOpCode = mipsValues[elements[16]].val;
-                    if (true) {
+                    if (debug) {
                     console.log("getElementData aluResult Rd1 is ", Rd1);
                     console.log("getElementData aluResult AluInBott is ", AluInBott);
                     console.log("getElementData aluResult AluOpCode is ", AluOpCode);}
@@ -2097,12 +1781,10 @@ function visualize () {
             case "PCSrc":
                 var zero = mipsValues[elements[17]].val;
                 var branch = mipsValues[elements[19]].val;
-
-                if (true) {
+                if (debug) {
                     console.log("PCSrc zero is ", zero);
                     console.log("PCSrc branch is ", branch);
                 }
-
                 if (zero == "0" && branch == "0" || zero == "1" && branch == "0" || zero == "0" && branch == "1" ) {
                     return "0";
                 } else {
@@ -2117,9 +1799,7 @@ function visualize () {
                 break;
 
             case "shiftLeft2":
-                console.log ("shiftLeft2 signExt32 is: ", mipsValues[elements[23]].val);
                 var temp = MIPS.binaryStringToNumber(mipsValues[elements[23]].val) << 2;
-                console.log ("shiftLeft2 signExt32 << 2 is: ", temp);
                 return MIPS.numberToBinaryString(temp, 32);
                 break;
 
@@ -2145,17 +1825,12 @@ function visualize () {
                 try {
                     var temp = MIPS.binaryStringToNumber(mipsValues[elements[18]].val);
                     var getAddrVal = "#stackEntry-" + (temp + 3);  //offset from stack display error
-                    //var classSelector = "stackVal stackspacer lastRegChanged";  // the class of the element
-                    console.log("getAddrVal is: ", getAddrVal);
                     var temps = d3.select(getAddrVal).text();
-                    console.log("testingMemoryReadData is: ", temps);
                     var fields = temps.split(/:/);
                     var memWriteData = fields[2];
                     memWriteData = memWriteData * 1;
-                    console.log("writeDataYEA is: ", MIPS.numberToBinaryString(memWriteData, 32));
                     return MIPS.numberToBinaryString(memWriteData, 32);
                 } catch (error){
-                    console.log ("Error in memoryReadDataResult: ", error);
                     return "00000000000000000000000000000000";
                 }
                 break;
@@ -2165,20 +1840,19 @@ function visualize () {
     }
 
 
-
-
+    // gets the ALU Control signal result
     function getAluControl (AluOp0, AluOp1, Inst5ToALUCtr) {
-        if (true) {
+        if (debug) {
         console.log ("getAluControl AluOp0 is: ", AluOp0);
-        console.log ("getAluControl AluOp1 is: ", AluOp1);}
-
+        console.log ("getAluControl AluOp1 is: ", AluOp1);
+        }
             try {
                 var strValue = MIPS.binaryStringToNumber(Inst5ToALUCtr);
             }catch (error){
                 console.log("Something went wrong in getAluControl: " + error);
             }
 
-            if (true){
+            if (debug){
             console.log ("getAluControl Inst5ToALUCtr: ", Inst5ToALUCtr);
             console.log ("getAluControl strValue: ", strValue);}
 
@@ -2219,84 +1893,61 @@ function visualize () {
     }
 
 
-
-
+    // gets the output result of the ALU and sets the zero line.
     function getAluResult (Rd1, AluInBott, AluOpCode){
-        console.log ("In getAluResult AluOpCode is: ", AluOpCode);
-
         switch (AluOpCode) {
             // AND
             case "0000":
                 var sum = Rd1 & AluInBott;
-                console.log ("getAluResult bitwise AND is: ", sum);
-
                 if (sum === 0) {
                     mipsValues[elements[17]].val = "1";
                 }else {
                     mipsValues[elements[17]].val = "0";
                 }
-                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
-
                 return MIPS.numberToBinaryString(sum,32);
                 break;
 
             // OR
             case "0001":
                 var sum = Rd1 | AluInBott;
-                console.log ("getAluResult bitwise OR is: ", sum);
-
                 if (sum === 0) {
                     mipsValues[elements[17]].val = "1";
                 }else {
                     mipsValues[elements[17]].val = "0";
                 }
-                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
-
                 return MIPS.numberToBinaryString(sum,32);
                 break;
 
             //ADD
             case "0010":
                 var sum = MIPS.binaryStringToNumber(Rd1) + MIPS.binaryStringToNumber(AluInBott);
-                console.log ("getAluResult ADD sum is: ", sum);
-
                 if (sum === 0) {
                     mipsValues[elements[17]].val = "1";
                 }else {
                     mipsValues[elements[17]].val = "0";
                 }
-                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
-
                 return MIPS.numberToBinaryString(sum,32);
                 break;
 
             //SUB
             case "0110":
                 var sum = MIPS.binaryStringToNumber(Rd1) - MIPS.binaryStringToNumber(AluInBott);
-                console.log ("getAluResult Subtract sum is: ", sum);
-
                 if (sum === 0) {
                     mipsValues[elements[17]].val = "1";
                 }else {
                     mipsValues[elements[17]].val = "0";
                 }
-                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
-
                 return MIPS.numberToBinaryString(sum,32);
                 break;
 
             // SLT: Set Less Than
             case "0111":
                 var temp = MIPS.binaryStringToUnsignedNumber(Rd1) < MIPS.binaryStringToUnsignedNumber(AluInBott);
-                console.log ("getAluResult SLT result is: ", temp);
-
                 if (temp === 0) {
                     mipsValues[elements[17]].val = "1";
                 }else {
                     mipsValues[elements[17]].val = "0";
                 }
-                console.log ("getAluResult zero is: ", mipsValues[elements[17]].val );
-
                 return MIPS.numberToBinaryString(temp,32);
                 break;
 
@@ -2307,18 +1958,14 @@ function visualize () {
     }
 
 
-
-
+    // gets the output result of the Add ALU.
     function getAluAddResult (aluInTop, aluInBott){
         var sum = MIPS.binaryStringToUnsignedNumber(aluInTop) + MIPS.binaryStringToUnsignedNumber(aluInBott);
-        console.log ("getAluAddResult ADD sum is: ", sum);
-
         return MIPS.numberToBinaryString(sum,32);
-
     }
 
 
-
+    // sets all control line values.
     function control(lineName) {
         if (debug) {
             console.log("function control opcode: ", MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(0, 6)));
@@ -2458,42 +2105,30 @@ function visualize () {
 
 
     // Print to console the data from mips_emulator.js
-    if (true) {
+    if (debug) {
+        // TODO: need CurrentLine accessor function written for mips_emulator.js
         var temp = CurrentLine["args"];
+        // TODO: need registers accessor function written for mips_emulator.js
         console.log("is registers global? ", allRegisterValues[temp[0]]);
         console.log("mipsValues array is :", mipsValues);
         console.log("the value of CurrentLine in visual_mips_original.html is :", CurrentLine);
         console.log("CurrentLine['assembledInstruction'] in visual_mips_original.html is :", CurrentLine["assembledInstruction"]);
-        opCode = CurrentLine["assembledInstruction"].slice(0, 6);
+        var opCode = CurrentLine["assembledInstruction"].slice(0, 6);
         console.log("This is the opCode: ", opCode);
         console.log("this is CurrentLine['args']: ", temp[0]);
-
     }
 
 
-
-
-    // Makes visable the lines and values in the stage based on the mips instruction.
+    // Makes visible the lines and values in the stage based on the mips instruction.
     function drawVisableLines (someClass, someStage) {
         var inData = d3.selectAll(someClass);               // collect all memebers of the class
         var theElementId = inData[[0]];
         for (var i = 0; i < elements.length; i++) {
-
-            var Btemp = mipsValues[elements[i]];        // access a specifice element
-                                                        //console.log("nameOfElement in the outer loop: ", elements[i]);
+            var Btemp = mipsValues[elements[i]];        // access a specific element
 
             if (Btemp.stage === someStage) {  //Limit the number of times the inner loop runs
-
                 for (var j = 0; j < theElementId.length; j++) {
-
-                                                //console.log("If inner loop (elements[i] == theElementID[j] ", elements[i], "===", theElementId[j].id);
                     if ((elements[i] === theElementId[j].id) && Btemp.vis) {
-                                                //console.log("YEA Found match elements[i] == theElementId[j]");
-                                                //console.log("YEA Found match stage: ", someStage);
-
-                                                //var Btemp = mipsValues[elements[i]];
-                                                //console.log("elements[i].vis is: ", Btemp.vis);
-
                         if (someClass === ".ifetch" || someClass === ".idecode" || someClass === ".excode"
                             || someClass === ".wbcode" || someClass === ".memcode" ) {
                             (d3.select(theElementId[j])
@@ -2502,6 +2137,7 @@ function visualize () {
                                     .duration(1500)
                                     .style("fill", "black")
                             );
+
                         } else if (someClass === ".ifetchObj" || someClass === ".idecodeObj" || someClass === ".excodeObj"
                                     || someClass === ".wbcodeObj" || someClass === ".memcodeObj" ) {
                                     (d3.select(theElementId[j])
@@ -2539,9 +2175,8 @@ function visualize () {
     }
 
 
-
     // Create the pipeline stage buttons & uses data from dataKeys to name the buttons
-    // Old method with buttons in
+    // TODO: convert this code into a function
     if (CurrentLine["lineNo"] != previousLine) {
 
         d3.select("#modal-buttons").selectAll("button.teams").data(dataKeys).enter()
@@ -2559,14 +2194,13 @@ function visualize () {
                 if (d == "Reset"){
                     return "active";
                 }
-                console.log ("this is d ", d);
             }))
             .append("a")
+            .attr("id",(function (d) {
+                return ("tab-" + d.toLowerCase())
+            }))
             .attr("class", "stage-tabs")
-            //.attr("type" , "button")
-            //.attr("text-align", "center")
             .attr("href", (function (d) {
-                console.log ("this is d ", d);
                 return ("#" + d.toLowerCase())
             }))
             .attr("data-toggle", "tab")
@@ -2577,53 +2211,50 @@ function visualize () {
 
     }
 
+    // detect a change in the displayed data type and make the change.
+    d3.select("#stageDisplayType").on("change", (function () {
+        newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
+        if (debug) {
+            console.log("NEWFORMAT is: ", newFormat);
+            console.log("CURRENTFORMAT is: ", currentFormat);
+        }
+        d3.selectAll(".mutable").text(function (d) {
+            return changeRep(this.innerHTML);
+        });
 
-d3.select("#stageDisplayType").on("change", (function () {
-    //console.log ("NEWFORMAT is: ", newFormat = $("#stageDisplayType option:selected").html().toLowerCase());
-    //console.log ("CURRENTFORMAT is: ", currentFormat);
-
-    d3.selectAll(".mutable").text(function (d) {
-        return changeRep(this.innerHTML);
-    });
-
-    currentFormat = newFormat;
-}));
+        currentFormat = newFormat;
+    }));
 
 
-
-
+    // convert a data type to Hexadecimal.
     function asHex (v, currentFormat) {
         if (currentFormat == "binary"){
-            console.log("ASHEX input value ", v);
             var intNum = MIPS.binaryStringToUnsignedNumber(v);
-            console.log ("asHex intNum is ", intNum);
-            console.log ("asHex HEX is ", "0x" + intNum.toString(16));
+            if(debug) {
+                console.log("asHex input value ", v);
+                console.log("asHex intNum is ", intNum);
+            }
             return "0x" + intNum.toString(16);
 
         }else {
-            console.log ("asHex INTEGER to HEX v is: ", v);
-
-            var asText = "32768";
-            asText = v * 1;
-            console.log ("asHex INTEGER to HEX v.toString(16) is: ", asText);
-
+            var asText = v * 1;
             return "0x" + asText.toString(16);
         }
 
     }
 
 
-
-    // Convert an existing value format into a new format.  The formats are binary, hex or integer.
+    // Convert a current data type into a the new format data type.  The formats are binary, hex or decimal.
     function changeRep(v) {
+        var newFormat = $("#stageDisplayType option:selected").html().toLowerCase();
         if (debug) {
-            console.log("change rep NEWFORMAT is: ", newFormat = $("#stageDisplayType option:selected").html().toLowerCase());
+            console.log("change rep NEWFORMAT is: ", newFormat);
             console.log("change rep CURRENTFORMAT is: ", currentFormat);
         }
             switch (currentFormat) {
                 case "binary":
                     switch (newFormat) {
-                        case "integer":
+                        case "decimal":
                             return MIPS.binaryStringToUnsignedNumber(v);
                             break;
                         case "hex":
@@ -2633,10 +2264,9 @@ d3.select("#stageDisplayType").on("change", (function () {
                             return v;
                     }
                     break;
-                case "integer":
+                case "decimal":
                     switch (newFormat) {
                         case "binary":
-                            //console.log("CHANGE REP Int TO Bin is: ", (parseInt(v).toString(2)));
                             return (parseInt(v).toString(2));
                             break;
                         case "hex":
@@ -2649,12 +2279,9 @@ d3.select("#stageDisplayType").on("change", (function () {
                 case "hex":
                     switch (newFormat) {
                         case "binary":
-                            console.log ("CHANGE_REP HEX No 0x is: ", v);
-                            console.log ("CHANGE_REP HEX TO BIN is ", parseInt(v).toString(2));
                             return (parseInt(v).toString(2));
-                            //return asBinary(v, currentFormat)
                             break;
-                        case "integer":
+                        case "decimal":
                             return parseInt(v);
                             break;
                         default:
@@ -2667,23 +2294,22 @@ d3.select("#stageDisplayType").on("change", (function () {
     }
 
 
-
-
-
     // convert the binary to the selected type: integer or hex.
     function changeType(v) {
         var newType = $("#stageDisplayType option:selected").html().toLowerCase();
-
-        console.log("change Type NEWTYPE is: ", newType);
-
+        if (debug) {
+            console.log("change Type NEWTYPE is: ", newType);
+        }
         switch (newType) {
-            case "integer":
+            case "decimal":
                 return MIPS.binaryStringToUnsignedNumber(v);
                 break;
             case "hex":
                 var intNum = MIPS.binaryStringToUnsignedNumber(v);
-                console.log ("asHex intNum is ", intNum);
-                console.log ("asHex HEX is ", "0x" + intNum.toString(16));
+                if (debug) {
+                    console.log("asHex intNum is ", intNum);
+                    console.log("asHex HEX is ", "0x" + intNum.toString(16));
+                }
                 return "0x" + intNum.toString(16);
                 break;
             default:
@@ -2692,71 +2318,69 @@ d3.select("#stageDisplayType").on("change", (function () {
     }
 
 
-
-
-
-
+    // Set data path elements to black: not used, future use?
     function setBlack (someClass){
-        // need to not set black the elements that are vis false.
         done =  (d3.selectAll(someClass)
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("fill", "black")
         +
-
         d3.selectAll(someClass + "Obj")
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("stroke", "black"));
         return done
     }
 
 
-
+    // Set data path elements to grey
     function setGrey (someClass){
         done =  (d3.selectAll(someClass)
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("fill", "lightgrey")
         +
         d3.selectAll(someClass + "Obj")
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("stroke", "lightgrey"));
         return done
     }
 
 
+    // Set data path elements to turquoise: not used, future use?
     function setTorq (someClass){
         done =  (d3.selectAll(someClass)
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("fill", "turquoise")
         +
         d3.selectAll(someClass + "Obj")
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("stroke", "turquoise"));
         return done
     }
 
+
+    // Set data path elements that are normally turquoise to grey.
     function setTorqGrey (someClass){
         done =  (d3.selectAll(someClass)
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("fill", "lightgrey")
         +
         d3.selectAll(someClass + "Obj")
             .transition()
             .style('opacity', 1)
-            .duration(1500)
+            .duration(1)
             .style("stroke", "lightgrey"));
         return done
     }
@@ -2775,7 +2399,8 @@ d3.select("#stageDisplayType").on("change", (function () {
         }
         if(datapoint === "IF" && iftoggle === 1){
             iftoggle = iftoggle - 1;
-            d3.selectAll(".mutable").remove();
+            d3.selectAll(".ifetch.mutable").remove();
+            d3.selectAll(".ifetch.lineValues").remove();
             return setGrey(".ifetch")
         }
 
@@ -2790,7 +2415,8 @@ d3.select("#stageDisplayType").on("change", (function () {
         }
         if(datapoint == "ID" && idtoggle == 1){
             idtoggle = idtoggle - 1;
-            d3.selectAll(".mutable").remove();
+            d3.selectAll(".idecode.mutable").remove();
+            d3.selectAll(".iedcode.lineValues").remove();
             return (setGrey(".idecode") + setTorqGrey(".idtorq"));
         }
 
@@ -2805,7 +2431,8 @@ d3.select("#stageDisplayType").on("change", (function () {
         }
         if(datapoint == "EX" && extoggle == 1){
             extoggle = extoggle - 1;
-            d3.selectAll(".mutable").remove();
+            d3.selectAll(".excode.mutable").remove();
+            d3.selectAll(".excode.lineValues").remove();
             return (setGrey(".excode") + setTorqGrey(".extorq"));
         }
 
@@ -2820,11 +2447,13 @@ d3.select("#stageDisplayType").on("change", (function () {
         }
         if(datapoint === "MEM" && memtoggle === 1){
             memtoggle = memtoggle - 1;
-            d3.selectAll(".mutable").remove();
+            d3.selectAll(".memcode.mutable").remove();
+            d3.selectAll(".memcode.lineValues").remove();
             return (setGrey(".memcode") + setTorqGrey(".memtorq"));
         }
 
         if (datapoint === "WB" && wbtoggle === 0) {
+
             stageClass = ".wbcode";
             wbtoggle = wbtoggle + 1;
             drawVisableLines (stageClass, datapoint);
@@ -2836,127 +2465,102 @@ d3.select("#stageDisplayType").on("change", (function () {
 
         if(datapoint === "WB" && wbtoggle === 1){
             wbtoggle = wbtoggle - 1;
-            d3.selectAll(".mutable").remove();
+            d3.selectAll(".wbcode.mutable").remove();
+            d3.selectAll(".wbcode.lineValues").remove();
             return (setGrey(".wbcode") + setTorqGrey(".wbtorq"));
         }
 
         if(datapoint === "Reset"){
-
-            console.log("Reset called:");
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
-
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
             d3.select("#reset").attr("class", "active");
             d3.selectAll(".lineValues").remove();
             d3.selectAll(".immutable").remove();
             d3.selectAll(".mutable").remove();
-
             iftoggle = 0;
             idtoggle = 0;
             extoggle = 0;
             memtoggle = 0;
             wbtoggle = 0;
-            console.log("RESET currentFormat is ", currentFormat);
-            console.log("RESET newFormat is ", newFormat);
-            //currentFormat = newFormat;
-            //console.log("RESET = newFormat is ", newFormat);
-            //console.log("RESET = currentFormat is ", currentFormat);
-
-
-
+            if (debug) {
+                console.log("RESET currentFormat is ", currentFormat);
+                console.log("RESET newFormat is ", newFormat);
+            }
         }
 
         if(datapoint === "All"){
-
-
+            buttonClick("Reset");
             var stage = ["IF", "ID", "EX", "MEM", "WB"];
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
             var i = 0;
-
             blackSection.forEach(setGrey);
             turqSection.forEach(setTorqGrey);
             d3.selectAll(".lineValues").remove();
             d3.selectAll(".immutable").remove();
             d3.selectAll(".mutable").remove();
-
-
             function myLoop () {
                 setTimeout(function () {
                     drawVisableLines (blackSection[i], stage[i]);
                     drawVisableLines (blackSection[i] + "Obj", stage[i]);
                     drawVisableLines (turqSection[i], stage[i]);
                     drawVisableLines ((turqSection[i] + "Obj"), stage[i]);
-                    console.log("ALL before dispalyElementValues: ", stage[i], blackSection[i] );
                     displayElementValues(stage[i], blackSection[i]);
-
                     i++;
                     if (i < 5) {
                         myLoop();
                     }
-                }, 500)
+                }, 1)
             }
             myLoop();
-
             iftoggle = 1;
             idtoggle = 1;
             extoggle = 1;
             memtoggle = 1;
             wbtoggle = 1;
-
         }
 
         if(datapoint == "Close") {
-
-            buttonClick("Reset");
-
+            // remove all data path values, instruction data, tab labels & data.
             d3.select("#if").attr("class", "tab-pane");
             d3.select("#id").attr("class", "tab-pane");
             d3.select("#ex").attr("class", "tab-pane");
             d3.select("#mem").attr("class", "tab-pane");
             d3.select("#wb").attr("class", "tab-pane");
             d3.select("#all").attr("class", "tab-pane");
-
-            previousLine = CurrentLine["lineNo"];
-            iftoggle = 0;
-            idtoggle = 0;
-            extoggle = 0;
-            memtoggle = 0;
-            wbtoggle = 0;
-            console.log("Close CurrentlLine['lineNo:'] ",CurrentLine["lineNo"]);
             d3.selectAll(".lineValues").remove();
             d3.selectAll(".immutable").remove();
             d3.selectAll(".initialize").remove();
             d3.selectAll(".stage-buttons").remove();
             d3.selectAll(".stage-tabs").remove();
             d3.selectAll(".mutable").remove();
-
-
+            previousLine = CurrentLine["lineNo"];
+            iftoggle = 0;
+            idtoggle = 0;
+            extoggle = 0;
+            memtoggle = 0;
+            wbtoggle = 0;
             // Disable the visualize button to prevent re-entering the visualization for a given MIPS instruction.
             document.getElementById('visualize').disabled = true;
-
             var blackSection = [".ifetch",".idecode", ".excode", ".memcode", ".wbcode"];
             var turqSection = ["iftorq", ".idtorq", ".extorq", ".memtorq", ".wbtorq"];
-
-            blackSection.forEach(setGrey);
-            turqSection.forEach(setTorqGrey);
-
-            // restore options box to binary
+                blackSection.forEach(setGrey);
+                turqSection.forEach(setTorqGrey);
+            // reset data type options selections box to binary
             $("#stageDisplayType").prop('selectedIndex',0);
-
             buttonClick("Reset");
-            // TODO: which of these methods of destruction work better?
+            // hide the modal window and invalidate all data.
             $("#myModal").modal("hide").data( 'bs.modal', null );
 
-            //$("#myModal").on('hidden.bs.modal', function () {
-            //    $(this).data('bs.modal', null);
-           // });
         }
     }
 
 
-    //console.log("testing value of elements: ", mipsValues[elements[15]].val);
-    console.log("This is the mipsValues: ", mipsValues);
+    if (debug) {
+        console.log("Close CurrentlLine['lineNo:'] ",CurrentLine["lineNo"]);
+        console.log("testing value of elements: ", mipsValues[elements[15]].val);
+        console.log("This is the mipsValues: ", mipsValues);
+    }
 }
