@@ -38,6 +38,15 @@ function visualize () {
                 '<div class="modal-body" >' +
         '<!-- MODAL DEFINITION END -->' +
 
+                                '<style>' +
+                                    'li  {' +
+                                        'list-style: none;' +
+                                        'margin:2px 0 2px 0;' +
+                                        'font-size: 13px;' +
+                                    '}' +
+
+                                '</style>' +
+
                                 //'<svg id="processor" style="width:640px;height:560px;">' +
                                 '<svg class="col-md-8" id="processor" height="70%" width="60%" viewBox="0 0 700 560" preserveAspectRatio="none">' +
 
@@ -355,11 +364,6 @@ function visualize () {
                                 '<text id="aluShiftTxtAlu" class="excode" x="435" y="92" font-size="11px" fill="lightgrey" >Branch</text>' +
                                 '<text id="aluShiftTxtResult" class="excode" x="450" y="102" font-size="11px" fill="lightgrey" >ALU</text>' +
 
-                                '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
-                                '<path id="lineRD2toMemWD" class="excodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
-                                '<!-- Arrow point end of line-->' +
-                                '<path id="lineRD2toMemWDArrow" class="excodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
-
                                 '<!-- LINE ALU RESULT TO MUX -->' +
                                 '<line id="lineAluResult2Mux" class="excodeObj" x1="480" y1="110" x2="505" y2="110"  stroke="lightgrey" stroke-width="2px" ></line>' +
                                 '<!-- Arrow point end of line-->' +
@@ -386,10 +390,11 @@ function visualize () {
                                 '<text id="dataMemRectTxt3Data" id="dataMemRect" class="memcode" x="538" y="385" font-size="11px" fill="lightgrey" >Data</text>' +
                                 '<text id="dataMemRectTxtMem" class="memcode" x="522" y="395" font-size="11px" fill="lightgrey" >memory</text>' +
 
-                                '<!-- LINE BETWEEN DATA MEMORY AND WB MUX-->' +
-                                '<line id="lineDataMemToMux" class="memcodeObj" x1="566" y1=324 x2="575" y2="324" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- LINE READ DATA 2 TO WRITE DATA -->' +
+                                '<path id="lineRD2toMemWD" class="memcodeObj" d="M 495,375 362,375 362,325" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
                                 '<!-- Arrow point end of line-->' +
-                                '<path id="DataMemToMuxArrow" class="memcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+                                '<path id="lineRD2toMemWDArrow" class="memcodeObj" d="M 493,375 493,373 497,375 493,377  z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
 
                                 '<!-- ALU RESULT TO ADDRESS -->' +
                                 '<line id="aluResultToAddr1" class="memcodeObj" x1="484" y1=320 x2="491" y2="320"  stroke="lightgrey" stroke-width="2px" ></line>' +
@@ -446,6 +451,11 @@ function visualize () {
                                 '<text id="memoryMuxTxtX" class="wbcode" x="589" y="351" font-size="10px" fill="lightgrey" >x</text>' +
                                 '<text id="memoryMuxTxt0" class="wbcode" x="590" y="361" font-size="10px" fill="lightgrey" >0</text>' +
 
+                                '<!-- LINE BETWEEN DATA MEMORY AND WB MUX-->' +
+                                '<line id="lineDataMemToMux" class="wbcodeObj" x1="566" y1=324 x2="575" y2="324" stroke="lightgrey" stroke-width="2px" ></line>' +
+                                '<!-- Arrow point end of line-->' +
+                                '<path id="DataMemToMuxArrow" class="wbcodeObj" d="M 575,324 575,322 579,324 575,326 z" style="fill:lightgrey;stroke:lightgrey;stroke-width:2px;"></path>' +
+
                                 '<!-- LINE MEMORY MUX TO REGISTER WRITE DATA  -->' +
                                 '<path id="lineMemMuxToRD" class="wbcodeObj" d="M 265,360 256,360 256,486 614,486 614,340 603,340" style="fill:none;stroke:lightgrey;stroke-width:2px;" ></path>' +
                                 '<!--line class="wbcode" x1="262" y1=360 x2="262" y2="360"  stroke="lightgrey" stroke-width="2px" ></line-->' +
@@ -481,68 +491,117 @@ function visualize () {
 
             '<!--div id="stageButtons" align="left"--><!--/div-->' +  // previous
             '<ul id="stageTabs" class="nav nav-tabs"></ul>' +  // previous
-                                        '<div id="dataTabs" class="tab-content">' +
+                                        '<div id="dataTabs" class="tab-content" font-size="10px">' +
                                             '<div class="tab-pane" id="if">' +
-                                                '<li id="pc" class="tabData" align="left" fill="lightgrey">PC: </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Instruction Memory</li>' +
+                                                '<li id="pc" class="tabData" align="left" fill="lightgrey">PC (in): </li>' +
+                                                '<li id="inst" class="tabData" align="left" fill="lightgrey">Instruction [31 - 0] (out): </li>' +
                                             '</div>' +
 
                                             '<div class="tab-pane" id="id">' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<div class="tabData" align="left" style="color: #428bca;">Register File</div>' +
                                                 '<li id="rd1" class="tabData" align="left" fill="lightgrey">RD1: </li>' +
                                                 '<li id="rd2" class="tabData" align="left" fill="lightgrey">RD2: </li>' +
-                                                '<li id="signext32" align="left" fill="lightgrey">Sign Extended 32 bit Result: </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Sign Extend 32</li>' +
+                                                '<li id="signext32" align="left" fill="lightgrey">Result (out): </li>' +
                                             '</div>' +
 
                                             '<div class="tab-pane" id="ex">' +
-                                                '<li id="aluinbot" class="tabData" align="left" fill="lightgrey">ALU in from Mux: </li>' +
-                                                '<li id="aluresult" class="tabData" align="left" fill="lightgrey">ALU Result: </li>' +
-                                                '<li id="shiftleft2" class="tabData" align="left" fill="lightgrey">Shift left 2 Result: </li>' +
-                                                '<li id="pcsl2addresult" class="tabData" align="left" fill="lightgrey">Branch ALU Result: </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">ALU (Arithmetic Logic Unit)</li>' +
+                                                '<li id="aluinbot" class="tabData" align="left" fill="lightgrey">ALU from Mux (in): </li>' +
+                                                '<li id="aluresult" class="tabData" align="left" fill="lightgrey">ALU Result (out): </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Shift Left 2</li>' +
+                                                '<li id="shiftleft2" class="tabData" align="left" fill="lightgrey">Result (out): </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Branch ALU</li>' +
+                                                '<li id="pcsl2addresult" class="tabData" align="left" fill="lightgrey">Result (out): </li>' +
                                                 '<li align="left"></li>' +
                                             '</div>' +
 
                                             '<div class="tab-pane" id="mem">' +
-                                                '<li id="newpc" class="tabData" align="left">New PC: </li>' +
-                                                '<li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li>' +
+                                                '<div class="medRow"></div>' +
+                                                '<div class="lineRow"></div>' +
+                                                '<li class="tabData" align="left" style="color: #428bca;">Data Memory</li>' +
+                                                    '<li id="aluresultmemval" class="tabData" align="left" fill="lightgrey">ALU Result (in): </li>' +
+                                                    '<li id="rd2mem" class="tabData" align="left" fill="lightgrey">Write Data from RD2 (in): </li>' +
+                                                    '<li id="wdmemreaddataresult" class="tabData" align="left">Read Data Result (out): </li>' +
+                                                '<div class="medRow"></div>' +
+                                                '<div class="lineRow"></div>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
+                                                    '<li id="newpc" class="tabData" align="left">New PC (out): </li>' +
+                                                    '<li id="pcsrc" class="tabData" align="left">PCSrc (in) : </li>' +
                                                 '<li align="left"></li>' +
                                             '</div>' +
 
                                             '<div class="tab-pane" id="wb">' +
-                                                '<li id="memoryreaddataresult" class="tabData" align="left">Memory Read Data Result: </li>' +
-                                                '<li id="wd" class="tabData" align="left">Write Data Result: </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
+                                                '<li id="memoryreaddataresult" class="tabData" align="left">Result (out): </li>' +
+                                            '<div class="medRow"></div>' +
+                                            '<div class="lineRow"></div>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Register File</li>' +
+                                                '<li id="wd" class="tabData" align="left">Write Data (in): </li>' +
                                                 '<li align="left"></li>' +
                                             '</div>' +
 
                                             '<div class="tab-pane" id="all">' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">IF</li>' +
-                                                    '<li id="pc" class="tabData" align="left">PC: </li>' +
+                                                '<li class="tabData" align="left" style="color: #428bca;">Instruction Memory</li>' +
+                                                '<li id="pc" class="tabData" align="left">PC: </li>' +
+                                                '<li id="inst" class="tabData" align="left" fill="lightgrey">Instruction [31 - 0] (out): </li>' +
 
-                                                '<div class="bigRow"></div>' +
+
+                                                '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>' +
                                                 '<li class="tabData" align="left" style="color: #428bca;">ID</li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Register File</li>' +
                                                     '<li id="rd1" class="tabData" align="left">RD1: </li>' +
                                                     '<li id="rd2" class="tabData" align="left">RD2: </li>' +
-                                                    '<li id="signext32" class="tabData" align="left">Sign Extended 32 bit Result: </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Sign Extend 32</li>' +
+                                                    '<li id="signext32" class="tabData" align="left">Result (out): </li>' +
 
-                                                '<div class="bigRow"></div>' +
+                                                '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">EX</li>' +
-                                                    '<li id="aluinbot" class="tabData" align="left">ALU in from Mux: </li>' +
-                                                    '<li id="aluresult" class="tabData" align="left">ALU Result: </li>' +
-                                                    '<li id="shiftleft2" class="tabData" align="left">Shift left 2 Result: </li>' +
-                                                    '<li id="pcsl2addresult" class="tabData" align="left">Branch ALU Result: </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">ALU (Arithmetic Logic Unit)</li>' +
+                                                    '<li id="aluinbot" class="tabData" align="left">ALU from Mux: (in) </li>' +
+                                                    '<li id="aluresult" class="tabData" align="left">ALU Result (out): </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Shift Left 2</li>' +
+                                                    '<li id="shiftleft2" class="tabData" align="left">Result (out): </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Branch ALU</li>' +
+                                                    '<li id="pcsl2addresult" class="tabData" align="left">Result (out): </li>' +
 
-                                                '<div class="bigRow"></div>' +
+                                                '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">MEM</li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Data Memory</li>' +
+                                                    '<li id="aluresultmemval" class="tabData" align="left" fill="lightgrey">ALU Result (in): </li>' +
+                                                    '<li id="rd2mem" class="tabData" align="left" fill="lightgrey">Write Data from RD2 (in): </li>' +
+                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Read Data Result (out): </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
                                                     '<li id="newpc" class="tabData" align="left">New PC: </li>' +
                                                     '<li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li>' +
-                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Memory Read Data Result: </li>' +
 
-                                                '<div class="bigRow"></div>' +
+                                                '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">WB</li>' +
-                                                    '<li id="wd" class="tabData" align="left">Write Data Result: </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
+                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Result (out): </li>' +
+                                                    '<li class="tabData" align="left" style="color: #428bca;">Register File</li>' +
+                                                    '<li id="wd" class="tabData" align="left">Write Data (in): </li>' +
                                                     '<li ></li>' +
                                             '</div>' +
 
@@ -629,13 +688,13 @@ function visualize () {
         'signExt32', 'shiftLeft2', 'PcSl2AddResult', 'newPc', 'memoryReadDataResult', 'memToReg',
     /*   23               24            25             26            27                   28                         */
 
-        'pcAluResultMuxTxt0', 'pcAluResultMuxTxt1',
-    /*   29                      30                     31          32            33                 34              */
+        'pcAluResultMuxTxt0', 'pcAluResultMuxTxt1', 'instToRR1',   'inst20ToRR2',
+        /*   29                      30                     31          32            33                 34              */
 
-        'inst20ToRR2', 'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
+        'fourAluArrow', 'fourTxt', 'instMemRect', 'instMemTxtRead',
         'instMemTxtAddress', 'instMemTxtInst', 'instMemTxt31', 'instMemTxtIns31', 'instMemTxtMem',
         'pcAluObj1', 'pcAluObj2', 'pcAluObj3', 'pcAluObj4', 'pcAluObj5',
-        'pcAluObj6', 'pcAluObj7', 'addTxt', 'instToRR1', 'inst20ToCircle',
+        'pcAluObj6', 'pcAluObj7', 'addTxt',  'inst20ToCircle',
         'inst31Txt', 'inst31Arrow', 'inst25Txt', 'inst25Arrow', 'inst25Circle',
         'inst20Txt', 'inst20MUX0Arrow','inst20Circle','inst20ToMux','inst20MuxArrow',
         'inst20MuxCircle', 'inst15Txt', 'inst15Arrow', 'inst15Circle', 'instMemLine',
@@ -669,11 +728,11 @@ function visualize () {
         'signExtEllipTxtExt', 'RegFileRD2Circle', 'signExtEllToMux1', 'Mux1ToShiftLeft2',
         'inst20ToMux', 'inst15ToMux', 'inst5ToAluCtrlTxt', 'inst5ToAluCtrl',
         'inst5ToAluCtrlArrow', 'instToAluCtrlCircle', 'registerMux1','registerMux2',
-        'jump', 'memRead',
+        'jump', 'memRead', 'aluResultMemVal',
         'memWrite', 'regWrite', 'RR1', 'RR2', 'WR',
         'WD', 'RD2',
         "intoSignExt16", "intoSignExtArrow16", "signExt16Txt", "signExt16DiagLine", "signExt32Txt",
-        "signExt32DiagLine"
+        "signExt32DiagLine", 'wdMemReadDataResult', 'rd2Mem', 'inst'
     ];
 
 
@@ -815,7 +874,7 @@ function visualize () {
              */
             vis: setElementVisibility(lineName),
             /**
-             * Indicates if element can be mutated into; int, hex, binary.
+             * Indicates if element can be mutated into; decimal, hexadecimal, binary.
              * @type boolean
              */
             mutable: setMutable(lineName)
@@ -849,6 +908,11 @@ function visualize () {
             case "memoryReadDataResult":
             case "signExt32":
             case "WD":
+            case "aluResultMemVal":
+            case "wdMemReadDataResult":
+            case "rd2Mem":
+            case "inst":
+
                 return true;
                 break;
 
@@ -857,7 +921,7 @@ function visualize () {
         }
     }
 
-
+    // Set control line and data path element visibility. Elements listed are not visible.
     function setElementVisibility(element) {
         // TODO: build a logic table as a 2D array to replace this mess
 
@@ -928,6 +992,8 @@ function visualize () {
                         case "shiftLeft2":
                         case "PcSl2AddResult":
                         case "memoryReadDataResult":
+                        case "wdMemReadDataResult":
+                        case "rd2Mem":
                             return false;
                             break;
 
@@ -1057,6 +1123,7 @@ function visualize () {
                         case "MemMuxToRDArrow":
                         case "writeData":
                         case "memoryReadDataResult":
+                        case "wdMemReadDataResult":
                             return false;
                             break;
 
@@ -1116,7 +1183,9 @@ function visualize () {
                         case 'MemMuxToRDArrow':
                         case 'aluResult':
                         case 'memoryReadDataResult':
-                        case "WD":
+                        case 'wdMemReadDataResult':
+                        case 'WD':
+                        case 'rd2Mem':
                             return false;
                             break;
                         case 'pcAluResultMuxTxt0':
@@ -1138,7 +1207,6 @@ function visualize () {
 
     // gets the x and y coordinates for the element values
     // values with negative coordinates are not visible - nav tab implementation.
-    // greyed out coordinates are values displayed under the data path and may be more intuitive.
     function getXYcoordinates(lineName) {
         var defaultFormat = [0, 0];
 
@@ -1148,6 +1216,7 @@ function visualize () {
             "PC": [-30, -365],
             "pcAluIn": [25, 50],
             "PcAdderResult": [168, 101],
+            "inst": [-1,-1],
 
             //ID elements
             "inst31ToCtrl": [170, 201],
@@ -1186,9 +1255,10 @@ function visualize () {
             "newPc": [370, 35],
 
             // MEM elements
-            "memoryReadDataResult":[-120, -547]
-
-
+            "memoryReadDataResult":[-120, -547],
+            "aluResultMemVal" : [-1,-1],
+            "wdMemReadDataResult" : [-2,-2],
+            "rd2Mem": [-3,-3]
         };
 
         return coordinates[lineName] || defaultFormat;
@@ -1236,6 +1306,7 @@ function visualize () {
             case "fourAluToAluTopCircle":
             case "fourAluToAluTopLine":
             case "fourAluToAluTopArrow":
+            case "inst":
                 return "IF";
                 break;
 
@@ -1379,8 +1450,6 @@ function visualize () {
             case 'aluShiftTxtAdd':
             case 'aluShiftTxtAlu':
             case 'aluShiftTxtResult':
-            case 'lineRD2toMemWD':
-            case 'lineRD2toMemWDArrow':
             case 'lineAluResult2Mux':
             case 'AluResult2MuxArrow':
             case 'zero':
@@ -1402,8 +1471,10 @@ function visualize () {
             case 'dataMemRectTxt2Data':
             case 'dataMemRectTxt3Data':
             case 'dataMemRectTxtMem':
-            case 'lineDataMemToMux':
-            case 'DataMemToMuxArrow':
+            //case 'lineDataMemToMux':
+            //case 'DataMemToMuxArrow':
+            case 'lineRD2toMemWD':
+            case 'lineRD2toMemWDArrow':
             case 'aluResultToAddr1':
             case 'aluResultToAddrArrow':
             case 'lineAluResultToMux0':
@@ -1421,10 +1492,14 @@ function visualize () {
             case 'aluMuxToPCArrow':
             case 'PCSrc':
             case 'newPc':
+            case 'aluResultMemVal':
+            case 'wdMemReadDataResult':
+            case 'rd2Mem':
+
                 return "MEM";
                 break;
 
-            // MEM elements
+            // WB elements
             case 'memoryMux':
             case 'memoryMux2':
             case 'memoryMuxTxt1':
@@ -1439,6 +1514,8 @@ function visualize () {
             case "writeData":
             case 'memoryReadDataResult':
             case "WR" :
+            case "lineDataMemToMux":
+            case "DataMemToMuxArrow":
                 return "WB";
                 break;
 
@@ -1721,6 +1798,7 @@ function visualize () {
                 break;
 
             case"RD2":
+            case "rd2Mem":
                 var regValue = allRegisterValues[allRegs[MIPS.binaryStringToUnsignedNumber(CurrentLine["assembledInstruction"].slice(13, 18))]];
                 return MIPS.numberToBinaryString(regValue.val);
                 break;
@@ -1766,6 +1844,7 @@ function visualize () {
 
 
             case "aluResult":
+            case "aluResultMemVal":
             {
                 var Rd1 = mipsValues[elements[14]].val;
                 var AluInBott = mipsValues[elements[15]].val;
@@ -1822,6 +1901,7 @@ function visualize () {
                 break;
 
             case "memoryReadDataResult":
+            case "wdMemReadDataResult":
                 try {
                     var temp = MIPS.binaryStringToNumber(mipsValues[elements[18]].val);
                     var getAddrVal = "#stackEntry-" + (temp + 3);  //offset from stack display error
@@ -1834,8 +1914,13 @@ function visualize () {
                     return "00000000000000000000000000000000";
                 }
                 break;
-            default : return null;
+            case "inst":
+                var str = mipsValues[elements[8]].val + mipsValues[elements[31]].val + mipsValues[elements[32]].val + mipsValues[elements[22]].val;
+                str = str.replace(/\s+/g, '')
+                return (str);
+                break;
 
+            default : return null;
         }
     }
 
