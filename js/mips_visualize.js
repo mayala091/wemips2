@@ -504,8 +504,8 @@ function visualize () {
                                             '<div class="medRow"></div>' +
                                             '<div class="lineRow"></div>' +
                                             '<div class="tabData" align="left" style="color: #428bca;">Register File</div>' +
-                                                '<li id="rd1" class="tabData" align="left" fill="lightgrey">RD1: </li>' +
-                                                '<li id="rd2" class="tabData" align="left" fill="lightgrey">RD2: </li>' +
+                                                '<li id="rd1" class="tabData" align="left" fill="lightgrey">RD1 (out): </li>' +
+                                                '<li id="rd2" class="tabData" align="left" fill="lightgrey">RD2 (out): </li>' +
                                             '<div class="medRow"></div>' +
                                             '<div class="lineRow"></div>' +
                                             '<li class="tabData" align="left" style="color: #428bca;">Sign Extend 32</li>' +
@@ -547,8 +547,8 @@ function visualize () {
                                             '<div class="tab-pane" id="wb">' +
                                             '<div class="medRow"></div>' +
                                             '<div class="lineRow"></div>' +
-                                            '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
-                                                '<li id="memoryreaddataresult" class="tabData" align="left">Result (out): </li>' +
+                                            '<li class="tabData" align="left" style="color: #428bca;">Data Memory</li>' +
+                                                '<li id="memoryreaddataresult" class="tabData" align="left">Read Data Result (out): </li>' +
                                             '<div class="medRow"></div>' +
                                             '<div class="lineRow"></div>' +
                                             '<li class="tabData" align="left" style="color: #428bca;">Register File</li>' +
@@ -559,7 +559,7 @@ function visualize () {
                                             '<div class="tab-pane" id="all">' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">IF</li>' +
-                                                '<li class="tabData" align="left" style="color: #428bca;">Instruction Memory</li>' +
+                                                '<!--li class="tabData" align="left" style="color: #428bca;">Instruction Memory</li-->' +
                                                 '<li id="pc" class="tabData" align="left">PC: </li>' +
                                                 '<li id="inst" class="tabData" align="left" fill="lightgrey">Instruction [31 - 0] (out): </li>' +
 
@@ -567,41 +567,41 @@ function visualize () {
                                                 '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>' +
                                                 '<li class="tabData" align="left" style="color: #428bca;">ID</li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Register File</li>' +
-                                                    '<li id="rd1" class="tabData" align="left">RD1: </li>' +
-                                                    '<li id="rd2" class="tabData" align="left">RD2: </li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Sign Extend 32</li>' +
-                                                    '<li id="signext32" class="tabData" align="left">Result (out): </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Register File</li-->' +
+                                                    '<li id="rd1" class="tabData" align="left">Register File RD1: </li>' +
+                                                    '<li id="rd2" class="tabData" align="left">Register File RD2: </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Sign Extend 32</li-->' +
+                                                    '<li id="signext32" class="tabData" align="left">Sign Extend 32 Result (out): </li>' +
 
                                                 '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">EX</li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">ALU (Arithmetic Logic Unit)</li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">ALU (Arithmetic Logic Unit)</li-->' +
                                                     '<li id="aluinbot" class="tabData" align="left">ALU from Mux: (in) </li>' +
                                                     '<li id="aluresult" class="tabData" align="left">ALU Result (out): </li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Shift Left 2</li>' +
-                                                    '<li id="shiftleft2" class="tabData" align="left">Result (out): </li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Branch ALU</li>' +
-                                                    '<li id="pcsl2addresult" class="tabData" align="left">Result (out): </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Shift Left 2</li-->' +
+                                                    '<li id="shiftleft2" class="tabData" align="left">Shift Left 2 Result (out): </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Branch ALU</li-->' +
+                                                    '<li id="pcsl2addresult" class="tabData" align="left">Branch ALU Result (out): </li>' +
 
                                                 '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">MEM</li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Data Memory</li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Data Memory</li-->' +
                                                     '<li id="aluresultmemval" class="tabData" align="left" fill="lightgrey">ALU Result (in): </li>' +
                                                     '<li id="rd2mem" class="tabData" align="left" fill="lightgrey">Write Data from RD2 (in): </li>' +
                                                     '<li id="memoryreaddataresult" class="tabData" align="left">Read Data Result (out): </li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
-                                                    '<li id="newpc" class="tabData" align="left">New PC: </li>' +
-                                                    '<li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Mux</li-->' +
+                                                    '<li id="newpc" class="tabData" align="left">Mux New PC (out): </li>' +
+                                                    '<!--li id="pcsrc" class="tabData" align="left">PC Source (PCSrc): </li-->' +
 
                                                 '<div class="medRow"></div>' +
                                                 '<div class="lineRow"></div>'+
                                                 '<li class="tabData" align="left" style="color: #428bca;">WB</li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Mux</li>' +
-                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Result (out): </li>' +
-                                                    '<li class="tabData" align="left" style="color: #428bca;">Register File</li>' +
-                                                    '<li id="wd" class="tabData" align="left">Write Data (in): </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Mux</li-->' +
+                                                    '<li id="memoryreaddataresult" class="tabData" align="left">Read Data Result (out): </li>' +
+                                                    '<!--li class="tabData" align="left" style="color: #428bca;">Register File</li-->' +
+                                                    '<li id="wd" class="tabData" align="left">Register File Write Data (in): </li>' +
                                                     '<li ></li>' +
                                             '</div>' +
 
